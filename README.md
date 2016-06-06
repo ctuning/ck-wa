@@ -23,11 +23,30 @@ License
 
 Installation
 ============
+Obtain CK repository for Workload Automation:
+
 ```
  $ ck pull repo --url=https://github.com/dividiti/ck-wa
 ```
 or
 ```
-$ ck pull repo --url=git@github.com:dividiti/ck-wa
+ $ ck pull repo --url=git@github.com:dividiti/ck-wa
 ```
 
+Install Workload Automation via CK:
+```
+ $ ck install package:arm-wa-workload
+```
+
+Usage
+=====
+
+Check available workloads in CK format:
+```
+ $ ck list wa
+```
+
+Run dhrystone workload via CK:
+```
+ $ ck run wa:dhrystone
+```

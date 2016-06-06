@@ -1,6 +1,6 @@
 {
   "backup_data_uid": "bf80b84064a65cfd", 
-  "data_name": "wa-dhrystone", 
+  "data_name": "dhrystone", 
   "print_files_after_run": [
     "tmp-output1.tmp", 
     "tmp-output2.tmp"
@@ -33,5 +33,6 @@
     "wa", 
     "workload-automation", 
     "dhrystone"
-  ] 
+  ],
+  "wa_desc":"Runs the Dhrystone benchmark"
 }

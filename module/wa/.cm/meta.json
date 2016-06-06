@@ -1,13 +1,24 @@
 {
   "actions": {
+    "dashboard": {
+      "desc": "ARM workload automation dashboard",
+      "for_web": "yes"
+    },
     "list": {
       "desc": "list workloads"
     },
     "run": {
       "desc": "run workload"
+    },
+    "show": {
+      "desc": "WA dashboard",
+      "for_web": "yes"
     }
   },
   "copyright": "See CK COPYRIGHT for copyright details",
   "desc": "ARM workload automation",
-  "license": "See CK LICENSE for licensing details"
+  "license": "See CK LICENSE for licensing details",
+  "module_deps": {
+    "program": "b0ac08fe1d3c2615"
+  }
 }

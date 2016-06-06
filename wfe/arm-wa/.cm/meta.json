@@ -1,0 +1,33 @@
+{
+  "top_menu": [
+    {
+      "module_uoa": "", 
+      "module_uoas": [
+        ""
+      ], 
+      "url_extra": "action=index&module_uoa=wfe&native_action=show&native_module_uoa=wa", 
+      "native_module_uoa":"wa",
+      "native_action":"show",
+      "default":"yes",
+      "name": "Dashboard"
+    }, 
+    {
+      "module_uoa": "program", 
+      "url_extra_browse":"ck_top_search_tag=wa",
+      "module_uoas": [
+        "program"
+      ], 
+      "any_module":"yes",
+      "name": "Browse"
+    }, 
+    {
+      "name": "Discussions", 
+      "url": "https://groups.google.com/forum/#!forum/collective-knowledge"
+    }, 
+    {
+      "name": "Get CK-based Workload Automation", 
+      "url": "https://github.com/dividiti/ck-wa"
+    }
+  ],
+  "extra_html_after_menu":""
+}

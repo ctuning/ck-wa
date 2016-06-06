@@ -4,3 +4,4 @@
              - added dependency on ck-autotuning repository
              - added first workload description (dhrystone) in CK format (program)
              - added wa module dummy with actions "run" and "list"
+             - added dummy dashboard with html template

@@ -31,11 +31,12 @@ def init(i):
     return {'return':0}
 
 ##############################################################################
-# list workloads
+# list workloads (using module "program" with tags "wa")
 
 def list(i):
     """
     Input:  {
+              (data_uoa) - can be wild cards
             }
 
     Output: {
@@ -46,18 +47,35 @@ def list(i):
 
     """
 
-    ck.out('list workloads')
+    o=i.get('out','')
+    oo=''
+    if o=='con': oo=o
 
-    ck.out('')
-    ck.out('Command line: ')
-    ck.out('')
+    duoa=i.get('data_uoa','')
 
-    import json
-    cmd=json.dumps(i, indent=2)
+    ii={'action':'search',
+        'module_uoa':cfg['module_deps']['program'],
+        'tags':'wa',
+        'add_meta':'yes'}
+    rr=ck.access(ii)
+    if rr['return']>0: return rr
 
-    ck.out(cmd)
+    if o=='con':
+       lst=rr['lst']
+       for x in lst:
+           duoa=x['data_uoa']
+           duid=x['data_uid']
 
-    return {'return':0}
+           meta=x['meta']
+           desc=meta.get('wa_desc','')
+
+           x=duoa+' ('+duid+')'
+           if desc!='':
+              x+=' - '+desc
+
+           ck.out(x)
+
+    return rr
 
 ##############################################################################
 # run workload
@@ -65,6 +83,7 @@ def list(i):
 def run(i):
     """
     Input:  {
+              (data_uoa) - workload to run
             }
 
     Output: {
@@ -75,15 +94,61 @@ def run(i):
 
     """
 
-    ck.out('run workload')
+    o=i.get('out','')
+    oo=''
+    if o=='con': oo=o
 
-    ck.out('')
-    ck.out('Command line: ')
-    ck.out('')
+    duoa=i.get('data_uoa','')
 
-    import json
-    cmd=json.dumps(i, indent=2)
+    ii={'action':'run',
+        'module_uoa':cfg['module_deps']['program'],
+        'data_uoa':duoa,
+        'out':oo}
+    r=ck.access(ii)
+    if r['return']>0: return r
 
-    ck.out(cmd)
+    return r
 
-    return {'return':0}
+##############################################################################
+# WA dashboard
+
+def show(i):
+    """
+    Input:  {
+            }
+
+    Output: {
+              return       - return code =  0, if successful
+                                         >  0, if error
+              (error)      - error text if return > 0
+            }
+
+    """
+
+    h='TBD'
+    st=''
+
+    return {'return':0, 'html':h, 'style':st}
+
+##############################################################################
+# ARM workload automation dashboard
+
+def dashboard(i):
+    """
+    Input:  {
+            }
+
+    Output: {
+              return       - return code =  0, if successful
+                                         >  0, if error
+              (error)      - error text if return > 0
+            }
+
+    """
+
+    i['action']='browser'
+    i['cid']=''
+    i['module_uoa']=''
+    i['template']='arm-wa'
+
+    return ck.access(i)
