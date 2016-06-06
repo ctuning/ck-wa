@@ -10,7 +10,8 @@
     "linux": "" 
   }, 
   "only_for_host_os_tags": [
-    "linux" 
+    "linux",
+    "windows" 
   ], 
   "only_for_target_os_tags": [
     "linux", 
