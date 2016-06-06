@@ -1,1 +1,6 @@
 * 2016.06.06 - first CK commit
+             - added WA soft description and package
+             - improved Python detection
+             - added dependency on ck-autotuning repository
+             - added first workload description (dhrystone) in CK format (program)
+             - added wa module dummy with actions "run" and "list"

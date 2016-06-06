@@ -1,0 +1,27 @@
+{
+  "check_exit_status": "yes", 
+  "customize": {
+    "skip_file_check": "yes",
+    "extra_dir": "", 
+    "version": "trunk",
+    "force_path":"/usr/local/bin/wa"
+  }, 
+  "end_full_path": {
+    "linux": "" 
+  }, 
+  "only_for_host_os_tags": [
+    "linux" 
+  ], 
+  "only_for_target_os_tags": [
+    "linux", 
+    "android"
+  ], 
+  "process_script": "process", 
+  "soft_uoa": "65d719061a41f7ae",
+  "suggested_path": "tool-arm-wa", 
+  "tags": [
+    "tool", 
+    "arm", 
+    "wa"
+  ]
+}

@@ -1,0 +1,4 @@
+Workload Automation (WA) is a framework for executing workloads and collecting measurements on Android and Linux devices.
+
+You can get it at https://github.com/ARM-software/workload-automation
+

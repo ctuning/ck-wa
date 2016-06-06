@@ -1,0 +1,13 @@
+{
+  "actions": {
+    "list": {
+      "desc": "list workloads"
+    },
+    "run": {
+      "desc": "run workload"
+    }
+  },
+  "copyright": "See CK COPYRIGHT for copyright details",
+  "desc": "ARM workload automation",
+  "license": "See CK LICENSE for licensing details"
+}

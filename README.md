@@ -8,6 +8,8 @@ Unstable - heavy development phase
 Prerequisites
 =============
 * Collective Knowledge framework ([@GitHub](http://github.com/ctuning/ck))
+* python2 (for ARM WA)
+* pip (installed via apt-get install python-pip)
 
 Authors
 =======
@@ -28,3 +30,4 @@ or
 ```
 $ ck pull repo --url=git@github.com:dividiti/ck-wa
 ```
+

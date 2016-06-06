@@ -1,0 +1,37 @@
+{
+  "backup_data_uid": "bf80b84064a65cfd", 
+  "data_name": "wa-dhrystone", 
+  "print_files_after_run": [
+    "tmp-output1.tmp", 
+    "tmp-output2.tmp"
+  ], 
+  "deps": {
+    "wa": {
+      "env_key": "WA", 
+      "local": "yes", 
+      "name": "ARM Workload Automation", 
+      "sort": 10, 
+      "tags": "tool,wa"
+    } 
+  },
+  "process_in_tmp": "yes", 
+  "program": "yes", 
+  "run_cmds": {
+    "default": {
+      "ignore_return_code": "no", 
+      "run_time": {
+        "fine_grain_timer_file": "tmp-ck-timer.json", 
+        "run_cmd_main": "wa run dhrystone -f", 
+        "run_cmd_out1": "tmp-output1.tmp", 
+        "run_cmd_out2": "tmp-output2.tmp", 
+        "run_output_files": []
+      }
+    }
+  }, 
+  "print_files_after_run":["tmp-output2.tmp", "wa_output/status.txt", "wa_output/dhrystone_1_1/result.txt"],
+  "tags": [
+    "wa", 
+    "workload-automation", 
+    "dhrystone"
+  ] 
+}
