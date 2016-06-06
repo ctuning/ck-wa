@@ -4,6 +4,9 @@
       "desc": "ARM workload automation dashboard",
       "for_web": "yes"
     },
+    "import": {
+      "desc": "import workloads from original WA"
+    },
     "list": {
       "desc": "list workloads"
     },

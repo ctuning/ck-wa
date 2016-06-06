@@ -152,3 +152,31 @@ def dashboard(i):
     i['template']='arm-wa'
 
     return ck.access(i)
+
+##############################################################################
+# import workloads from original WA
+
+def import(i):
+    """
+    Input:  {
+            }
+
+    Output: {
+              return       - return code =  0, if successful
+                                         >  0, if error
+              (error)      - error text if return > 0
+            }
+
+    """
+
+    # Get platform params
+    hos=i.get('host_os','')
+    tos=i.get('target_os', '')
+    tdid=i.get('device_id', '')
+
+    # Set environment for WA
+
+
+
+
+    return {'return':0}
