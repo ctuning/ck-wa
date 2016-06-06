@@ -50,3 +50,8 @@ Run dhrystone workload via CK:
 ```
  $ ck run wa:dhrystone
 ```
+
+Starting (currently dummy) dashboard:
+```
+ $ ck dashboard wa
+```
