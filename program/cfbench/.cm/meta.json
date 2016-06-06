@@ -1,0 +1,38 @@
+{
+  "backup_data_uid": "90c97d58a41146fa",
+  "data_name": "cfbench",
+  "deps": {
+    "wa": {
+      "env_key": "WA",
+      "local": "yes",
+      "name": "ARM Workload Automation",
+      "sort": 10,
+      "tags": "tool,wa"
+    }
+  },
+  "print_files_after_run": [
+    "tmp-output2.tmp",
+    "wa_output/status.txt",
+    "wa_output/cfbench_1_1/result.txt"
+  ],
+  "process_in_tmp": "yes",
+  "program": "yes",
+  "run_cmds": {
+    "default": {
+      "ignore_return_code": "no",
+      "run_time": {
+        "fine_grain_timer_file": "tmp-ck-timer.json",
+        "run_cmd_main": "wa run cfbench -f",
+        "run_cmd_out1": "tmp-output1.tmp",
+        "run_cmd_out2": "tmp-output2.tmp",
+        "run_output_files": []
+      }
+    }
+  },
+  "tags": [
+    "wa",
+    "workload-automation",
+    "cfbench"
+  ],
+  "wa_desc": "CF-Bench is (mainly) CPU and memory benchmark tool specifically designed to be able to handle multi-core devices, produce a fairly stable score, and test both native as well managed code performance."
+}

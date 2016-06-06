@@ -1,0 +1,38 @@
+{
+  "backup_data_uid": "fc78e6814d6f812b",
+  "data_name": "vellamo",
+  "deps": {
+    "wa": {
+      "env_key": "WA",
+      "local": "yes",
+      "name": "ARM Workload Automation",
+      "sort": 10,
+      "tags": "tool,wa"
+    }
+  },
+  "print_files_after_run": [
+    "tmp-output2.tmp",
+    "wa_output/status.txt",
+    "wa_output/vellamo_1_1/result.txt"
+  ],
+  "process_in_tmp": "yes",
+  "program": "yes",
+  "run_cmds": {
+    "default": {
+      "ignore_return_code": "no",
+      "run_time": {
+        "fine_grain_timer_file": "tmp-ck-timer.json",
+        "run_cmd_main": "wa run vellamo -f",
+        "run_cmd_out1": "tmp-output1.tmp",
+        "run_cmd_out2": "tmp-output2.tmp",
+        "run_output_files": []
+      }
+    }
+  },
+  "tags": [
+    "wa",
+    "workload-automation",
+    "vellamo"
+  ],
+  "wa_desc": "Android benchmark designed by Qualcomm."
+}

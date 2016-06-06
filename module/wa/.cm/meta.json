@@ -18,10 +18,53 @@
       "for_web": "yes"
     }
   },
+  "actions_redirect": {
+    "import": "wa_import"
+  },
   "copyright": "See CK COPYRIGHT for copyright details",
   "desc": "ARM workload automation",
   "license": "See CK LICENSE for licensing details",
   "module_deps": {
+    "env": "9b9b3208ac44b891",
+    "platform": "707ccdfe444cafac",
     "program": "b0ac08fe1d3c2615"
+  },
+  "wa_template": {
+    "backup_data_uid": "bf80b84064a65cfd",
+    "data_name": "$#wa_name#$",
+    "deps": {
+      "wa": {
+        "env_key": "WA",
+        "local": "yes",
+        "name": "ARM Workload Automation",
+        "sort": 10,
+        "tags": "tool,wa"
+      }
+    },
+    "print_files_after_run": [
+      "tmp-output2.tmp",
+      "wa_output/status.txt",
+      "wa_output/$#wa_name#$_1_1/result.txt"
+    ],
+    "process_in_tmp": "yes",
+    "program": "yes",
+    "run_cmds": {
+      "default": {
+        "ignore_return_code": "no",
+        "run_time": {
+          "fine_grain_timer_file": "tmp-ck-timer.json",
+          "run_cmd_main": "wa run $#wa_name#$ -f",
+          "run_cmd_out1": "tmp-output1.tmp",
+          "run_cmd_out2": "tmp-output2.tmp",
+          "run_output_files": []
+        }
+      }
+    },
+    "tags": [
+      "wa",
+      "workload-automation",
+      "$#wa_name#$"
+    ],
+    "wa_desc": "Runs the Dhrystone benchmark"
   }
 }
