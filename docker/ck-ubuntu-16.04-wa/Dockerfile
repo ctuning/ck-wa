@@ -72,7 +72,7 @@ COPY adbkey /root/.android/adbkey
 CMD adb devices
 
 # Check WA
-#CMD wa --help ; ck run wa:dhrystone
+#CMD wa --help ; ck run wa:dhrystone --out=json
 
 # Set the CK web service defaults.
 ENV CK_PORT=3344 \
