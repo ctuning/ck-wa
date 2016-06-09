@@ -8,10 +8,12 @@
       "desc": "import workloads from original WA"
     },
     "list": {
-      "desc": "list workloads"
+      "desc": "list workloads",
+      "for_web": "yes"
     },
     "run": {
-      "desc": "run workload"
+      "desc": "run workload",
+      "for_web": "yes"
     },
     "show": {
       "desc": "WA dashboard",
