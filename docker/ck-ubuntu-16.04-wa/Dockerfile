@@ -40,7 +40,9 @@ RUN ck pull repo:ck-web
 #RUN android list sdk --extended --all
 #RUN android list sdk --extended
 RUN apt-get install -y expect
-COPY update_android.sh /usr/bin
+
+COPY update_android.sh /usr/bin/update_android.sh
+
 RUN chmod 755 /usr/bin/update_android.sh
 RUN /usr/bin/update_android.sh
 
