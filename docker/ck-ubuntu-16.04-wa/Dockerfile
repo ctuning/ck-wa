@@ -49,7 +49,7 @@ RUN cd /opt ; wget http://dl.google.com/android/repository/android-ndk-r11c-linu
 RUN cd /opt ; unzip android-ndk-r11c-linux-x86_64.zip
 
 # Add CK-WA (and automatically unzip)
-ADD ck-wa.tar.bz2 ${CK_REPOS}
+ADD ckr-ck-wa.zip ${CK_REPOS}
 RUN cd ${CK_REPOS}/ck-wa ; ck import repo --quiet
 
 # Install WA via CK
