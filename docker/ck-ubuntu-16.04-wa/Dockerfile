@@ -2,16 +2,9 @@ FROM ubuntu:16.04
 MAINTAINER Grigori Fursin <Grigori.Fursin@cTuning.org>
 MAINTAINER Anton Lokhmotov <anton@dividiti.com>
 
-# Install standard packages.
+# Install min standard packages.
 RUN apt-get update && apt-get install -y \
-    python-all \
-    python-pip \
-    git \
-    bzip2 \
-    sudo \ 
-    wget \
-    zip \
-    libjpeg8 libjpeg62-dev libfreetype6 libfreetype6-dev python-pillow
+    git bzip2 sudo wget zip
 
 # Install Android SDK
 RUN cd /opt ; \
@@ -20,18 +13,21 @@ RUN cd /opt ; \
     tar xvf android-sdk_r24.4.1-linux.tar ; \
     rm android-sdk_r24.4.1-linux.tar
 
-# Set Android HOME
-ENV ANDROID_HOME=/opt/Android/sdk
-
-#    adb \
-#    android-sdk-platform-tools \
-#    android-sdk 
+# Install standard packages.
+RUN apt-get install -y \
+    python-all \
+    python-pip \
+    default-jre \
+    libjpeg8 libjpeg62-dev libfreetype6 libfreetype6-dev python-pillow
 
 # Install the core Collective Knowledge (CK) module.
 ENV CK_ROOT=/root/ck-master \
     CK_REPOS=/root/CK \
-    CK_TOOLS=/root/CK-TOOLS \
-    PATH=${CK_ROOT}/bin:${PATH}
+    CK_TOOLS=/root/CK-TOOLS
+
+ENV ANDROID_HOME=/opt/android-sdk-linux
+
+ENV PATH=${CK_ROOT}/bin:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:${PATH}
 
 RUN mkdir -p ${CK_ROOT} ${CK_REPOS} ${CK_TOOLS}
 RUN git clone https://github.com/ctuning/ck.git ${CK_ROOT}
@@ -40,28 +36,40 @@ RUN cd ${CK_ROOT} && python setup.py install && python -c "import ck.kernel as c
 # Install other CK modules.
 RUN ck pull repo:ck-web
 
+# Update Android SDK (extra deps) - need expect to automate license acceptance
+#RUN android list sdk --extended --all
+#RUN android list sdk --extended
+RUN apt-get install -y expect
+COPY update_android.sh /usr/bin
+RUN chmod 755 /usr/bin/update_android.sh
+RUN /usr/bin/update_android.sh
+
+# Install Android NDK
+RUN cd /opt ; wget http://dl.google.com/android/repository/android-ndk-r11c-linux-x86_64.zip
+RUN cd /opt ; unzip android-ndk-r11c-linux-x86_64.zip
+
 # Add CK-WA (and automatically unzip)
-#ADD ck-wa.tar.bz2 ${CK_REPOS}
-#RUN cd ${CK_REPOS}/ck-wa ; ck import repo --quiet
+ADD ck-wa.tar.bz2 ${CK_REPOS}
+RUN cd ${CK_REPOS}/ck-wa ; ck import repo --quiet
 
 # Install WA via CK
-#RUN ck install package:arm-wa-github
+RUN ck install package:arm-wa-github
 
 #Create and copy some existing keys (without pass)
 # to allow access from this Docker client 
 # to any given Android device
-
-RUN mkdir -m 0750 /root/.android
+#RUN mkdir -m 0750 /root/.android
 ADD adbkey.pub /root/.android/adbkey.pub
 ADD adbkey /root/.android/adbkey
 
+# interactive, if needed to debug
+#CMD bash
+
 # Check ADB
-#CMD adb shell
+CMD adb devices
 
 # Check WA
-#CMD ck run wa:dhrystone
-#CMD which wa ; wa --help ; wa run dhrystone
-CMD bash
+CMD wa --help ; ck run wa:dhrystone
 
 # Set the CK web service defaults.
 #ENV CK_PORT=3344 \
