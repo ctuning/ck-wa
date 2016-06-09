@@ -1,31 +1,16 @@
-CK uses standard 3-clause (new) BSD license. Contributions are welcome to
-either improve existing functionality or add new functionality possibly using
-new modules.
+Acknowledgments:
 
-Contributors should clearly mark their contributions including date and remark.
+N: Grigori Fursin
+E: Grigori.Fursin@cTuning.org
+H: http://fursin.net
+O: cTuning foundation
+C: 
+W: 
 
-This is still a relatively new project so we still discuss how to make
-contributions easy and efficient.
-
-For now, patches can be sent directly to the collective-mind@googlegroups.com
-
-Bugs can be reported here:
-* https://github.com/ctuning/ck/issues
-
-Thank you for your interest!
-
-=======================================================================
 N: Anton Lokhmotov
 E: anton@dividiti.com
 H: https://www.hipeac.net/~anton
-O: dividiti, UK
+O: dividiti
 C: 
 W: 
 
-=================================================================================
-N: Grigori Fursin
-E: grigori@dividiti.com
-H: http://fursin.net/research
-O: dividiti, UK / cTuning foundation, France
-C: 
-W: 

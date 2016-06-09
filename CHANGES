@@ -1,3 +1,5 @@
+* 2016.06.09 - adding and testing Docker image (unfinished)
+
 * 2016.06.06 - first CK commit
              - added WA soft description and package
              - improved Python detection
