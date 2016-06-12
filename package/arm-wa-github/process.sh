@@ -25,7 +25,7 @@ which python
 echo ""
 echo "Installing (with sudo) ..."
 cd ${INSTALL_DIR}/src
-sudo -H pip install .
+sudo -H pip install . --upgrade
 
  if [ "${?}" != "0" ] ; then
   echo "Error: Installation failed in $PWD!" 

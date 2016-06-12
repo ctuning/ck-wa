@@ -8,8 +8,9 @@ Unstable - heavy development phase
 Prerequisites
 =============
 * Collective Knowledge framework ([@GitHub](http://github.com/ctuning/ck))
-* python2 (for ARM WA)
-* pip (installed via apt-get install python-pip)
+* (ARM WA) python2
+* (ARM WA) pip (install via apt-get install python-pip)
+* (ARM WA) yaml (install via apt-get install libyaml-dev)
 
 Authors
 =======

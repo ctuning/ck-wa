@@ -235,7 +235,7 @@ def run(i):
 
             'pipeline':pipeline,
 
-            'record':'yes',
+            'record':record,
 
             "features_keys_to_process":["##choices#*"],
 
