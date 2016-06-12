@@ -1,4 +1,7 @@
 {
+  "ck_to_env": {
+    "CK_WA_SCRIPTS_PATH": "script:39157fb314f399ae"
+  }, 
   "backup_data_uid": "443bcf472b744bfb",
   "data_name": "power_loadtest",
   "deps": {
@@ -21,8 +24,11 @@
     "default": {
       "ignore_return_code": "no",
       "run_time": {
+        "post_process_cmds": [
+          "python $<<CK_WA_SCRIPTS_PATH>>$$#dir_sep#$convert_output_to_ck_format.py"
+        ],
         "fine_grain_timer_file": "tmp-ck-timer.json",
-        "run_cmd_main": "wa run power_loadtest -f",
+        "run_cmd_main": "wa run power_loadtest -f $<<EXTRA_CMD>>$",
         "run_cmd_out1": "tmp-output1.tmp",
         "run_cmd_out2": "tmp-output2.tmp",
         "run_output_files": []

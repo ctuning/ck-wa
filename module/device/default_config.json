@@ -1,0 +1,25 @@
+{
+ "reboot_policy": "as_needed",
+ "execution_order": "by_iteration",
+ "retry_on_status": ["FAILED", "PARTIAL"],
+ "max_retries": 3,
+ "device": "generic_android",
+ "device_config": {
+ },
+ "instrumentation": [
+    "execution_time",
+    "interrupts",
+    "cpufreq"
+ ],
+ "result_processors": [
+    "status",
+    "standard",
+    "json"
+ ],
+ "logging": {
+    "file format": "%(asctime)s %(levelname)-8s %(name)s: %(message)s",
+    "verbose format": "%(asctime)s %(levelname)-8s %(name)s: %(message)s",
+    "regular format": "%(levelname)-8s %(message)s",
+    "colour_enabled": true
+ }
+}

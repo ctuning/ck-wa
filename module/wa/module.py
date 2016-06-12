@@ -4,7 +4,7 @@
 # See CK LICENSE for licensing details
 # See CK COPYRIGHT for copyright details
 #
-# Developer: cTuning foundation, admin@cTuning.org, http://cTuning.org
+# Developer: dividiti, http://dividiti.com
 #
 
 cfg={}  # Will be updated by CK (meta description of this module)
@@ -84,7 +84,10 @@ def list(i):
 def run(i):
     """
     Input:  {
-              (data_uoa) - workload to run
+              (device)   - device UOA (see "ck list device")
+              (data_uoa) - workload to run (see "ck list wa")
+
+              (record)   - if 'yes', record result in repository
             }
 
     Output: {
@@ -95,20 +98,157 @@ def run(i):
 
     """
 
+    import os
+    import copy
+
     o=i.get('out','')
     oo=''
     if o=='con': oo=o
 
-    duoa=i.get('data_uoa','')
+    # Check device (search and select if one)
+    device=i.get('device','')
 
-    ii={'action':'run',
-        'module_uoa':cfg['module_deps']['program'],
-        'data_uoa':duoa,
+    r=ck.access({'action':'search',
+                 'module_uoa':cfg['module_deps']['device'],
+                 'data_uoa':device})
+    if r['return']>0: return r
+    dl=r['lst']
+    if len(dl)!=1:
+       return {'return':1, 'error':'CK device name is not defined (ck run wa:{workload_name} --device={device_name})'}
+
+    device=dl[0]['data_uid']
+    device_uoa=dl[0]['data_uoa']
+
+    # Load info about device (including configuration)
+    r=ck.access({'action':'load',
+                 'module_uoa':cfg['module_deps']['device'],
+                 'data_uoa':device})
+    if r['return']>0: return r
+    dd=r['dict']
+    pd=r['path']
+
+    dcfg=os.path.join(pd, cfg['device_cfg_file'])
+
+    # Check host/target OS/CPU
+    hos=i.get('host_os','')
+    tos=i.get('target_os','')
+    tdid=i.get('device_id','')
+
+    if tos=='': tos=dd.get('target_os','')
+    if tdid=='': tdid=dd.get('device_id','')
+
+    # Get some info about platforms
+    ii={'action':'detect',
+        'module_uoa':cfg['module_deps']['platform.os'],
+        'host_os':hos,
+        'target_os':tos,
+        'device_id':tdid,
         'out':oo}
     r=ck.access(ii)
     if r['return']>0: return r
 
-    return r
+    # Check workload(s)
+    duoa=i.get('data_uoa','')
+
+    r=ck.access({'action':'search',
+                 'module_uoa':cfg['module_deps']['program'],
+                 'add_meta':'yes',
+                 'data_uoa':duoa,
+                 'tags':'wa'})
+    if r['return']>0: return r
+    lst=r['lst']
+
+    if len(lst)==0:
+       return {'return':1, 'error':'workload name is not defined (ck run wa:{workload_name})'}
+
+    record=i.get('record','')
+
+    # Iterate over workloads
+    rrr={}
+    for wa in lst:
+        duoa=wa['data_uoa']
+        duid=wa['data_uid']
+        dw=wa['meta']
+        dp=wa['path']
+
+        meta={'program_uoa':duoa,
+              'program_uid':duid,
+              'device_uoa':device_uoa,
+              'device_uid':device}
+
+        if o=='con':
+           ck.out('Running workload '+duoa+' on device '+device_uoa+' ...')
+
+        # Prepare CK pipeline for a given workload
+
+        ii={'action':'pipeline',
+            'module_uoa':cfg['module_deps']['program'],
+            'data_uoa':duid,
+
+            'prepare':'yes',
+
+            'env':{'EXTRA_CMD':'-c '+dcfg},
+            'no_state_check':'yes',
+            'no_compiler_description':'yes',
+            'skip_info_collection':'yes',
+            'skip_calibration':'yes',
+            'cpu_freq':'',
+            'gpu_freq':'',
+            'env_speed':'yes',
+            'energy':'no',
+            'skip_print_timers':'yes',
+            'generate_rnd_tmp_dir':'yes',
+
+            'out':oo}
+        r=ck.access(ii)
+        if r['return']>0: return r
+
+        fail=r.get('fail','')
+        if fail=='yes':
+           return {'return':10, 'error':'pipeline failed ('+r.get('fail_reason','')+')'}
+
+        ready=r.get('ready','')
+        if ready!='yes':
+           return {'return':11, 'error':'couldn\'t prepare autotuning pipeline'}
+
+        state=r['state']
+        tmp_dir=state['tmp_dir']
+
+        # Clean pipeline
+        if 'ready' in r: del(r['ready'])
+        if 'fail' in r: del(r['fail'])
+        if 'return' in r: del(r['return'])
+
+        pipeline=copy.deepcopy(r)
+
+        # Run CK pipeline *****************************************************
+        ii={'action':'autotune',
+            'module_uoa':cfg['module_deps']['pipeline'],
+            'data_uoa':cfg['module_deps']['program'],
+
+            'iterations':1,
+            'repetitions':1,
+
+            'meta':meta,
+
+            'tmp_dir':tmp_dir,
+
+            'pipeline':pipeline,
+
+            'record':'yes',
+
+            "features_keys_to_process":["##choices#*"],
+
+            "record_params": {
+              "search_point_by_features":"yes"
+            },
+
+            'out':oo}
+
+        rrr=ck.access(ii)
+        if rrr['return']>0: return rrr
+
+    return rrr
 
 ##############################################################################
 # WA dashboard
@@ -335,7 +475,6 @@ def wa_import(i):
            if r['return']!=16: return r # some other error (16 - entry not found)
 
            # Preparing meta in CK program format
-
 
            # Adding new entry
            ck.out('  Adding new entry '+w+' ...')
