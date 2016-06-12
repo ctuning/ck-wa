@@ -229,19 +229,23 @@ def run(i):
             'iterations':1,
             'repetitions':1,
 
-            'meta':meta,
-
             'tmp_dir':tmp_dir,
 
             'pipeline':pipeline,
 
             'record':record,
 
+            'meta':meta,
+
+            'tags':'wa',
+
             "features_keys_to_process":["##choices#*"],
 
             "record_params": {
               "search_point_by_features":"yes"
             },
+
+            "record_dict":{"subview_uoa":"3d9a4f4b03b1b257"},
 
             'out':oo}
 

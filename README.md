@@ -42,6 +42,11 @@ Install Workload Automation via CK:
 Local Usage
 ===========
 
+First, add a description of a connected device to CK.
+```
+ $ ck add device:samsung-galaxy-s7
+```
+
 Check available workloads in CK format:
 ```
  $ ck list wa
@@ -49,10 +54,16 @@ Check available workloads in CK format:
 
 Run dhrystone workload via CK:
 ```
- $ ck run wa:dhrystone
+ $ ck run wa:dhrystone --device=samsung-galaxy-s7
 ```
 
-Starting (currently dummy) dashboard:
+Run dhrystone workload via CK and record results in CK repository
+(using experiment module):
+```
+ $ ck run wa:dhrystone --device=samsung-galaxy-s7 --record
+```
+
+Start web dashboard and browse workloads and experimental results:
 ```
  $ ck dashboard wa
 ```
@@ -93,6 +104,11 @@ You can see CK dashboard via http://cknowledge.ddns.net:7344/?template=arm-wa
 To be able to access above service via local CK instance, 
 we already provided a proxy repository "remote-wa". 
 
+You can now list devices connected to a remote machine via
+```
+ $ ck list remote-wa:device:*
+```
+
 You can now list workloads available in this remote service via
 ```
  $ ck list remote-wa:wa:*
@@ -100,7 +116,13 @@ You can now list workloads available in this remote service via
 
 You can run dhrystone workload on this remote machine (and connected mobile phone) via
 ```
- $ ck run remote-wa:wa:dhrystone
+ $ ck run remote-wa:wa:dhrystone --remote
+```
+
+You can run dhrystone workload on this remote machine (and connected mobile phone) 
+and save output in JSON via
+```
+ $ ck run remote-wa:wa:dhrystone --remote --out=json_file --out_file=results.json
 ```
 
 If you want to deploy Docker container with CK-powered WA web service on your own machine 

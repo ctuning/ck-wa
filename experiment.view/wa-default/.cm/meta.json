@@ -1,0 +1,27 @@
+{
+  "flat_keys": [
+    "##characteristics#run#return_code", 
+    "##choices#data_uoa",
+    "##choices#host_os", 
+    "##characteristics#run#execution_time_kernel_0"
+  ], 
+  "flat_keys_desc": [
+    {
+      "desc": "Failure (yes if !=0)"
+    }, 
+    {
+      "desc": "Workload", 
+      "module_uoa": "b0ac08fe1d3c2615", 
+      "type": "uoa"
+    }, 
+    {
+      "desc": "Host OS", 
+      "module_uoa": "0440cb72c2bc5cc6", 
+      "type": "uoa"
+    }, 
+    {
+      "desc": "Execution time (sec.)",
+      "format":"%.2f"
+    } 
+  ]
+}
