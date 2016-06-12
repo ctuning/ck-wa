@@ -1,3 +1,5 @@
+* 2016.06.12 - added and tested Docker image (checked on Linux and Windows + web service)
+
 * 2016.06.09 - adding and testing Docker image (unfinished)
 
 * 2016.06.06 - first CK commit
