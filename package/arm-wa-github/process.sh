@@ -27,4 +27,9 @@ echo "Installing (with sudo) ..."
 cd ${INSTALL_DIR}/src
 sudo -H pip install .
 
+ if [ "${?}" != "0" ] ; then
+  echo "Error: Installation failed in $PWD!" 
+  exit 1
+ fi
+
 exit 0
