@@ -1,0 +1,12 @@
+{
+  "config": {
+    "instrumentation": [
+      "~execution_time"
+    ],
+    "result_processors": [
+      "json"
+    ]
+  },
+  "workloads": [
+  ]
+}

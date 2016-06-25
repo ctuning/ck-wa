@@ -1,3 +1,7 @@
+* 2016.06.22 - added wa-agenda and wa-result modules
+             - added multiple agenda run
+             - added basic view of results (demo via dashboard)
+
 * 2016.06.12 - added and tested Docker image (checked on Linux and Windows + web service)
              - major update (device module to configure connected devices, 
                              running workload for a given device,

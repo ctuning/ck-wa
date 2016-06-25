@@ -12,7 +12,10 @@
       "for_web": "yes"
     },
     "run": {
-      "desc": "run workload",
+      "desc": "run workload(s)"
+    },
+    "runx": {
+      "desc": "run workload via CK pipeline",
       "for_web": "yes"
     },
     "show": {
@@ -33,7 +36,9 @@
     "pipeline": "db25414b48b4ffb3",
     "platform": "707ccdfe444cafac",
     "platform.os": "41e31cc4496b8a8e",
-    "program": "b0ac08fe1d3c2615"
+    "program": "b0ac08fe1d3c2615",
+    "wa-agenda": "749324e71a4947ac",
+    "wa-result": "9db0db9369416e1b"
   },
   "wa_deps": {
     "wa": {

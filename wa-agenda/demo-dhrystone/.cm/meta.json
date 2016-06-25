@@ -1,0 +1,19 @@
+{
+  "config": {
+    "instrumentation": [
+      "~execution_time"
+    ],
+    "result_processors": [
+      "json"
+    ]
+  },
+  "workloads": [
+    {
+      "name": "dhrystone",
+      "params": {
+        "mloops": 5,
+        "threads": 1
+      }
+    }
+  ]
+}

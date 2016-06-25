@@ -79,13 +79,14 @@ def list(i):
     return rr
 
 ##############################################################################
-# run workload
+# run workload via CK pipeline
 
-def run(i):
+def runx(i):
     """
     Input:  {
-              (device)   - device UOA (see "ck list device")
               (data_uoa) - workload to run (see "ck list wa")
+
+              (device)   - device UOA (see "ck list device")
 
               (record)   - if 'yes', record result in repository
             }
@@ -159,7 +160,7 @@ def run(i):
     lst=r['lst']
 
     if len(lst)==0:
-       return {'return':1, 'error':'workload name is not defined (ck run wa:{workload_name})'}
+       return {'return':1, 'error':'workload is not found (ck run wa:{workload_name})'}
 
     record=i.get('record','')
 
@@ -253,27 +254,6 @@ def run(i):
         if rrr['return']>0: return rrr
 
     return rrr
-
-##############################################################################
-# WA dashboard
-
-def show(i):
-    """
-    Input:  {
-            }
-
-    Output: {
-              return       - return code =  0, if successful
-                                         >  0, if error
-              (error)      - error text if return > 0
-            }
-
-    """
-
-    h='TBD'
-    st=''
-
-    return {'return':0, 'html':h, 'style':st}
 
 ##############################################################################
 # ARM workload automation dashboard
@@ -519,5 +499,178 @@ def wa_import(i):
 
         else:
            ck.out('    Entry '+w+' already exists!')
+
+    return {'return':0}
+
+
+##############################################################################
+# run workload(s)
+
+def run(i):
+    """
+    Input:  {
+              agendas      - list of agenda files (.yaml/.json/entries)
+                 or
+              workloads    - list of multiple workloads under 1 agenda template
+              (agenda)     - agenda template (.yaml/.json/entries) or ck-agenda:default
+
+              (params)     - params for agenda
+
+              (iterations) - number of statistical repetitions (3 by default)
+
+              (record)     - if 'yes', record to CK
+            }
+
+    Output: {
+              return       - return code =  0, if successful
+                                         >  0, if error
+              (error)      - error text if return > 0
+            }
+
+    """
+
+    import os
+    import copy
+    import yaml
+
+    o=i.get('out','')
+
+    pc=os.getcwd()
+
+    # Agendas
+    a=i.get('agendas','')
+    agendas=a.split(',')
+
+    # Workloads
+    w=i.get('workloads','')
+    workloads=w.split(',')
+    agenda=i.get('agenda','')
+
+    # Parameters
+    params=i.get('params',{})
+
+    iters=i.get('iterations','')
+    if iters=='': iters=3
+    iters=int(iters)
+
+    record=i.get('record','')
+
+    # Check
+    if a=='' and w=='':
+       ck.out('Usage:')
+       ck.out('  ck run wa --agendas=a1.yaml,a2.yaml,a3.json, ...')
+       ck.out('                or')
+       ck.out('  ck run wa --workloads=w1,w2,w3 --agenda=template.yaml')
+
+       return {'return':0}
+
+    # Prepare agendas as dict
+    aa=[]
+
+    # Iterate
+    ck.out(line)
+    if a!='':
+       for a in agendas:
+           ck.out('Reading agenda: '+a)
+
+           r=ck.access({'action':'read',
+                        'module_uoa':cfg['module_deps']['wa-agenda'],
+                        'from':a})
+           if r['return']>0: return r
+           d=r['dict']
+
+           aa.append(d)
+    else:
+       if agenda=='':
+          agenda='default'
+
+       ck.out('Reading agenda: '+agenda)
+
+       r=ck.access({'action':'read',
+                    'module_uoa':cfg['module_deps']['wa-agenda'],
+                    'from':agenda})
+       if r['return']>0: return r
+       d=r['dict']
+
+       # Iterating over workloads
+       for w in workloads:
+           ck.out('Adding workload: '+w)
+
+           dd=copy.deepcopy(d)
+
+           dd['workloads']=[{'name':w, 'params': params}]
+
+           aa.append(dd)
+
+    # Run agendas and record if needed
+    for a in aa:
+        ww=a.get('workloads',[])
+
+        for w in ww:
+            name=w.get('name','')
+            params=w.get('params',{})
+
+            ck.out(line)
+            ck.out('Workload:       '+name)
+
+            # Create CK entry (where to record results)
+            dd={'meta':{
+                        'workload_name':name
+                       }}
+
+            r=ck.access({'action':'add',
+                         'module_uoa':cfg['module_deps']['wa-result'],
+                         'dict':dd
+                        })
+            if r['return']>0: return r
+            p=r['path']
+            euid=r['data_uid']
+
+            p=os.path.join(p,'results') # otherwise WA overwrites .cm
+            os.makedirs(p)
+
+            ck.out('Experiment UID: '+euid)
+
+            # Prepare temporal agenda
+            atmp=copy.deepcopy(a)
+            atmp['workloads']=[w]
+
+            if 'global' not in atmp:
+               atmp['global']={}
+
+            ag=atmp['global']
+
+            if ag.get('iterations','')=='':
+               ag['iterations']=iters
+
+            if 'config' not in atmp:
+               atmp['config']={}
+
+            ac=atmp['config']
+
+            if 'result_processors' not in ac:
+               ac['result_processors']=[]
+
+            acrp=ac['result_processors']
+            if 'json'not in acrp:
+               acrp.append('json')
+
+            # Prepare temp yaml file
+            r=ck.gen_tmp_file({'prefix':'tmp-', 'suffix':'.yaml'})
+            if r['return']>0: return r
+            ta=r['file_name']
+
+            # Save agenda as YAML
+            r=ck.save_yaml_to_file({'yaml_file':ta, 'dict':atmp})
+            if r['return']>0: return r
+
+            # Prepare CMD
+            cmd='wa run '+ta+' -fd '+p
+
+            ck.out('CMD:            '+cmd)
+
+            # Run WA
+            ck.out('')
+            r=os.system(cmd)
 
     return {'return':0}
