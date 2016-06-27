@@ -31,7 +31,7 @@
   "device_cfg_file": "config.py",
   "license": "See CK LICENSE for licensing details",
   "module_deps": {
-    "device": "50bd50ef0723105a",
+    "wa-device": "50bd50ef0723105a",
     "env": "9b9b3208ac44b891",
     "pipeline": "db25414b48b4ffb3",
     "platform": "707ccdfe444cafac",
@@ -48,49 +48,5 @@
       "sort": 10,
       "tags": "tool,wa"
     }
-  },
-  "wa_template": {
-    "backup_data_uid": "bf80b84064a65cfd",
-    "ck_to_env": {
-      "CK_WA_SCRIPTS_PATH": "script:39157fb314f399ae"
-    },
-    "data_name": "$#wa_name#$",
-    "deps": {
-      "wa": {
-        "env_key": "WA",
-        "local": "yes",
-        "name": "ARM Workload Automation",
-        "sort": 10,
-        "tags": "tool,wa"
-      }
-    },
-    "print_files_after_run": [
-      "tmp-output2.tmp",
-      "wa_output/status.txt",
-      "wa_output/$#wa_name#$_1_1/result.txt"
-    ],
-    "process_in_tmp": "yes",
-    "program": "yes",
-    "run_cmds": {
-      "default": {
-        "ignore_return_code": "no",
-        "run_time": {
-          "fine_grain_timer_file": "tmp-ck-timer.json",
-          "post_process_cmds": [
-            "python $<<CK_WA_SCRIPTS_PATH>>$$#dir_sep#$convert_output_to_ck_format.py"
-          ],
-          "run_cmd_main": "wa run $#wa_name#$ -f $<<EXTRA_CMD>>$",
-          "run_cmd_out1": "tmp-output1.tmp",
-          "run_cmd_out2": "tmp-output2.tmp",
-          "run_output_files": []
-        }
-      }
-    },
-    "tags": [
-      "wa",
-      "workload-automation",
-      "$#wa_name#$"
-    ],
-    "wa_desc": "Runs the Dhrystone benchmark"
   }
 }

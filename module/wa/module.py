@@ -110,7 +110,7 @@ def runx(i):
     device=i.get('device','')
 
     r=ck.access({'action':'search',
-                 'module_uoa':cfg['module_deps']['device'],
+                 'module_uoa':cfg['module_deps']['wa-device'],
                  'data_uoa':device})
     if r['return']>0: return r
     dl=r['lst']
@@ -122,7 +122,7 @@ def runx(i):
 
     # Load info about device (including configuration)
     r=ck.access({'action':'load',
-                 'module_uoa':cfg['module_deps']['device'],
+                 'module_uoa':cfg['module_deps']['wa-device'],
                  'data_uoa':device})
     if r['return']>0: return r
     dd=r['dict']
@@ -446,6 +446,13 @@ def wa_import(i):
     if wk!='':
        wa[wk]=wv
 
+    # Load WA template
+    wt=os.path.join(work['path'],'wa-template.json')
+    r=ck.load_json_file({'json_file':wt})
+    if r['return']>0: return r
+
+    wtd=r['dict']
+
     # Add entries
     for w in wa:
         wd=wa[w]
@@ -467,7 +474,7 @@ def wa_import(i):
            if rx['return']>0: return rx
            duid=rx['data_uid']
 
-           d=copy.deepcopy(cfg['wa_template'])
+           d=copy.deepcopy(wtd)
 
            d["backup_data_uid"]=duid
            d["data_name"]=w
@@ -509,6 +516,8 @@ def wa_import(i):
 def run(i):
     """
     Input:  {
+              (device)     - device UOA (see "ck list device" or add new "ck add device")
+
               agendas      - list of agenda files (.yaml/.json/entries)
                  or
               workloads    - list of multiple workloads under 1 agenda template
@@ -531,11 +540,13 @@ def run(i):
 
     import os
     import copy
-    import yaml
 
     o=i.get('out','')
 
     pc=os.getcwd()
+
+    # Device
+    device=i.get('device','')
 
     # Agendas
     a=i.get('agendas','')
@@ -543,6 +554,9 @@ def run(i):
 
     # Workloads
     w=i.get('workloads','')
+    if w=='' and i.get('data_uoa','')!='':
+       w=i['data_uoa']
+
     workloads=w.split(',')
     agenda=i.get('agenda','')
 
@@ -556,22 +570,42 @@ def run(i):
     record=i.get('record','')
 
     # Check
-    if a=='' and w=='':
+    if (a=='' and w=='') or device=='':
        ck.out('Usage:')
-       ck.out('  ck run wa --agendas=a1.yaml,a2.yaml,a3.json, ...')
+       ck.out('  ck run wa --device={device name} --agendas={a1.yaml,a2.yaml,a3.json, ...}')
        ck.out('                or')
-       ck.out('  ck run wa --workloads=w1,w2,w3 --agenda=template.yaml')
+       ck.out('  ck run wa --device={device name} --workloads={w1,w2,w3} --agenda=template.yaml')
+       ck.out('')
+       ck.out('Notes:')
+       ck.out('  * You should add at least one device via "ck add wa-device"')
+       ck.out('  * You should add at least one device via "ck add wa-device"')
+       ck.out('  * You can list available workloads via "ck list wa"')
 
        return {'return':0}
+
+    # Loading device configuration
+    ck.out('Loading device configuration: '+device)
+    r=ck.access({'action':'load',
+                 'module_uoa':cfg['module_deps']['wa-device'],
+                 'data_uoa':device})
+    if r['return']>0: return r
+
+    dd=r['dict']
+
+    ddc=dd.get('device_config',{}) # device meta ('config' dict will be merged with agenda's device config)
+    ddf=dd.get('device_features',{})
+
+    pd=r['path']
+
+    pcfg=os.path.join(pd, cfg['device_cfg_file'])
 
     # Prepare agendas as dict
     aa=[]
 
     # Iterate
-    ck.out(line)
     if a!='':
        for a in agendas:
-           ck.out('Reading agenda: '+a)
+           ck.out('Reading agenda:               '+a)
 
            r=ck.access({'action':'read',
                         'module_uoa':cfg['module_deps']['wa-agenda'],
@@ -584,7 +618,7 @@ def run(i):
        if agenda=='':
           agenda='default'
 
-       ck.out('Reading agenda: '+agenda)
+       ck.out('Reading agenda:               '+agenda)
 
        r=ck.access({'action':'read',
                     'module_uoa':cfg['module_deps']['wa-agenda'],
@@ -594,7 +628,7 @@ def run(i):
 
        # Iterating over workloads
        for w in workloads:
-           ck.out('Adding workload: '+w)
+           ck.out('Adding workload:              '+w)
 
            dd=copy.deepcopy(d)
 
@@ -613,9 +647,20 @@ def run(i):
             ck.out(line)
             ck.out('Workload:       '+name)
 
+            # Check that exists to get UID (and other parameters if needed)
+            r=ck.access({'action':'load',
+                         'module_uoa':cfg['module_deps']['program'],
+                         'data_uoa':name})
+            if r['return']>0: return r
+            wuid=r['data_uid']
+
+            ck.out('Workload UID:   '+wuid)
+
             # Create CK entry (where to record results)
             dd={'meta':{
-                        'workload_name':name
+                        'workload_name':name,
+                        'workload_uid':wuid,
+                        'device_features':ddf
                        }}
 
             r=ck.access({'action':'add',
@@ -643,10 +688,14 @@ def run(i):
             if ag.get('iterations','')=='':
                ag['iterations']=iters
 
+            ck.out('Iterations:     '+str(iters))
+
             if 'config' not in atmp:
                atmp['config']={}
 
             ac=atmp['config']
+
+            ac.update(ddc) # Update config from device description
 
             if 'result_processors' not in ac:
                ac['result_processors']=[]
@@ -665,7 +714,7 @@ def run(i):
             if r['return']>0: return r
 
             # Prepare CMD
-            cmd='wa run '+ta+' -fd '+p
+            cmd='wa run '+ta+' -c '+pcfg+' -fd '+p
 
             ck.out('CMD:            '+cmd)
 

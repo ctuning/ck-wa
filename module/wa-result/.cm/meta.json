@@ -5,6 +5,10 @@
       "for_web": "yes"
     }
   },
+  "module_deps": {
+    "program": "b0ac08fe1d3c2615",
+    "platform": "707ccdfe444cafac"
+  },
   "copyright": "See CK COPYRIGHT.txt for copyright details",
   "desc": "WA results",
   "developer": "dividiti",

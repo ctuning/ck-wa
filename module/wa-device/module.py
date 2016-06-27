@@ -39,9 +39,9 @@ def add(i):
               (data_uoa)      - CK entry name
               (data_name)     - user-friendly name
 
-              (device_name)   - WA device name (generic_android, generic_linux, ... - see "wa list devices")
+              (wa_device)     - WA device name/interface (generic_android, generic_linux, ... - see "wa list devices")
 
-              (target_os)     - target OS on the device
+              (target_os)     - target OS on the device (android19-arm by default)
               (device_id)     - device id if remote (such as adb)
             }
 
@@ -57,6 +57,62 @@ def add(i):
     import json
 
     o=i.get('out','')
+    oo=''
+    if o=='con': oo=o
+
+    # Check target OS and ID
+    hos=i.get('host_os','')
+    tos=i.get('target_os','')
+    tdid=i.get('device_id','')
+
+    if tos=='': tos='android19-arm'
+
+    # Detect platform features
+    if o=='con':
+       ck.out('Detecting your platform info ...')
+       ck.out('')
+
+    ii={'action':'detect',
+        'module_uoa':cfg['module_deps']['platform'],
+        'out':oo,
+        'host_os':hos,
+        'target_os':tos,
+        'target_device_id':tdid,
+        'exchange':'yes',
+        'exchange_repo':'local',
+        'exchange_subrepo':'',
+#        'skip_info_collection':sic,
+#        'quiet':quiet,
+        'skip_gpu_info':'yes',
+#        'platform_init_uoa':piuoa,
+#        'force_platform_name':fpn
+    }
+    rpp=ck.access(ii)
+    if rpp['return']>0: return rpp
+
+    hos=rpp['host_os_uoa']
+    hosd=rpp['host_os_dict']
+
+    tos=rpp['os_uoa']
+    tosd=rpp['os_dict']
+    tbits=tosd.get('bits','')
+
+    hosz=hosd.get('base_uoa','')
+    if hosz=='': hosz=hos
+    tosz=tosd.get('base_uoa','')
+    if tosz=='': tosz=tos
+
+    remote=tosd.get('remote','')
+
+    tdid=rpp['device_id']
+    device_features=rpp.get('features',{})
+    tname=device_features.get('platform',{}).get('name','')
+
+    if hos=='':
+       return {'return':1, 'error':'"host_os" is not defined or detected'}
+
+    if tos=='':
+       return {'return':1, 'error':'"target_os" is not defined or detected'}
 
     # Load default config (in CK JSON)
     pm=work['path']
@@ -68,34 +124,71 @@ def add(i):
 
     # Choose CK alias for a given device (such as generic_linux, etc)
     duoa=i.get('data_uoa','')
-    if duoa=='' and o=='con':
-       r=ck.inp({'text':'Enter device alias for CK repository: '})
-       duoa=r['string'].strip()
+    if duoa=='':
+       tname1='' # simplified
+       if tname!='':
+          tname1=tname.lower().replace(' ','-')
+
+       if o=='con':
+          s='Enter device alias to be recored in the CK repository'
+          if tname1!='':
+             s+=' or press Enter to select "'+tname1+'"'
+          s+=': '
+
+          ck.out('')
+          r=ck.inp({'text':s})
+
+          duoa=r['string'].strip()
+          if duoa=='' and tname1!='':
+             duoa=tname1
+       elif tname1!='':
+          duoa=tname1
 
     # Choose CK user-friendly name
     dname=i.get('data_name','')
-    if duoa=='' and o=='con':
-       r=ck.inp({'text':'Enter user-friendly device name: '})
-       dname=r['string'].strip()
+    if dname=='':
+       if o=='con':
+          s='Enter user-friendly device name'
+          if tname!='':
+             s+=' or press Enter to select "'+tname+'"'
+          s+=': '
+
+          ck.out('')
+          r=ck.inp({'text':s})
+
+          dname=r['string'].strip()
+          if dname=='' and tname!='':
+             dname=tname
+       elif tname!='':
+          dname=tname
 
     # Select WA device
-    device=i.get('device_name','')
+    device=i.get('wa_device','')
     if device=='' and o=='con':
-       r=ck.inp({'text':'Enter WA device name (see "wa list devices") or press Enter for generic_android: '})
+       ck.out('')
+
+       ck.out('Available WA devices:')
+       ck.out('')
+       os.system('wa list devices')
+
+       ck.out('')
+       r=ck.inp({'text':'Enter WA device name from above list or press Enter to select "generic_android": '})
        device=r['string'].strip()
        if device=='': device='generic_android'
-
-    # Check target OS and ID
-    hos=i.get('host_os','')
-    tos=i.get('target_os','')
-    tdid=i.get('device_id','')
 
     # Updating default config
     dcfg['device']=device
 
-    dd={'default_config':dcfg,
+    if 'device_config' not in dcfg:
+       dcfg['device_config']={}
+
+    if tdid!='':
+       dcfg['device_config']['adb_name']=tdid
+
+    dd={'device_config':dcfg,
         'target_os':tos,
-        'device_id':tdid}
+        'device_id':tdid,
+        'device_features':device_features}
 
     # Adding CK entry
     r=ck.access({'action':'add',
@@ -131,6 +224,7 @@ def add(i):
     if r['return']>0: return r
 
     if o=='con':
+       ck.out('')
        ck.out('CK entry and config file were successfully created in path '+pp)
        ck.out('  You can customize WA device config.py file there if needed!')
 

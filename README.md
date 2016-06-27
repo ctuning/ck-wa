@@ -42,10 +42,19 @@ Install Workload Automation via CK:
 Local Usage
 ===========
 
-First, add a description of a connected device to CK.
+First, add a description of a connected Android-based device to CK
+(main properties will be automatically detected by CK).
 ```
- $ ck add device:samsung-galaxy-s7
+ $ ck add wa-device
 ```
+
+Check that your device was recorded in CK:
+```
+ $ ck list wa-device
+```
+
+For example, if you have Samsung Galaxy S7 conected, 
+you should see CK entry "samsung-sm-g930f".
 
 Check available workloads in CK format:
 ```
@@ -54,18 +63,29 @@ Check available workloads in CK format:
 
 Run dhrystone workload via CK:
 ```
- $ ck run wa:dhrystone --device=samsung-galaxy-s7
+ $ ck run wa:dhrystone --device=samsung-sm-g930f
 ```
 
 Run dhrystone workload via CK and record results in CK repository
 (using experiment module):
 ```
- $ ck run wa:dhrystone --device=samsung-galaxy-s7 --record
+ $ ck run wa:dhrystone --device=samsung-sm-g930f --record
 ```
 
-Start web dashboard and browse workloads and experimental results:
+Raw results as well as unified JSON meta description will be recorded
+using ck-result module. You can see them via
+```
+ $ ck list wa-result
+```
+
+You can also browse results in a user-friendy way via web-based WA dashboard:
 ```
  $ ck dashboard wa
+```
+
+You can delete all above results via
+```
+ $ ck rm wa-result:* --force
 ```
 
 Using Docker image

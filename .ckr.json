@@ -4,11 +4,14 @@
   "dict": {
     "repo_deps": [
       {
+        "repo_uoa": "ck-docker"
+      },
+      {
         "repo_uoa": "ck-autotuning"
       },
       {
-        "repo_uoa": "ck-docker"
-      } 
+        "repo_uoa": "ck-crowdtuning-platforms"
+      }
     ], 
     "url": "https://github.com/dividiti/ck-wa", 
     "shared": "git"

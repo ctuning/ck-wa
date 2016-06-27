@@ -81,9 +81,10 @@ def show(i):
     h+='<table border="1" cellpadding="7" cellspacing="0">\n'
 
     h+='  <tr>\n'
-    h+='   <td><b>CK UID</b></td>\n'
-    h+='   <td><b>WA</b></td>\n'
-    h+='   <td><b>Results (json)</b></td>\n'
+    h+='   <td align="center"><b>CK UID</b></td>\n'
+    h+='   <td align="center"><b>Platform</b></td>\n'
+    h+='   <td align="center"><b>WA</b></td>\n'
+    h+='   <td align="center"><b>Raw results (json)</b></td>\n'
     h+='  <tr>\n'
 
     for q in lst:
@@ -91,13 +92,27 @@ def show(i):
         d=q['meta']
 
         meta=d.get('meta',{})
-        wn=meta.get('workload_name','')
+        wname=meta.get('workload_name','')
+        wuid=meta.get('workload_uid','')
+
+        df=meta.get('device_features',{})
+        dp=df.get('platform',{})
+        dname=dp.get('name','')
+
+        puid=df.get('platform_uid','')
 
         h+='  <tr>\n'
 
-        h+='   <td><a href="'+url0+'&wcid='+work['self_module_uid']+':'+duid+'">'+duid+'</a></td>\n'
-        h+='   <td>'+wn+'</td>\n'
-        h+='   <td><a href="'+url0+'action=pull&common_action=yes&cid='+work['self_module_uid']+':'+duid+'&filename=results/results.json">view</a></td>\n'
+        h+='   <td align="center"><a href="'+url0+'&wcid='+work['self_module_uid']+':'+duid+'">'+duid+'</a></td>\n'
+
+        x=dname
+        if puid!='':
+           x='<a href="'+url0+'&wcid='+cfg['module_deps']['platform']+':'+puid+'">'+dname+'</a>'
+        h+='   <td align="center">'+x+'</td>\n'
+
+        h+='   <td align="center"><a href="'+url0+'&wcid='+cfg['module_deps']['program']+':'+wuid+'">'+wname+'</a></td>\n'
+
+        h+='   <td align="center"><a href="'+url0+'action=pull&common_action=yes&cid='+work['self_module_uid']+':'+duid+'&filename=results/results.json">view</a></td>\n'
 
         h+='  <tr>\n'
 

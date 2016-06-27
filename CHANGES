@@ -1,3 +1,9 @@
+* 2016.06.27 - added automatic detection of connected device properties (useful for ML)
+             - added device name (with UID) to WA dashboard
+
+* 2016.06.26 - added reading of a device configuration when running workloads
+             - renamed 'device' to 'wa-device'
+
 * 2016.06.22 - added wa-agenda and wa-result modules
              - added multiple agenda run
              - added basic view of results (demo via dashboard)
