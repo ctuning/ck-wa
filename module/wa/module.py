@@ -516,7 +516,7 @@ def wa_import(i):
 def run(i):
     """
     Input:  {
-              (device)     - device UOA (see "ck list device" or add new "ck add device")
+              device       - device UOA (see "ck list device" or add new "ck add device")
 
               agendas      - list of agenda files (.yaml/.json/entries)
                  or
@@ -569,7 +569,7 @@ def run(i):
 
     record=i.get('record','')
 
-    # Check
+    # Help
     if (a=='' and w=='') or device=='':
        ck.out('Usage:')
        ck.out('  ck run wa --device={device name} --agendas={a1.yaml,a2.yaml,a3.json, ...}')
@@ -589,6 +589,8 @@ def run(i):
                  'module_uoa':cfg['module_deps']['wa-device'],
                  'data_uoa':device})
     if r['return']>0: return r
+    dev_uid=r['data_uid']
+    dev_uoa=r['data_uoa']
 
     dd=r['dict']
 
@@ -656,26 +658,6 @@ def run(i):
 
             ck.out('Workload UID:   '+wuid)
 
-            # Create CK entry (where to record results)
-            dd={'meta':{
-                        'workload_name':name,
-                        'workload_uid':wuid,
-                        'device_features':ddf
-                       }}
-
-            r=ck.access({'action':'add',
-                         'module_uoa':cfg['module_deps']['wa-result'],
-                         'dict':dd
-                        })
-            if r['return']>0: return r
-            p=r['path']
-            euid=r['data_uid']
-
-            p=os.path.join(p,'results') # otherwise WA overwrites .cm
-            os.makedirs(p)
-
-            ck.out('Experiment UID: '+euid)
-
             # Prepare temporal agenda
             atmp=copy.deepcopy(a)
             atmp['workloads']=[w]
@@ -704,10 +686,39 @@ def run(i):
             if 'json'not in acrp:
                acrp.append('json')
 
+            # Create CK entry (where to record results)
+            p=pc
+            if record=='yes':
+               dd={'meta':{
+                           'workload_name':name,
+                           'workload_uid':wuid,
+                           'device_features':ddf,
+                           'device_config':atmp,
+                           'local_device_uid':dev_uid,
+                           'local_device_uoa':dev_uoa
+                          }}
+
+               r=ck.access({'action':'add',
+                            'module_uoa':cfg['module_deps']['wa-result'],
+                            'dict':dd
+                          })
+               if r['return']>0: return r
+               p=r['path']
+               euid=r['data_uid']
+
+               ck.out('Experiment UID: '+euid)
+
+            px=p
+            p=os.path.join(p,'results') # otherwise WA overwrites .cm
+            os.makedirs(p)
+
             # Prepare temp yaml file
-            r=ck.gen_tmp_file({'prefix':'tmp-', 'suffix':'.yaml'})
-            if r['return']>0: return r
-            ta=r['file_name']
+            if record=='yes':
+               ta=os.path.join(px, cfg['agenda_file'])
+            else:
+               r=ck.gen_tmp_file({'prefix':'tmp-', 'suffix':'.yaml'})
+               if r['return']>0: return r
+               ta=r['file_name']
 
             # Save agenda as YAML
             r=ck.save_yaml_to_file({'yaml_file':ta, 'dict':atmp})
@@ -721,5 +732,78 @@ def run(i):
             # Run WA
             ck.out('')
             r=os.system(cmd)
+
+    return {'return':0}
+
+##############################################################################
+# replay a given experiment
+
+def replay(i):
+    """
+    Input:  {
+              data_uoa - experiment UID (see "ck list wa-result")
+            }
+
+    Output: {
+              return       - return code =  0, if successful
+                                         >  0, if error
+              (error)      - error text if return > 0
+            }
+
+    """
+
+    import os
+
+    duoa=i.get('data_uoa','')
+
+    # Help
+    if (duoa==''):
+       ck.out('Usage:')
+       ck.out('  ck replay wa:{experiment UID}')
+       ck.out('')
+       ck.out('Notes:')
+       ck.out('  * You can list available experiments via "ck list wa-result"')
+       ck.out('  * You can view experiments via web-based WA dashboard ("ck dashboard wa"')
+
+       return {'return':0}
+
+    # Load meta
+    r=ck.access({'action':'load',
+                 'module_uoa':cfg['module_deps']['wa-result'],
+                 'data_uoa':duoa})
+    if r['return']>0: return r
+    p=r['path']
+    d=r['dict']
+
+    dm=d.get('meta',{})
+
+    lduid=dm.get('local_device_uid','')
+    lduoa=dm.get('local_device_uoa','')
+    lwname=dm.get('workload_name','')
+
+    pagenda=os.path.join(p,cfg['agenda_file'])
+
+    # Loading device configuration
+    ck.out('Loading device configuration: '+lduoa)
+    r=ck.access({'action':'load',
+                 'module_uoa':cfg['module_deps']['wa-device'],
+                 'data_uoa':lduid})
+    if r['return']>0: return r
+    dd=r['dict']
+    pd=r['path']
+
+    dev_uid=r['data_uid']
+    dev_uoa=r['data_uoa']
+
+    pcfg=os.path.join(pd, cfg['device_cfg_file'])
+
+    # Prepare CMD
+    cmd='wa run '+pagenda+' -c '+pcfg
+
+    ck.out('CMD:            '+cmd)
+
+    # Run WA
+    ck.out('')
+    r=os.system(cmd)
 
     return {'return':0}

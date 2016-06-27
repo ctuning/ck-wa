@@ -61,12 +61,12 @@ Check available workloads in CK format:
  $ ck list wa
 ```
 
-Run dhrystone workload via CK:
+Run dhrystone workload via CK (results will be recorded in a local wa_output directory):
 ```
  $ ck run wa:dhrystone --device=samsung-sm-g930f
 ```
 
-Run dhrystone workload via CK and record results in CK repository
+Run dhrystone workload via CK and record results in the CK repository
 (using experiment module):
 ```
  $ ck run wa:dhrystone --device=samsung-sm-g930f --record
@@ -81,6 +81,11 @@ using ck-result module. You can see them via
 You can also browse results in a user-friendy way via web-based WA dashboard:
 ```
  $ ck dashboard wa
+```
+
+You can replay a given WA run using above UIDs via
+```
+ $ ck replay wa:{UID}
 ```
 
 You can delete all above results via

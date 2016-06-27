@@ -1,5 +1,6 @@
 * 2016.06.27 - added automatic detection of connected device properties (useful for ML)
              - added device name (with UID) to WA dashboard
+             - added basic replay function
 
 * 2016.06.26 - added reading of a device configuration when running workloads
              - renamed 'device' to 'wa-device'

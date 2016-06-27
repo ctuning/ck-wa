@@ -11,6 +11,9 @@
       "desc": "list workloads",
       "for_web": "yes"
     },
+    "replay": {
+      "desc": "replay a given experiment"
+    },
     "run": {
       "desc": "run workload(s)"
     },
@@ -26,18 +29,19 @@
   "actions_redirect": {
     "import": "wa_import"
   },
+  "agenda_file":"agenda.yaml",
   "copyright": "See CK COPYRIGHT for copyright details",
   "desc": "ARM workload automation wrapper",
   "device_cfg_file": "config.py",
   "license": "See CK LICENSE for licensing details",
   "module_deps": {
-    "wa-device": "50bd50ef0723105a",
     "env": "9b9b3208ac44b891",
     "pipeline": "db25414b48b4ffb3",
     "platform": "707ccdfe444cafac",
     "platform.os": "41e31cc4496b8a8e",
     "program": "b0ac08fe1d3c2615",
     "wa-agenda": "749324e71a4947ac",
+    "wa-device": "50bd50ef0723105a",
     "wa-result": "9db0db9369416e1b"
   },
   "wa_deps": {
