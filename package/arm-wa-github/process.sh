@@ -21,11 +21,13 @@ git clone ${WA_URL} ${INSTALL_DIR}/src
 echo ""
 echo "Checking python version (environment is set by CK):"
 which python
+python --version
 
 echo ""
 echo "Installing (with sudo) ..."
 cd ${INSTALL_DIR}/src
-sudo -H pip install . --upgrade
+#sudo -H pip install . --upgrade
+sudo python setup.py install
 
  if [ "${?}" != "0" ] ; then
   echo "Error: Installation failed in $PWD!" 
