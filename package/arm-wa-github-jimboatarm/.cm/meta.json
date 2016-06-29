@@ -1,0 +1,34 @@
+{
+  "check_exit_status": "yes",
+  "customize": {
+    "extra_dir": "",
+    "install_env": {
+      "WA_URL": "https://github.com/jimboatarm/workload-automation"
+    },
+    "force_path": "/usr/local/bin/wa",
+    "skip_file_check": "yes",
+    "version": "trunk"
+  },
+  "end_full_path": {
+    "linux": ""
+  },
+  "only_for_host_os_tags": [
+    "linux",
+    "windows"
+  ],
+  "only_for_target_os_tags": [
+    "linux",
+    "android"
+  ],
+  "process_script": "process",
+  "soft_uoa": "65d719061a41f7ae",
+  "suggested_path": "tool-arm-wa",
+  "tags": [
+    "tool",
+    "arm",
+    "wa"
+  ],
+  "use_scripts_from_another_entry": {
+    "data_uoa": "6976e5ab692baf91"
+  }
+}
