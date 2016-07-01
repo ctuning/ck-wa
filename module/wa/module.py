@@ -710,7 +710,8 @@ def run(i):
 
             px=p
             p=os.path.join(p,'results') # otherwise WA overwrites .cm
-            os.makedirs(p)
+            if not os.path.isdir(p):
+               os.makedirs(p)
 
             # Prepare temp yaml file
             if record=='yes':

@@ -1,3 +1,5 @@
+* 2016.07.01 - fixed a few bugs reported by Michael Mcgeagh
+
 * 2016.06.29 - added package with forked WA: https://github.com/jimboatarm/workload-automation
 
 * 2016.06.27 - added automatic detection of connected device properties (useful for ML)
