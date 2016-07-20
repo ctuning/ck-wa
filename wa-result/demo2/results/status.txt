@@ -1,0 +1,15 @@
+Run name: Lenovo_Yoga_Tab_3_Pro_2016-06-10_14-19-03
+Run status: OK
+Date: Fri Jun 10 15:38:56 2016
+10/10 iterations completed without error
+
+1 gmail  1 OK 
+1 gmail  2 OK 
+1 gmail  3 OK 
+1 gmail  4 OK 
+1 gmail  5 OK 
+1 gmail  6 OK 
+1 gmail  7 OK 
+1 gmail  8 OK 
+1 gmail  9 OK 
+1 gmail 10 OK 

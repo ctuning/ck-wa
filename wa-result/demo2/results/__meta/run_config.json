@@ -1,0 +1,135 @@
+{
+    "project": null, 
+    "reboot_policy": "as_needed", 
+    "execution_order": "by_iteration", 
+    "device_config": {
+        "package_data_directory": "/data/data", 
+        "android_prompt": "^.*(shell|root)@.*:/\\S* [#$] ", 
+        "logcat_poll_period": null, 
+        "property_files": [
+            "/etc/arch-release", 
+            "/etc/debian_version", 
+            "/etc/lsb-release", 
+            "/proc/config.gz", 
+            "/proc/cmdline", 
+            "/proc/cpuinfo", 
+            "/proc/version", 
+            "/proc/zconfig", 
+            "/sys/kernel/debug/sched_features", 
+            "/sys/kernel/hmp"
+        ], 
+        "core_names": [
+            "Z8500", 
+            "Z8500", 
+            "Z8500", 
+            "Z8500"
+        ], 
+        "core_clusters": [
+            0, 
+            0, 
+            0, 
+            0
+        ], 
+        "modules": null, 
+        "external_storage_directory": "/sdcard", 
+        "connection": "usb", 
+        "working_directory": "/sdcard/wa-working", 
+        "scheduler": "unknown", 
+        "iks_switch_frequency": null, 
+        "binaries_directory": "/data/local/tmp", 
+        "enable_screen_check": false, 
+        "swipe_to_unlock": null, 
+        "adb_name": "10.1.28.40:5555"
+    }, 
+    "result_processors": {
+        "status": {
+            "modules": null
+        }, 
+        "csv": {
+            "modules": null, 
+            "use_all_classifiers": false, 
+            "extra_columns": null
+        }, 
+        "cpustates": {
+            "create_utilization_timeline": false, 
+            "create_timeline": true, 
+            "modules": null, 
+            "write_iteration_reports": false, 
+            "first_system_state": 3, 
+            "use_ratios": false, 
+            "first_cluster_state": 2
+        }, 
+        "standard": {
+            "modules": null
+        }
+    }, 
+    "project_stage": null, 
+    "run_name": null, 
+    "device": "LenovoYT3X90F", 
+    "instrumentation": {
+        "execution_time": {
+            "modules": null
+        }, 
+        "interrupts": {
+            "modules": null
+        }, 
+        "cpufreq": {
+            "tmpfs_size": "32m", 
+            "paths": null, 
+            "tmpfs_mount_point": null, 
+            "use_tmpfs": null, 
+            "modules": null
+        }, 
+        "trace-cmd": {
+            "buffer_size_step": 1000, 
+            "report_on_target": false, 
+            "no_install": false, 
+            "modules": null, 
+            "mode": "start", 
+            "buffer_size_file": "/sys/kernel/debug/tracing/buffer_size_kb", 
+            "report": true, 
+            "buffer_size": 64000, 
+            "events": [
+                "cpu_idle", 
+                "cpu_frequency"
+            ]
+        }
+    }, 
+    "other_config": {}, 
+    "flashing_config": {}, 
+    "max_retries": 3, 
+    "workload_specs": [
+        {
+            "instrumentation": [
+                "execution_time", 
+                "interrupts", 
+                "cpufreq", 
+                "trace-cmd"
+            ], 
+            "runtime_parameters": {}, 
+            "workload_name": "gmail", 
+            "number_of_iterations": 10, 
+            "flash": {}, 
+            "enabled": true, 
+            "section_id": null, 
+            "label": "gmail", 
+            "id": "1", 
+            "classifiers": {}, 
+            "boot_parameters": {}, 
+            "workload_parameters": {
+                "modules": null, 
+                "uninstall_apk": false, 
+                "force_install": false, 
+                "install_timeout": 300, 
+                "recipient": "armuxperf@gmail.com", 
+                "clear_data_on_reset": true, 
+                "check_apk": false, 
+                "dumpsys_enabled": true
+            }
+        }
+    ], 
+    "retry_on_status": [
+        "FAILED", 
+        "PARTIAL"
+    ]
+}

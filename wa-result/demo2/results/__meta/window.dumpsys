@@ -1,0 +1,290 @@
+
+WINDOW MANAGER LAST ANR (dumpsys window lastanr)
+  <no ANR has occurred since boot>
+
+WINDOW MANAGER POLICY STATE (dumpsys window policy)
+    mSafeMode=false mSystemReady=true mSystemBooted=true
+    mLidState=-1 mLidOpenRotation=-1 mCameraLensCoverState=-1 mHdmiPlugged=false
+    mLastSystemUiFlags=0x8600 mResettingSystemUiFlags=0x0 mForceClearedSystemUiFlags=0x0
+    mWakeGestureEnabledSetting=true
+    mSupportAutoRotation=true
+    mUiMode=1 mDockMode=0 mCarDockRotation=-1 mDeskDockRotation=-1
+    mUserRotationMode=1 mUserRotation=1 mAllowAllRotations=-1
+    mCurrentAppOrientation=-1
+    mCarDockEnablesAccelerometer=true mDeskDockEnablesAccelerometer=true
+    mLidKeyboardAccessibility=0 mLidNavigationAccessibility=0 mLidControlsSleep=false
+    mShortPressOnPowerBehavior=1 mLongPressOnPowerBehavior=1
+    mDoublePressOnPowerBehavior=0 mTriplePressOnPowerBehavior=0
+    mHasSoftInput=true
+    mAwake=true
+    mScreenOnEarly=true mScreenOnFully=true
+    mKeyguardDrawComplete=true mWindowManagerDrawComplete=true
+    mOrientationSensorEnabled=false
+    mOverscanScreen=(0,0) 2560x1600
+    mRestrictedOverscanScreen=(0,0) 2560x1504
+    mUnrestrictedScreen=(0,0) 2560x1600
+    mRestrictedScreen=(0,0) 2560x1504
+    mStableFullscreen=(0,0)-(2560,1504)
+    mStable=(0,50)-(2560,1504)
+    mSystem=(0,0)-(2560,1600)
+    mCur=(0,50)-(2560,1504)
+    mContent=(0,50)-(2560,1504)
+    mVoiceContent=(0,50)-(2560,1504)
+    mDock=(0,50)-(2560,1504)
+    mDockLayer=268435456 mStatusBarLayer=151000
+    mShowingLockscreen=false mShowingDream=false mDreamingLockscreen=false
+    mStatusBar=Window{113a071 u0 StatusBar}
+    isStatusBarKeyguard=false    mNavigationBar=Window{1d80975c u0 NavigationBar}
+    mFocusedWindow=Window{5425520 u0 hu.varghamarkpeter.wadb/hu.varghamarkpeter.wadb.MainActivity}
+    mFocusedApp=Token{1a3ffee ActivityRecord{5191969 u0 hu.varghamarkpeter.wadb/.MainActivity t983}}
+    mTopFullscreenOpaqueWindowState=Window{5425520 u0 hu.varghamarkpeter.wadb/hu.varghamarkpeter.wadb.MainActivity}
+    mTopIsFullscreen=false mHideLockScreen=false
+    mForceStatusBar=false mForceStatusBarFromKeyguard=false
+    mDismissKeyguard=0 mWinDismissingKeyguard=null mHomePressed=false
+    mAllowLockscreenWhenOn=false mLockScreenTimeout=30000 mLockScreenTimerActive=false
+    mEndcallBehavior=2 mIncallPowerBehavior=1 mLongPressOnHomeBehavior=0
+    mLandscapeRotation=1 mSeascapeRotation=3
+    mPortraitRotation=0 mUpsideDownRotation=2
+    mDemoHdmiRotation=1 mDemoHdmiRotationLock=false
+    mUndockedHdmiRotation=-1
+    mKeyMapping.size=0
+    BarController.StatusBar
+      mState=WINDOW_STATE_SHOWING
+      mTransientBar=TRANSIENT_BAR_NONE
+    BarController.NavigationBar
+      mState=WINDOW_STATE_SHOWING
+      mTransientBar=TRANSIENT_BAR_NONE
+    PolicyControl.sImmersiveStatusFilter=null
+    PolicyControl.sImmersiveNavigationFilter=null
+    PolicyControl.sImmersivePreconfirmationsFilter=null
+    WakeGestureListener
+      mTriggerRequested=false
+      mSensor=null
+    WindowOrientationListener
+      mEnabled=false
+      mCurrentRotation=1
+      mSensor={Sensor name="Accelerometer sensor", vendor="BOSCH", version=1, type=1, maxRange=39.2, resolution=4.88281E-4, power=0.006, minDelay=10000}
+      mRate=2
+      mProposedRotation=0
+      mPredictedRotation=0
+      mLastFilteredX=0.0
+      mLastFilteredY=0.0
+      mLastFilteredZ=0.0
+      mTiltHistory={last: 0.0}
+      mFlat=false
+      mSwinging=false
+      mAccelerating=false
+      mOverhead=false
+
+WINDOW MANAGER ANIMATOR STATE (dumpsys window animator)
+    DisplayContentsAnimator #0:
+      Window #0: WindowStateAnimator{6e8393a com.android.systemui.ImageWallpaper}
+      Window #1: WindowStateAnimator{9be398d com.lenovo.olauncher/com.android.launcher3.Launcher}
+      Window #2: WindowStateAnimator{4acae21 com.android.settings/com.lenovo.usb.UsbPicker}
+      Window #3: WindowStateAnimator{1a29057e com.google.android.gm/com.google.android.gm.ConversationListActivityGmail}
+      Window #4: WindowStateAnimator{9ee2ed9 hu.varghamarkpeter.wadb/hu.varghamarkpeter.wadb.MainActivity}
+      Window #5: WindowStateAnimator{1d8bea89 KeyguardScrim}
+      Window #6: WindowStateAnimator{17378ac1 StatusBar}
+      Window #7: WindowStateAnimator{167f1e09 Heads Up}
+      Window #8: WindowStateAnimator{1331266 NavigationBar}
+      Window #9: WindowStateAnimator{133cb80e SearchPanel}
+      Window #10: WindowStateAnimator{bf20589 PointerLocation}
+
+    mBulkUpdateParams=0x8 ORIENTATION_CHANGE_COMPLETE
+
+WINDOW MANAGER SESSIONS (dumpsys window sessions)
+  Session Session{76f238a 3529:u0a10021}:
+    mNumWindow=5 mClientDead=false mSurfaceSession=android.view.SurfaceSession@19c2d22f
+  Session Session{8dea7a6 5132:u0a10055}:
+    mNumWindow=1 mClientDead=false mSurfaceSession=android.view.SurfaceSession@1358003c
+  Session Session{c536ff4 3387:1000}:
+    mNumWindow=2 mClientDead=false mSurfaceSession=android.view.SurfaceSession@16f291c5
+  Session Session{f2c39eb 4159:u0a10019}:
+    mNumWindow=1 mClientDead=false mSurfaceSession=android.view.SurfaceSession@1110471a
+  Session Session{102951dd 6957:u0a10097}:
+    mNumWindow=1 mClientDead=false mSurfaceSession=android.view.SurfaceSession@11b4624b
+  Session Session{1a326c9b 7019:u0a10093}:
+    mNumWindow=0 mClientDead=false mSurfaceSession=android.view.SurfaceSession@10c2e428
+  Session Session{1fb4eca5 4918:1000}:
+    mNumWindow=1 mClientDead=false mSurfaceSession=android.view.SurfaceSession@36f8541
+
+
+WINDOW MANAGER DISPLAY CONTENTS (dumpsys window displays)
+  Display: mDisplayId=0
+    init=1600x2560 320dpi cur=2560x1600 app=2560x1504 rng=1600x1454-2560x2414
+    deferred=false layoutNeeded=false
+  mStacks[1]1
+    mStackId=1
+    mDeferDetach=false
+    {taskId=981 appTokens=[AppWindowToken{5422a0c token=Token{16d7413f ActivityRecord{10d0395e u0 com.android.settings/com.lenovo.usb.UsbPicker t981}}}] mdr=false}
+    {taskId=982 appTokens=[AppWindowToken{d1548a0 token=Token{b282da3 ActivityRecord{a0148d2 u0 com.google.android.gm/.ConversationListActivityGmail t982}}}] mdr=false}
+    {taskId=983 appTokens=[AppWindowToken{ae2ac8f token=Token{1a3ffee ActivityRecord{5191969 u0 hu.varghamarkpeter.wadb/.MainActivity t983}}}] mdr=false}
+  mStacks[0]0
+    mStackId=0
+    mDeferDetach=false
+    {taskId=980 appTokens=[AppWindowToken{876c85 token=Token{14a08dfc ActivityRecord{541feef u0 com.lenovo.olauncher/com.android.launcher3.Launcher t980}}}] mdr=false}
+
+  Application tokens in top down Z order:
+  mStackId=1
+    mTaskId=983
+    Activity #0 AppWindowToken{ae2ac8f token=Token{1a3ffee ActivityRecord{5191969 u0 hu.varghamarkpeter.wadb/.MainActivity t983}}}:
+      windows=[Window{5425520 u0 hu.varghamarkpeter.wadb/hu.varghamarkpeter.wadb.MainActivity}]
+      windowType=2 hidden=false hasVisible=true
+      app=true voiceInteraction=false
+      allAppWindows=[Window{5425520 u0 hu.varghamarkpeter.wadb/hu.varghamarkpeter.wadb.MainActivity}]
+      groupId=983 appFullscreen=true requestedOrientation=-1
+      hiddenRequested=false clientHidden=false willBeHidden=false reportedDrawn=true reportedVisible=true
+      numInterestingWindows=1 numDrawnWindows=1 inPendingTransaction=false allDrawn=true (animator=true)
+      startingData=null removed=false firstWindowDrawn=true mDeferRemoval=false
+    mTaskId=982
+    Activity #0 AppWindowToken{d1548a0 token=Token{b282da3 ActivityRecord{a0148d2 u0 com.google.android.gm/.ConversationListActivityGmail t982}}}:
+      windows=[Window{43d9832 u0 com.google.android.gm/com.google.android.gm.ConversationListActivityGmail}]
+      windowType=2 hidden=true hasVisible=true
+      app=true voiceInteraction=false
+      allAppWindows=[Window{43d9832 u0 com.google.android.gm/com.google.android.gm.ConversationListActivityGmail}]
+      groupId=982 appFullscreen=true requestedOrientation=-1
+      hiddenRequested=true clientHidden=true willBeHidden=false reportedDrawn=false reportedVisible=false
+      numInterestingWindows=1 numDrawnWindows=1 inPendingTransaction=false allDrawn=true (animator=true)
+      startingData=null removed=false firstWindowDrawn=true mDeferRemoval=false
+    mTaskId=981
+    Activity #0 AppWindowToken{5422a0c token=Token{16d7413f ActivityRecord{10d0395e u0 com.android.settings/com.lenovo.usb.UsbPicker t981}}}:
+      windows=[Window{1c49a488 u0 com.android.settings/com.lenovo.usb.UsbPicker}]
+      windowType=2 hidden=true hasVisible=true
+      app=true voiceInteraction=false
+      allAppWindows=[Window{1c49a488 u0 com.android.settings/com.lenovo.usb.UsbPicker}]
+      groupId=981 appFullscreen=true requestedOrientation=-1
+      hiddenRequested=true clientHidden=true willBeHidden=false reportedDrawn=false reportedVisible=false
+      numInterestingWindows=1 numDrawnWindows=1 inPendingTransaction=false allDrawn=true (animator=true)
+      startingData=null removed=false firstWindowDrawn=true mDeferRemoval=false
+  mStackId=0
+    mTaskId=980
+    Activity #0 AppWindowToken{876c85 token=Token{14a08dfc ActivityRecord{541feef u0 com.lenovo.olauncher/com.android.launcher3.Launcher t980}}}:
+      windows=[Window{1e9289c7 u0 com.lenovo.olauncher/com.android.launcher3.Launcher}]
+      windowType=2 hidden=true hasVisible=true
+      app=true voiceInteraction=false
+      allAppWindows=[Window{1e9289c7 u0 com.lenovo.olauncher/com.android.launcher3.Launcher}]
+      groupId=980 appFullscreen=true requestedOrientation=-1
+      hiddenRequested=true clientHidden=true willBeHidden=false reportedDrawn=false reportedVisible=false
+      numInterestingWindows=1 numDrawnWindows=1 inPendingTransaction=false allDrawn=true (animator=true)
+      startingData=null removed=false firstWindowDrawn=true mDeferRemoval=false
+
+
+
+WINDOW MANAGER TOKENS (dumpsys window tokens)
+  All tokens:
+  WindowToken{25bbae6 null}
+  AppWindowToken{876c85 token=Token{14a08dfc ActivityRecord{541feef u0 com.lenovo.olauncher/com.android.launcher3.Launcher t980}}}
+  AppWindowToken{d1548a0 token=Token{b282da3 ActivityRecord{a0148d2 u0 com.google.android.gm/.ConversationListActivityGmail t982}}}
+  WindowToken{7e4d827 android.os.Binder@1cb961c1}
+  AppWindowToken{5422a0c token=Token{16d7413f ActivityRecord{10d0395e u0 com.android.settings/com.lenovo.usb.UsbPicker t981}}}
+  WindowToken{b761ad4 android.os.Binder@d7f1d0b}
+  AppWindowToken{ae2ac8f token=Token{1a3ffee ActivityRecord{5191969 u0 hu.varghamarkpeter.wadb/.MainActivity t983}}}
+
+  Wallpaper tokens:
+  Wallpaper #0 WindowToken{b761ad4 android.os.Binder@d7f1d0b}
+
+WINDOW MANAGER WINDOWS (dumpsys window windows)
+  Window #10 Window{4b2498e u0 PointerLocation}:
+    mDisplayId=0 mSession=Session{c536ff4 3387:1000} mClient=android.view.ViewRootImpl$W@1c099890
+    mOwnerUid=1000 mShowToOwnerOnly=true package=android appop=NONE
+    mAttrs=WM.LayoutParams{(0,0)(fillxfill) sim=#20 ty=2015 fl=#1000518 pfl=0x2 fmt=-3 if=0x2 surfaceInsets=Rect(0, 0 - 0, 0)}
+    Requested w=2560 h=1600 mLayoutSeq=146
+    mHasSurface=true mShownFrame=[0.0,0.0][2560.0,1600.0] isReadyForDisplay()=true
+    WindowStateAnimator{bf20589 PointerLocation}:
+      Surface: shown=true layer=271000 alpha=1.0 rect=(0.0,0.0) 2560.0 x 1600.0
+    mLastFreezeDuration=+29s148ms
+  Window #9 Window{828a943 u0 SearchPanel}:
+    mDisplayId=0 mSession=Session{76f238a 3529:u0a10021} mClient=android.os.BinderProxy@34deef2
+    mOwnerUid=10021 mShowToOwnerOnly=false package=com.android.systemui appop=NONE
+    mAttrs=WM.LayoutParams{(0,0)(fillxfill) gr=#800053 sim=#31 ty=2024 fl=#1820100 fmt=-3 surfaceInsets=Rect(0, 0 - 0, 0)}
+    Requested w=2560 h=1600 mLayoutSeq=146
+    mHasSurface=false mShownFrame=[0.0,0.0][0.0,0.0] isReadyForDisplay()=false
+    WindowStateAnimator{133cb80e SearchPanel}:
+      mShownAlpha=0.0 mAlpha=1.0 mLastAlpha=0.0
+  Window #8 Window{1d80975c u0 NavigationBar}:
+    mDisplayId=0 mSession=Session{76f238a 3529:u0a10021} mClient=android.os.BinderProxy@14a0d1cf
+    mOwnerUid=10021 mShowToOwnerOnly=false package=com.android.systemui appop=NONE
+    mAttrs=WM.LayoutParams{(0,0)(fillxfill) sim=#20 ty=2019 fl=#1840068 fmt=-3 surfaceInsets=Rect(0, 0 - 0, 0)}
+    Requested w=2560 h=96 mLayoutSeq=146
+    mHasSurface=true mShownFrame=[0.0,1504.0][2560.0,1600.0] isReadyForDisplay()=true
+    WindowStateAnimator{1331266 NavigationBar}:
+      mAnimating=false mLocalAnimating=false mAnimationIsEntrance=true mAnimation=null
+      Surface: shown=true layer=201000 alpha=1.0 rect=(0.0,1504.0) 2560.0 x 96.0
+    mLastFreezeDuration=+29s366ms
+  Window #7 Window{4bc87e1 u0 Heads Up}:
+    mDisplayId=0 mSession=Session{76f238a 3529:u0a10021} mClient=android.os.BinderProxy@b2dcd48
+    mOwnerUid=10021 mShowToOwnerOnly=false package=com.android.systemui appop=NONE
+    mAttrs=WM.LayoutParams{(0,0)(fillx500) gr=#30 sim=#20 ty=2014 fl=#1820328 fmt=-3 wanim=0x7f110033 surfaceInsets=Rect(0, 0 - 0, 0)}
+    Requested w=0 h=0 mLayoutSeq=6
+    mHasSurface=false mShownFrame=[0.0,0.0][0.0,0.0] isReadyForDisplay()=false
+    WindowStateAnimator{167f1e09 Heads Up}:
+      mShownAlpha=0.0 mAlpha=1.0 mLastAlpha=0.0
+  Window #6 Window{113a071 u0 StatusBar}:
+    mDisplayId=0 mSession=Session{76f238a 3529:u0a10021} mClient=android.os.BinderProxy@d26ae18
+    mOwnerUid=10021 mShowToOwnerOnly=false package=com.android.systemui appop=NONE
+    mAttrs=WM.LayoutParams{(0,0)(fillx50) gr=#30 sim=#10 ty=2000 fl=#81840048 fmt=-3 vsysui=0x600 surfaceInsets=Rect(0, 0 - 0, 0)}
+    Requested w=2560 h=50 mLayoutSeq=146
+    mHasSurface=true mShownFrame=[0.0,0.0][2560.0,50.0] isReadyForDisplay()=true
+    WindowStateAnimator{17378ac1 StatusBar}:
+      Surface: shown=true layer=151000 alpha=1.0 rect=(0.0,0.0) 2560.0 x 50.0
+    mLastFreezeDuration=+32s742ms
+  Window #5 Window{e5d7f63 u0 KeyguardScrim}:
+    mDisplayId=0 mSession=Session{c536ff4 3387:1000} mClient=android.view.ViewRootImpl$W@13d5c992
+    mOwnerUid=1000 mShowToOwnerOnly=false package=android appop=NONE
+    mAttrs=WM.LayoutParams{(0,0)(fillxfill) sim=#10 ty=2029 fl=#1010900 pfl=0x1 fmt=-3 or=5 vsysui=0x3610000 surfaceInsets=Rect(0, 0 - 0, 0)}
+    Requested w=2560 h=1600 mLayoutSeq=48
+    mHasSurface=false mShownFrame=[0.0,0.0][2560.0,1504.0] isReadyForDisplay()=false
+    WindowStateAnimator{1d8bea89 KeyguardScrim}:
+    mLastFreezeDuration=+31s956ms
+  Window #4 Window{5425520 u0 hu.varghamarkpeter.wadb/hu.varghamarkpeter.wadb.MainActivity}:
+    mDisplayId=0 mSession=Session{102951dd 6957:u0a10097} mClient=android.os.BinderProxy@17e79c23
+    mOwnerUid=10097 mShowToOwnerOnly=true package=hu.varghamarkpeter.wadb appop=NONE
+    mAttrs=WM.LayoutParams{(0,0)(fillxfill) sim=#120 ty=1 fl=#81810100 wanim=0x1030466 vsysui=0x600 surfaceInsets=Rect(0, 0 - 0, 0) needsMenuKey=2}
+    Requested w=2560 h=1504 mLayoutSeq=146
+    mHasSurface=true mShownFrame=[0.0,0.0][2560.0,1600.0] isReadyForDisplay()=true
+    WindowStateAnimator{9ee2ed9 hu.varghamarkpeter.wadb/hu.varghamarkpeter.wadb.MainActivity}:
+      Surface: shown=true layer=21020 alpha=1.0 rect=(0.0,0.0) 2560.0 x 1600.0
+  Window #3 Window{43d9832 u0 com.google.android.gm/com.google.android.gm.ConversationListActivityGmail}:
+    mDisplayId=0 mSession=Session{8dea7a6 5132:u0a10055} mClient=android.os.BinderProxy@b9c983d
+    mOwnerUid=10055 mShowToOwnerOnly=true package=com.google.android.gm appop=NONE
+    mAttrs=WM.LayoutParams{(0,0)(fillxfill) sim=#123 ty=1 fl=#81810100 wanim=0x1030466 vsysui=0x600 surfaceInsets=Rect(0, 0 - 0, 0) needsMenuKey=2}
+    Requested w=2560 h=1504 mLayoutSeq=111
+    mHasSurface=false mShownFrame=[0.0,0.0][2560.0,1600.0] isReadyForDisplay()=false
+    WindowStateAnimator{1a29057e com.google.android.gm/com.google.android.gm.ConversationListActivityGmail}:
+      mShownAlpha=1.0 mAlpha=1.0 mLastAlpha=0.0
+  Window #2 Window{1c49a488 u0 com.android.settings/com.lenovo.usb.UsbPicker}:
+    mDisplayId=0 mSession=Session{1fb4eca5 4918:1000} mClient=android.os.BinderProxy@15d6682b
+    mOwnerUid=1000 mShowToOwnerOnly=true package=com.android.settings appop=NONE
+    mAttrs=WM.LayoutParams{(0,0)(fillxfill) sim=#20 ty=1 fl=#81810100 pfl=0x80000000 wanim=0x1030380 vsysui=0x600 surfaceInsets=Rect(0, 0 - 0, 0) needsMenuKey=2}
+    Requested w=2560 h=1504 mLayoutSeq=78
+    mHasSurface=false mShownFrame=[0.0,0.0][2560.0,1600.0] isReadyForDisplay()=false
+    WindowStateAnimator{4acae21 com.android.settings/com.lenovo.usb.UsbPicker}:
+      mShownAlpha=1.0 mAlpha=1.0 mLastAlpha=0.0
+  Window #1 Window{1e9289c7 u0 com.lenovo.olauncher/com.android.launcher3.Launcher}:
+    mDisplayId=0 mSession=Session{f2c39eb 4159:u0a10019} mClient=android.os.BinderProxy@390af06
+    mOwnerUid=10019 mShowToOwnerOnly=true package=com.lenovo.olauncher appop=NONE
+    mAttrs=WM.LayoutParams{(0,0)(fillxfill) sim=#120 ty=1 fl=#81910100 fmt=-2 wanim=0x10303e2 vsysui=0x600 surfaceInsets=Rect(0, 0 - 0, 0) needsMenuKey=2}
+    Requested w=2560 h=1600 mLayoutSeq=126
+    mHasSurface=false mShownFrame=[0.0,0.0][2560.0,1600.0] isReadyForDisplay()=false
+    WindowStateAnimator{9be398d com.lenovo.olauncher/com.android.launcher3.Launcher}:
+    mWallpaperX=0.0 mWallpaperY=0.5
+    mWallpaperXStep=Infinity mWallpaperYStep=1.0
+  Window #0 Window{9887865 u0 com.android.systemui.ImageWallpaper}:
+    mDisplayId=0 mSession=Session{76f238a 3529:u0a10021} mClient=android.os.BinderProxy@cd0dd5c
+    mOwnerUid=10021 mShowToOwnerOnly=true package=null appop=NONE
+    mAttrs=WM.LayoutParams{(0,0)(2560x1600) gr=#800033 ty=2013 fl=#318 fmt=2 wanim=0x10302e5 surfaceInsets=Rect(0, 0 - 0, 0)}
+    Requested w=2560 h=1600 mLayoutSeq=134
+    mIsImWindow=false mIsWallpaper=true mIsFloatingLayer=true mWallpaperVisible=false
+    mHasSurface=true mShownFrame=[0.0,0.0][2560.0,1600.0] isReadyForDisplay()=false
+    WindowStateAnimator{6e8393a com.android.systemui.ImageWallpaper}:
+      Surface: shown=false layer=21000 alpha=1.0 rect=(0.0,0.0) 2560.0 x 1600.0
+    mLastFreezeDuration=+31s734ms
+    mWallpaperX=0.0 mWallpaperY=0.5
+    mWallpaperXStep=Infinity mWallpaperYStep=1.0
+
+  mCurConfiguration={1.0 ?mcc?mnc en_GB ldltr sw800dp w1280dp h727dp 320dpi xlrg land finger -keyb/v/h -nav/h s.5}
+  mHasPermanentDpad=false
+  mCurrentFocus=Window{5425520 u0 hu.varghamarkpeter.wadb/hu.varghamarkpeter.wadb.MainActivity}
+  mFocusedApp=AppWindowToken{ae2ac8f token=Token{1a3ffee ActivityRecord{5191969 u0 hu.varghamarkpeter.wadb/.MainActivity t983}}}
+  mInTouchMode=true mLayoutSeq=146
+  mLastDisplayFreezeDuration=0 due to Window{113a071 u0 StatusBar}

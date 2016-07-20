@@ -1,3 +1,6 @@
+* 2016.07.20 - added wa-results demo
+* 2016.07.19 - converted Jupyter Notebook to CK
+
 * 2016.07.01 - fixed a few bugs reported by Michael Mcgeagh
 
 * 2016.06.29 - added package with forked WA: https://github.com/jimboatarm/workload-automation
