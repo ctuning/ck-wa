@@ -78,15 +78,17 @@ def setup(i):
     ep=cus.get('env_prefix','')
 
     fp=cus.get('full_path','')
+
+    env[ep+'_SRC']=fp
+
     if cus.get('force_path',''):
        fp=cus['force_path'] # usually passed from CK package
 
-    if fp!='':
-       p1=os.path.dirname(fp)
-       pi=os.path.dirname(p1)
+    p1=os.path.dirname(fp)
+    pi=os.path.dirname(p1)
 
-       env[ep]=pi
-       env[ep+'_BIN']=p1
+    env[ep]=pi
+    env[ep+'_BIN']=p1
 
     if p1!='':
        ############################################################
