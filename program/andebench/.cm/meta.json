@@ -1,8 +1,8 @@
 {
+  "backup_data_uid": "6471092657327aee",
   "ck_to_env": {
     "CK_WA_SCRIPTS_PATH": "script:39157fb314f399ae"
-  }, 
-  "backup_data_uid": "6471092657327aee",
+  },
   "data_name": "andebench",
   "deps": {
     "wa": {
@@ -13,6 +13,8 @@
       "tags": "tool,wa"
     }
   },
+  "no_compile": "yes",
+  "no_target_file": "yes",
   "print_files_after_run": [
     "tmp-output2.tmp",
     "wa_output/status.txt",
@@ -24,10 +26,10 @@
     "default": {
       "ignore_return_code": "no",
       "run_time": {
+        "fine_grain_timer_file": "tmp-ck-timer.json",
         "post_process_cmds": [
           "python $<<CK_WA_SCRIPTS_PATH>>$$#dir_sep#$convert_output_to_ck_format.py"
-        ], 
-        "fine_grain_timer_file": "tmp-ck-timer.json",
+        ],
         "run_cmd_main": "wa run andebench -f $<<EXTRA_CMD>>$",
         "run_cmd_out1": "tmp-output1.tmp",
         "run_cmd_out2": "tmp-output2.tmp",

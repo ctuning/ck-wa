@@ -3,7 +3,7 @@ Workload Automation for ARM
 
 Status
 ======
-Unstable - heavy development phase
+Heavy development phase ...
 
 Prerequisites
 =============
@@ -15,8 +15,9 @@ Prerequisites
 Authors
 =======
 
-* Anton Lokhmotov, dividiti (UK)
 * Grigori Fursin, dividiti (UK)
+* Anton Lokhmotov, dividiti (UK)
+* Ed Plowman, ARM (UK)
 
 License
 =======

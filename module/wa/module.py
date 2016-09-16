@@ -34,7 +34,7 @@ def init(i):
 ##############################################################################
 # list workloads (using module "program" with tags "wa")
 
-def list(i):
+def wa_list(i):
     """
     Input:  {
               (data_uoa) - can be wild cards
@@ -457,55 +457,56 @@ def wa_import(i):
     for w in wa:
         wd=wa[w]
 
+        duid=''
+        d={}
+
         # First check, if such program exists
+        s='Adding new'
         ii={'action':'load',
             'module_uoa':cfg['module_deps']['program'],
             'data_uoa':w}
         r=ck.access(ii)
-        if r['return']>0:
-           if r['return']!=16: return r # some other error (16 - entry not found)
-
-           # Preparing meta in CK program format
-
-           # Adding new entry
-           ck.out('  Adding new entry '+w+' ...')
-
+        if r['return']==0:
+           duid=r['data_uid']
+           d=r['dict']
+           s='Updating'
+        else:
            rx=ck.gen_uid({})
            if rx['return']>0: return rx
            duid=rx['data_uid']
 
            d=copy.deepcopy(wtd)
 
-           d["backup_data_uid"]=duid
-           d["data_name"]=w
-           d["wa_desc"]=wd
+        # Adding/updating entry
+        ck.out('  '+s+' entry "'+w+'" ...')
 
-           x=d["print_files_after_run"]
-           xx=[]
-           for y in x:
-               xx.append(y.replace('$#wa_name#$',w))
-           d["print_files_after_run"]=xx
+        d["backup_data_uid"]=duid
+        d["data_name"]=w
+        d["wa_desc"]=wd
 
-           x=d["run_cmds"]["default"]["run_time"]["run_cmd_main"]
-           d["run_cmds"]["default"]["run_time"]["run_cmd_main"]=x.replace('$#wa_name#$',w)
+        x=d["print_files_after_run"]
+        xx=[]
+        for y in x:
+            xx.append(y.replace('$#wa_name#$',w))
+        d["print_files_after_run"]=xx
 
-           x=d["tags"]
-           xx=[]
-           for y in x:
-               xx.append(y.replace('$#wa_name#$',w))
-           d["tags"]=xx
+        x=d["run_cmds"]["default"]["run_time"]["run_cmd_main"]
+        d["run_cmds"]["default"]["run_time"]["run_cmd_main"]=x.replace('$#wa_name#$',w)
 
-           ii={'action':'add',
-               'module_uoa':cfg['module_deps']['program'],
-               'data_uoa':w,
-               'data_uid':duid,
-               'repo_uoa':'ck-wa',
-               'dict':d}
-           r=ck.access(ii)
-           if r['return']>0: return r
+        x=d["tags"]
+        xx=[]
+        for y in x:
+            xx.append(y.replace('$#wa_name#$',w))
+        d["tags"]=xx
 
-        else:
-           ck.out('    Entry '+w+' already exists!')
+        ii={'action':'update',
+            'module_uoa':cfg['module_deps']['program'],
+            'data_uoa':w,
+            'data_uid':duid,
+            'repo_uoa':'ck-wa',
+            'dict':d}
+        r=ck.access(ii)
+        if r['return']>0: return r
 
     return {'return':0}
 
