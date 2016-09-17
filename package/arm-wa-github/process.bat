@@ -18,6 +18,10 @@ echo Cloning ARM Workload Automation from GitHub ...
 git clone %WA_URL% %INSTALL_DIR%\src
 
 echo.
-echo Installing (with sudo) ...
+echo "Checking python version (environment is set by CK):"
+python --version
+
+echo.
+echo Installing ...
 cd %INSTALL_DIR%\src
-pip install .
+python setup.py install

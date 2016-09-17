@@ -7,12 +7,12 @@
     },
     "extra_dir": "", 
     "version": "trunk",
-    "force_path":"/usr/local/bin/wa",
     "use_git_revision":"yes",
     "git_src_dir":"src"
   }, 
   "end_full_path": {
-    "linux": "" 
+    "linux": "",
+    "android": "src$#sep#$Scripts$#sep#$wa" 
   }, 
   "only_for_host_os_tags": [
     "linux",

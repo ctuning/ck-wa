@@ -84,6 +84,14 @@ def setup(i):
     if cus.get('force_path',''):
        fp=cus['force_path'] # usually passed from CK package
 
+    if winh=='yes':
+       fp+='.bat'
+
+       if not os.path.isfile(fp):
+          # Create
+          r=ck.save_text_file({'text_file':fp, 'string':'python -W ignore::DeprecationWarning -m wlauto.core.entry_point.main %*\n'})
+          if r['return']>0: return r
+
     p1=os.path.dirname(fp)
     pi=os.path.dirname(p1)
 
