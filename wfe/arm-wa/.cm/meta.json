@@ -5,10 +5,20 @@
       "module_uoas": [
         ""
       ], 
+      "url_extra": "action=index&module_uoa=wfe&native_action=show&native_module_uoa=device", 
+      "native_module_uoa":"device",
+      "native_action":"show",
+      "default":"yes",
+      "name": "Devices"
+    }, 
+    {
+      "module_uoa": "", 
+      "module_uoas": [
+        ""
+      ], 
       "url_extra": "action=index&module_uoa=wfe&native_action=show&native_module_uoa=wa-result", 
       "native_module_uoa":"wa-result",
       "native_action":"show",
-      "default":"yes",
       "name": "Dashboard"
     }, 
     {
