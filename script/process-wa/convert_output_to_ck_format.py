@@ -61,7 +61,7 @@ try:
   f=open('wa_output/results.json', 'r')
 except Exception as e:
   print ('')
-  print ('Error: war_output/results.json was not produced - program execution likely failed!')
+  print ('Error: wa_output/results.json was not produced - program execution likely failed!')
   exit(1)
 
 try:

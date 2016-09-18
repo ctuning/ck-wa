@@ -37,6 +37,7 @@
       }
     }
   },
+  "run_via_third_party":"yes",
   "tags": [
     "wa",
     "workload-automation",

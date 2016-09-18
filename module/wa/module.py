@@ -521,7 +521,8 @@ def run(i):
 
               agendas      - list of agenda files (.yaml/.json/entries)
                  or
-              workloads    - list of multiple workloads under 1 agenda template
+              workloads    - list of multiple workloads executed in PARALLEL in one agenda template
+
               (agenda)     - agenda template (.yaml/.json/entries) or ck-agenda:default
 
               (params)     - params for agenda
@@ -548,17 +549,40 @@ def run(i):
 
     # Device
     device=i.get('device','')
+    rx=ck.access({'action':'search',
+                  'module_uoa':cfg['module_deps']['wa-device'],
+                  'data_uoa':device})
+    if rx['return']>0: return rx
+    lst=rx['lst']
+
+    if len(lst)==1:
+       device=lst[0].get('data_uid','')
+    elif len(lst)>1:
+       ck.out('More than one device found')
+       ck.out('')
+       r=ck.select_uoa({'choices':lst})
+       if r['return']>0: return r
+       device=r['choice']
+       ck.out('')
+
+    if device=='':
+       return {'return':1, 'error':'no target device selected'}
 
     # Agendas
     a=i.get('agendas','')
     agendas=a.split(',')
 
-    # Workloads
-    w=i.get('workloads','')
-    if w=='' and i.get('data_uoa','')!='':
-       w=i['data_uoa']
+    # Parallel workloads
+    workloads=[]
 
-    workloads=w.split(',')
+    ww=i.get('workloads','').strip()
+    if len(ww)>0:
+       for w in ww.split(','):
+           workloads.append(w)
+
+    if i.get('data_uoa','')!='':
+       workloads.append(i['data_uoa'])
+
     agenda=i.get('agenda','')
 
     # Parameters
@@ -571,15 +595,14 @@ def run(i):
     record=i.get('record','')
 
     # Help
-    if (a=='' and w=='') or device=='':
+    if (a=='' and len(workloads)==0) or device=='':
        ck.out('Usage:')
        ck.out('  ck run wa --device={device name} --agendas={a1.yaml,a2.yaml,a3.json, ...}')
        ck.out('                or')
-       ck.out('  ck run wa --device={device name} --workloads={w1,w2,w3} --agenda=template.yaml')
+       ck.out('  ck run wa --device={device name} --workloads={w1,w2,w3} --agenda={template.yaml}')
        ck.out('')
        ck.out('Notes:')
-       ck.out('  * You should add at least one device via "ck add wa-device"')
-       ck.out('  * You should add at least one device via "ck add wa-device"')
+       ck.out('  * You can add target devices "ck add wa-device"')
        ck.out('  * You can list available workloads via "ck list wa"')
 
        return {'return':0}

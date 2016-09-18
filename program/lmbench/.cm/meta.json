@@ -13,6 +13,8 @@
       "tags": "tool,wa"
     }
   },
+  "no_compile": "yes",
+  "no_target_file": "yes",
   "print_files_after_run": [
     "tmp-output2.tmp",
     "wa_output/status.txt",
@@ -35,6 +37,7 @@
       }
     }
   },
+  "run_via_third_party": "yes",
   "tags": [
     "wa",
     "workload-automation",

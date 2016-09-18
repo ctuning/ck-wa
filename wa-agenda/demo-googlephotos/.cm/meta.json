@@ -18,8 +18,7 @@
     {
       "name": "googlephotos",
       "params": {
-        "check_apk": false,
-        "dumpsys_enabled": true
+        "check_apk": false
       }
     }
   ]
