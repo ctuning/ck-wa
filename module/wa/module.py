@@ -670,6 +670,7 @@ def run(i):
         p=pc
         if record=='yes':
             dd={'meta':{
+                        'workload_name':workloads[0],
                         'workloads':workloads,
                         'params':params,
                         'device_features':ddf,

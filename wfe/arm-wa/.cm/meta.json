@@ -19,7 +19,7 @@
       "url_extra": "action=index&module_uoa=wfe&native_action=show&native_module_uoa=wa-result", 
       "native_module_uoa":"wa-result",
       "native_action":"show",
-      "name": "Dashboard"
+      "name": "Raw experiments"
     }, 
     {
       "module_uoa": "program", 
@@ -31,22 +31,13 @@
       "name": "Workloads"
     }, 
     {
-      "module_uoa": "experiment", 
-      "url_extra_browse":"ck_top_search_tag=wa",
-      "module_uoas": [
-        "experiment", 
-        "bc0409fb61f0aa82"
-      ], 
-      "name": "Experiments"
-    }, 
-    {
       "module_uoa": "", 
       "module_uoas": [
       ], 
       "name": "Browse"
     }, 
     {
-      "name": "Get CK-powered WA", 
+      "name": "Get framework", 
       "url": "https://github.com/dividiti/ck-wa"
     }
   ],
