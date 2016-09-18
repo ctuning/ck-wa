@@ -97,11 +97,6 @@ def add(i):
     tosd=rpp['os_dict']
     tbits=tosd.get('bits','')
 
-    hosz=hosd.get('base_uoa','')
-    if hosz=='': hosz=hos
-    tosz=tosd.get('base_uoa','')
-    if tosz=='': tosz=tos
-
     remote=tosd.get('remote','')
 
     tdid=rpp['device_id']
