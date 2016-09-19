@@ -640,6 +640,14 @@ def run(i):
         ck.out('Adding workload: '+w)
         agenda['workloads'].append({'name':w, 'params': params})
 
+    # Get first name of a workload in agenda (to record in CK)
+    wname=''
+    for q in agenda.get('workloads',[]):
+        name=q.get('name','')
+        if name!='':
+           wname=name
+           break
+
     # Run agenda and record if needed
     if 'global' not in agenda:
         agenda['global']={}
@@ -670,7 +678,7 @@ def run(i):
         p=pc
         if record=='yes':
             dd={'meta':{
-                        'workload_name':workloads[0],
+                        'workload_name':wname,
                         'workloads':workloads,
                         'params':params,
                         'device_features':ddf,
