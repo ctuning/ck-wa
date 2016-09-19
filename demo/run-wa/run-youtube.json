@@ -1,0 +1,27 @@
+{
+ "agenda":{
+  "config": {
+    "instrumentation": [
+      "trace-cmd"
+    ],
+    "result_processors": [
+      "cpustates"
+    ],
+    "trace-cmd": {
+      "buffer_size": 64000,
+      "events": [
+        "cpu_idle",
+        "cpu_frequency"
+      ]
+    }
+  },
+  "workloads": [
+    {
+      "name": "youtube",
+      "params": {
+        "check_apk": false
+      }
+    }
+  ]
+ }
+}

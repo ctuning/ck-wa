@@ -1,1 +1,1 @@
-ck run wa @run-googlephotos.json --record --iterations=2
+ck run wa @run-googlephotos.json --record --iterations=2 --verbose

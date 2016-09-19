@@ -534,6 +534,8 @@ def run(i):
               (iterations) - number of statistical repetitions (3 by default)
 
               (record)     - if 'yes', record to CK
+
+              (verbose)    - if 'yes', use verbose WA mode
             }
 
     Output: {
@@ -716,6 +718,9 @@ def run(i):
 
         # Prepare CMD
         cmd='wa run '+ta+' -c '+pcfg+' -fd '+p
+
+        if i.get('verbose','')=='yes':
+           cmd+=' --verbose'
 
         ck.out('CMD:            '+cmd)
 
