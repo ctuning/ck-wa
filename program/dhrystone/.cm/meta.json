@@ -27,8 +27,14 @@
       "ignore_return_code": "no",
       "run_time": {
         "fine_grain_timer_file": "tmp-ck-timer.json",
+        "pre_process_via_ck": {
+          "module_uoa":"script",
+          "data_uoa":"process-wa",
+          "script_name":"preprocess_workload"
+        },
+        "post_process_via_ck":"yes",
         "post_process_cmds": [
-          "python $<<CK_WA_SCRIPTS_PATH>>$$#dir_sep#$convert_output_to_ck_format.py"
+          "python $<<CK_WA_SCRIPTS_PATH>>$$#dir_sep#$postprocess_workload.py"
         ],
         "run_cmd_main": "wa run dhrystone -f $<<EXTRA_CMD>>$",
         "run_cmd_out1": "tmp-output1.tmp",
