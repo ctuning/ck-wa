@@ -43,5 +43,5 @@
     "workload-automation",
     "audio"
   ],
-  "wa_desc": "Audio workload plays an MP3 file using the built-in music player. By default, it plays Canon_in_D_Pieano.mp3 for 30 seconds."
+  "wa_desc": "Audio workload plays an MP3 file using the built-in music player. By default, it plays Canon_in_D_Pieano.mp3 for 30 seconds"
 }

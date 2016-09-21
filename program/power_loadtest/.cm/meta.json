@@ -43,5 +43,5 @@
     "workload-automation",
     "power_loadtest"
   ],
-  "wa_desc": "power_LoadTest (part of ChromeOS autotest suite) continuously cycles through a set of browser-based activities and monitors battery drain on a device."
+  "wa_desc": "power_LoadTest (part of ChromeOS autotest suite) continuously cycles through a set of browser-based activities and monitors battery drain on a device"
 }

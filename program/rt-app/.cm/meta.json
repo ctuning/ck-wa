@@ -43,5 +43,5 @@
     "workload-automation",
     "rt-app"
   ],
-  "wa_desc": "A test application that simulates cofigurable real-time periodic load."
+  "wa_desc": "A test application that simulates cofigurable real-time periodic load"
 }

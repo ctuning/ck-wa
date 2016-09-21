@@ -43,5 +43,5 @@
     "workload-automation",
     "iozone"
   ],
-  "wa_desc": "Iozone is a filesystem benchmark that runs a series of disk I/O performance tests."
+  "wa_desc": "Iozone is a filesystem benchmark that runs a series of disk I/O performance tests"
 }

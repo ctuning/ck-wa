@@ -43,5 +43,5 @@
     "workload-automation",
     "androbench"
   ],
-  "wa_desc": "Measures the storage performance of an Android device."
+  "wa_desc": "Measures the storage performance of an Android device"
 }

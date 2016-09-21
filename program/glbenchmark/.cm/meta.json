@@ -43,5 +43,5 @@
     "workload-automation",
     "glbenchmark"
   ],
-  "wa_desc": "Measures the graphics performance of Android devices by testing the underlying OpenGL (ES) implementation."
+  "wa_desc": "Measures the graphics performance of Android devices by testing the underlying OpenGL (ES) implementation"
 }

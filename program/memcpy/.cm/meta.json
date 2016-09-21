@@ -43,5 +43,5 @@
     "workload-automation",
     "memcpy"
   ],
-  "wa_desc": "Runs memcpy in a loop."
+  "wa_desc": "Runs memcpy in a loop"
 }

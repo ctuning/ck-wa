@@ -43,5 +43,5 @@
     "workload-automation",
     "apklaunch"
   ],
-  "wa_desc": "Installs and runs a .apk file, waits wait_time_seconds, and tests if the app has started successfully."
+  "wa_desc": "Installs and runs a .apk file, waits wait_time_seconds, and tests if the app has started successfully"
 }

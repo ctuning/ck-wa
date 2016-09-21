@@ -43,5 +43,5 @@
     "workload-automation",
     "video"
   ],
-  "wa_desc": "Plays a video file using the standard android video player for a predetermined duration."
+  "wa_desc": "Plays a video file using the standard android video player for a predetermined duration"
 }

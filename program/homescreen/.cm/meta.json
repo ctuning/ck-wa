@@ -43,5 +43,5 @@
     "workload-automation",
     "homescreen"
   ],
-  "wa_desc": "A workload that goes to the home screen and idles for the the specified duration."
+  "wa_desc": "A workload that goes to the home screen and idles for the the specified duration"
 }

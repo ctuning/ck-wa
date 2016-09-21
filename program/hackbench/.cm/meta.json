@@ -43,5 +43,5 @@
     "workload-automation",
     "hackbench"
   ],
-  "wa_desc": "Hackbench runs a series of tests for the Linux scheduler."
+  "wa_desc": "Hackbench runs a series of tests for the Linux scheduler"
 }

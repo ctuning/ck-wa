@@ -43,5 +43,5 @@
     "workload-automation",
     "sqlitebm"
   ],
-  "wa_desc": "Measures the performance of the sqlite database. It determines within what time the target device processes a number of SQL queries."
+  "wa_desc": "Measures the performance of the sqlite database. It determines within what time the target device processes a number of SQL queries"
 }

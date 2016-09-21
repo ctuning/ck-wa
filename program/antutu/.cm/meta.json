@@ -43,5 +43,5 @@
     "workload-automation",
     "antutu"
   ],
-  "wa_desc": "AnTuTu Benchmark is an benchmarking tool for Android Mobile Phone/Pad. It can run a full test of a key project, through the \"Memory Performance\",\"CPU Integer Performance\",\"CPU Floating point Performance\",\"2D 3D Graphics Performance\",\"SD card reading/writing speed\",\"Database IO\" performance testing, and gives accurate analysis for Andriod smart phones."
+  "wa_desc": "AnTuTu Benchmark is an benchmarking tool for Android Mobile Phone/Pad. It can run a full test of a key project, through the \"Memory Performance\",\"CPU Integer Performance\",\"CPU Floating point Performance\",\"2D 3D Graphics Performance\",\"SD card reading/writing speed\",\"Database IO\" performance testing, and gives accurate analysis for Andriod smart phones"
 }

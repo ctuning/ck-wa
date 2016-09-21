@@ -43,5 +43,5 @@
     "workload-automation",
     "shellscript"
   ],
-  "wa_desc": "Runs an arbitrary shellscript on the device."
+  "wa_desc": "Runs an arbitrary shellscript on the device"
 }

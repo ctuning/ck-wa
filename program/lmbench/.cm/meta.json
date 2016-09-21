@@ -43,5 +43,5 @@
     "workload-automation",
     "lmbench"
   ],
-  "wa_desc": "Run a subtest from lmbench, a suite of portable ANSI/C microbenchmarks for UNIX/POSIX."
+  "wa_desc": "Run a subtest from lmbench, a suite of portable ANSI/C microbenchmarks for UNIX/POSIX"
 }

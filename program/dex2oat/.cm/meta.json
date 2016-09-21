@@ -43,5 +43,5 @@
     "workload-automation",
     "dex2oat"
   ],
-  "wa_desc": "Benchmarks the execution time of dex2oat (a key part of APK installation process)."
+  "wa_desc": "Benchmarks the execution time of dex2oat (a key part of APK installation process)"
 }

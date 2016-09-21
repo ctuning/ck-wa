@@ -43,5 +43,5 @@
     "workload-automation",
     "recentfling"
   ],
-  "wa_desc": "Tests UI jank on android devices."
+  "wa_desc": "Tests UI jank on android devices"
 }

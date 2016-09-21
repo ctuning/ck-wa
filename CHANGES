@@ -1,3 +1,5 @@
+* 2016.09.21 - major update of "device" module and compile/run via universal CK program pipeline!
+
 * 2016.09.18 - major update of all interfaces + using universal device from ck-env
 
 * 2016.07.20 - added wa-results demo

@@ -43,5 +43,5 @@
     "workload-automation",
     "real-linpack"
   ],
-  "wa_desc": "This version of `Linpack <http://en.wikipedia.org/wiki/LINPACK_benchmarks>` was developed by Dave Butcher. RealLinpack tries to find the number of threads that give you the maximum linpack score."
+  "wa_desc": "This version of `Linpack <http://en.wikipedia.org/wiki/LINPACK_benchmarks>` was developed by Dave Butcher. RealLinpack tries to find the number of threads that give you the maximum linpack score"
 }

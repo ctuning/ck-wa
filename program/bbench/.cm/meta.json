@@ -43,5 +43,5 @@
     "workload-automation",
     "bbench"
   ],
-  "wa_desc": "BBench workload opens the built-in browser and navigates to, and scrolls through, some preloaded web pages and ends the workload by trying to connect to a local server it runs after it starts. It can also play the workload while it plays an audio file in the background."
+  "wa_desc": "BBench workload opens the built-in browser and navigates to, and scrolls through, some preloaded web pages and ends the workload by trying to connect to a local server it runs after it starts. It can also play the workload while it plays an audio file in the background"
 }

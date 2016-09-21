@@ -43,5 +43,5 @@
     "workload-automation",
     "ebizzy"
   ],
-  "wa_desc": "ebizzy is designed to generate a workload resembling common web application server workloads. It is highly threaded, has a large in-memory working set with low locality, and allocates and deallocates memory frequently. When running most efficiently, it will max out the CPU."
+  "wa_desc": "ebizzy is designed to generate a workload resembling common web application server workloads. It is highly threaded, has a large in-memory working set with low locality, and allocates and deallocates memory frequently. When running most efficiently, it will max out the CPU"
 }

@@ -43,5 +43,5 @@
     "workload-automation",
     "andebench"
   ],
-  "wa_desc": "AndEBench is an industry standard Android benchmark provided by The Embedded Microprocessor Benchmark Consortium (EEMBC)."
+  "wa_desc": "AndEBench is an industry standard Android benchmark provided by The Embedded Microprocessor Benchmark Consortium (EEMBC)"
 }

@@ -43,5 +43,5 @@
     "workload-automation",
     "manual"
   ],
-  "wa_desc": "Yields control to the user, either for a fixed period or based on user input, to perform custom operations on the device, about which workload automation does not know of."
+  "wa_desc": "Yields control to the user, either for a fixed period or based on user input, to perform custom operations on the device, about which workload automation does not know of"
 }

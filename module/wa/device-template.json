@@ -7,9 +7,7 @@
  "device_config": {
  },
  "instrumentation": [
-    "execution_time",
-    "interrupts",
-    "cpufreq"
+    "execution_time"
  ],
  "result_processors": [
     "status",

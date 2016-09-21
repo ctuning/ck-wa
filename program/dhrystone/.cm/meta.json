@@ -3,6 +3,9 @@
   "ck_to_env": {
     "CK_WA_SCRIPTS_PATH": "script:39157fb314f399ae"
   },
+  "clean_dirs": [
+    "wa_output"
+  ],
   "data_name": "dhrystone",
   "deps": {
     "wa": {
@@ -22,21 +25,25 @@
   ],
   "process_in_tmp": "yes",
   "program": "yes",
+  "required_device_access_type": [
+    "wa_android",
+    "wa_linux"
+  ],
   "run_cmds": {
     "default": {
       "ignore_return_code": "no",
       "run_time": {
         "fine_grain_timer_file": "tmp-ck-timer.json",
-        "pre_process_via_ck": {
-          "module_uoa":"script",
-          "data_uoa":"process-wa",
-          "script_name":"preprocess_workload"
-        },
-        "post_process_via_ck":"yes",
         "post_process_cmds": [
           "python $<<CK_WA_SCRIPTS_PATH>>$$#dir_sep#$postprocess_workload.py"
         ],
-        "run_cmd_main": "wa run dhrystone -f $<<EXTRA_CMD>>$",
+        "post_process_via_ck": "yes",
+        "pre_process_via_ck": {
+          "data_uoa": "process-wa",
+          "module_uoa": "script",
+          "script_name": "preprocess_workload"
+        },
+        "run_cmd_main": "wa run $<<CK_WA_CMD>>$",
         "run_cmd_out1": "tmp-output1.tmp",
         "run_cmd_out2": "tmp-output2.tmp",
         "run_output_files": []
@@ -49,5 +56,5 @@
     "workload-automation",
     "dhrystone"
   ],
-  "wa_desc": "Runs the Dhrystone benchmark."
+  "wa_desc": "Dhrystone benchmark"
 }

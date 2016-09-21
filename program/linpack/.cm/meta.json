@@ -43,5 +43,5 @@
     "workload-automation",
     "linpack"
   ],
-  "wa_desc": "The LINPACK Benchmarks are a measure of a system's floating point computing power."
+  "wa_desc": "The LINPACK Benchmarks are a measure of a system's floating point computing power"
 }

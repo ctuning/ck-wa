@@ -43,5 +43,5 @@
     "workload-automation",
     "camerarecord"
   ],
-  "wa_desc": "Uses in-built Android camera app to record the video for given interval of time."
+  "wa_desc": "Uses in-built Android camera app to record the video for given interval of time"
 }

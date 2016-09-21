@@ -43,5 +43,5 @@
     "workload-automation",
     "idle"
   ],
-  "wa_desc": "Do nothing for the specified duration."
+  "wa_desc": "Do nothing for the specified duration"
 }

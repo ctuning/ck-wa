@@ -43,5 +43,5 @@
     "workload-automation",
     "benchmarkpi"
   ],
-  "wa_desc": "Measures the time the target device takes to run and complete the Pi calculation algorithm."
+  "wa_desc": "Measures the time the target device takes to run and complete the Pi calculation algorithm"
 }

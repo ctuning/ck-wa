@@ -125,6 +125,48 @@
         "8",
         "2dev"
       ]
+    },
+    {
+      "author": "cTuning foundation",
+      "author_email": "admin@cTuning.org",
+      "author_webpage": "http://cTuning.org",
+      "copyright": "See CK COPYRIGHT.txt for copyright details",
+      "engine": "CK",
+      "iso_datetime": "2016-09-21T15:40:55.964608",
+      "license": "See CK LICENSE.txt for licensing details",
+      "version": [
+        "1",
+        "8",
+        "2dev"
+      ]
+    },
+    {
+      "author": "cTuning foundation",
+      "author_email": "admin@cTuning.org",
+      "author_webpage": "http://cTuning.org",
+      "copyright": "See CK COPYRIGHT.txt for copyright details",
+      "engine": "CK",
+      "iso_datetime": "2016-09-21T15:54:39.279321",
+      "license": "See CK LICENSE.txt for licensing details",
+      "version": [
+        "1",
+        "8",
+        "2dev"
+      ]
+    },
+    {
+      "author": "cTuning foundation",
+      "author_email": "admin@cTuning.org",
+      "author_webpage": "http://cTuning.org",
+      "copyright": "See CK COPYRIGHT.txt for copyright details",
+      "engine": "CK",
+      "iso_datetime": "2016-09-21T16:33:22.403023",
+      "license": "See CK LICENSE.txt for licensing details",
+      "version": [
+        "1",
+        "8",
+        "2dev"
+      ]
     }
   ]
 }

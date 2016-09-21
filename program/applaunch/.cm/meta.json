@@ -43,5 +43,5 @@
     "workload-automation",
     "applaunch"
   ],
-  "wa_desc": "Measures the time and energy used in launching an application."
+  "wa_desc": "Measures the time and energy used in launching an application"
 }

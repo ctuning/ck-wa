@@ -43,5 +43,5 @@
     "workload-automation",
     "spec2000"
   ],
-  "wa_desc": "SPEC2000 benchmarks measuring processor, memory and compiler."
+  "wa_desc": "SPEC2000 benchmarks measuring processor, memory and compiler"
 }

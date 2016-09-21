@@ -188,7 +188,6 @@ def runx(i):
 
             'prepare':'yes',
 
-            'env':{'EXTRA_CMD':'-c '+dcfg},
             'no_state_check':'yes',
             'no_compiler_description':'yes',
             'skip_info_collection':'yes',
@@ -477,6 +476,10 @@ def wa_import(i):
 
         d["backup_data_uid"]=duid
         d["data_name"]=w
+
+        # Cleaning up wd
+        if wd.endswith('.'): wd=wd[:-1]
+        if wd.startswith('Runs the '): wd=wd[9:]
         d["wa_desc"]=wd
 
         x=d["print_files_after_run"]
@@ -629,7 +632,7 @@ def run(i):
 
     dd=r['dict']
 
-    ddc=dd.get('extra_cfg',{}) # default device meta
+    ddc=dd.get('extra_cfg',{}).get('wa_config',{}) # default device meta
     ddf=dd.get('features',{})
 
     pd=r['path']
@@ -654,79 +657,79 @@ def run(i):
     if 'global' not in agenda:
         agenda['global']={}
 
-        ag=agenda['global']
+    ag=agenda['global']
 
-        if ag.get('iterations','')=='':
-            ag['iterations']=iters
+    if ag.get('iterations','')=='':
+        ag['iterations']=iters
 
-        ck.out('')
-        ck.out('Iterations: '+str(iters))
+    ck.out('')
+    ck.out('Iterations: '+str(iters))
 
-        if 'config' not in agenda:
-            agenda['config']={}
+    if 'config' not in agenda:
+        agenda['config']={}
 
-        ac=agenda['config']
+    ac=agenda['config']
 
-        ac.update(ddc) # Update config from device description
+    ac.update(ddc) # Update config from device description
 
-        if 'result_processors' not in ac:
-            ac['result_processors']=[]
+    if 'result_processors' not in ac:
+        ac['result_processors']=[]
 
-        acrp=ac['result_processors']
-        if 'json'not in acrp:
-            acrp.append('json')
+    acrp=ac['result_processors']
+    if 'json'not in acrp:
+        acrp.append('json')
 
-        # Create CK entry (where to record results)
-        p=pc
-        if record=='yes':
-            dd={'meta':{
-                        'workload_name':wname,
-                        'workloads':workloads,
-                        'params':params,
-                        'device_features':ddf,
-                        'device_config':agenda,
-                        'local_device_uid':dev_uid,
-                        'local_device_uoa':dev_uoa
-                       }}
+    # Create CK entry (where to record results)
+    p=pc
+    if record=='yes':
+        dd={'meta':{
+                    'workload_name':wname,
+                    'workloads':workloads,
+                    'params':params,
+                    'device_features':ddf,
+                    'device_config':agenda,
+                    'local_device_uid':dev_uid,
+                    'local_device_uoa':dev_uoa
+                   }}
 
-            r=ck.access({'action':'add',
-                         'module_uoa':cfg['module_deps']['wa-result'],
-                         'dict':dd
-                       })
-            if r['return']>0: return r
-            p=r['path']
-            euid=r['data_uid']
-
-            ck.out('Experiment UID: '+euid)
-
-        px=p
-        p=os.path.join(p,'results') # otherwise WA overwrites .cm
-        if not os.path.isdir(p):
-            os.makedirs(p)
-
-        # Prepare temp yaml file
-        if record=='yes':
-            ta=os.path.join(px, cfg['agenda_file'])
-        else:
-            r=ck.gen_tmp_file({'prefix':'tmp-', 'suffix':'.yaml'})
-            if r['return']>0: return r
-            ta=r['file_name']
-
-        # Save agenda as YAML
-        r=ck.save_yaml_to_file({'yaml_file':ta, 'dict':agenda})
+        r=ck.access({'action':'add',
+                     'module_uoa':cfg['module_deps']['wa-result'],
+                     'dict':dd
+                   })
         if r['return']>0: return r
+        p=r['path']
+        euid=r['data_uid']
 
-        # Prepare CMD
-        cmd='wa run '+ta+' -c '+pcfg+' -fd '+p
+        ck.out('Experiment UID: '+euid)
 
-        if i.get('verbose','')=='yes':
-           cmd+=' --verbose'
+    px=p
+    p=os.path.join(p,'results') # otherwise WA overwrites .cm
+    if not os.path.isdir(p):
+        os.makedirs(p)
 
-        ck.out('CMD:            '+cmd)
+    # Prepare temp yaml file
+    if record=='yes':
+        ta=os.path.join(px, cfg['agenda_file'])
+    else:
+        r=ck.gen_tmp_file({'prefix':'tmp-', 'suffix':'.yaml'})
+        if r['return']>0: return r
+        ta=r['file_name']
 
-        # Run WA
-        ck.out('')
-        r=os.system(cmd)
+    # Save agenda as YAML
+    r=ck.save_yaml_to_file({'yaml_file':ta, 'dict':agenda})
+    if r['return']>0: return r
+
+    # Prepare CMD
+    cmd='wa run '+ta+' -c '+pcfg+' -fd '+p
+
+    if i.get('verbose','')=='yes':
+       cmd+=' --verbose'
+
+    ck.out('CMD:            '+cmd)
+
+    # Run WA
+    ck.out('')
+    r=os.system(cmd)
 
     return {'return':0}
 

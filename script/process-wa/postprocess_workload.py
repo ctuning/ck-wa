@@ -28,14 +28,14 @@ def ck_postprocess(i):
     #######################################
     ck.out ('Loading tmp-output2.tmp ...')
 
-    r=ck.load_text_file({'text_file':'tmp-output2.txt'})
+    r=ck.load_text_file({'text_file':'tmp-output2.tmp'})
     if r['return']>0: return r
     err=r['string']
 
     #######################################
     ck.out ('Loading wa_output/results.json ...')
 
-    r=ck.load_json_file({'wa_output/results.json', 'r'})
+    r=ck.load_json_file({'json_file':'wa_output/results.json'})
     if r['return']>0:
        return {'return':1, 'error':'wa_output/results.json was not produced - program execution likely failed'}
 

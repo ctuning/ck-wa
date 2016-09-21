@@ -43,5 +43,5 @@
     "workload-automation",
     "cyclictest"
   ],
-  "wa_desc": "Measures the amount of time that passes between when a timer expires and when the thread which set the timer actually runs."
+  "wa_desc": "Measures the amount of time that passes between when a timer expires and when the thread which set the timer actually runs"
 }

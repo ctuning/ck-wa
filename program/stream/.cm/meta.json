@@ -43,5 +43,5 @@
     "workload-automation",
     "stream"
   ],
-  "wa_desc": "Measures memory bandwidth."
+  "wa_desc": "Measures memory bandwidth"
 }

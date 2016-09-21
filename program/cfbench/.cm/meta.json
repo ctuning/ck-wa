@@ -43,5 +43,5 @@
     "workload-automation",
     "cfbench"
   ],
-  "wa_desc": "CF-Bench is (mainly) CPU and memory benchmark tool specifically designed to be able to handle multi-core devices, produce a fairly stable score, and test both native as well managed code performance."
+  "wa_desc": "CF-Bench is (mainly) CPU and memory benchmark tool specifically designed to be able to handle multi-core devices, produce a fairly stable score, and test both native as well managed code performance"
 }

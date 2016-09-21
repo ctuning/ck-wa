@@ -43,5 +43,5 @@
     "workload-automation",
     "googleslides"
   ],
-  "wa_desc": "A workload to perform standard productivity tasks with Google Slides. The workload carries out various tasks, such as creating a new presentation, adding text, images, and shapes, as well as basic editing and playing a slideshow. This workload should be able to run without a network connection."
+  "wa_desc": "A workload to perform standard productivity tasks with Google Slides. The workload carries out various tasks, such as creating a new presentation, adding text, images, and shapes, as well as basic editing and playing a slideshow. This workload should be able to run without a network connection"
 }

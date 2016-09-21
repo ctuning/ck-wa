@@ -43,5 +43,5 @@
     "workload-automation",
     "skype"
   ],
-  "wa_desc": "A workload to perform standard productivity tasks within Skype. The workload logs in to the Skype application, selects a recipient from the contacts list and then initiates either a voice or video call."
+  "wa_desc": "A workload to perform standard productivity tasks within Skype. The workload logs in to the Skype application, selects a recipient from the contacts list and then initiates either a voice or video call"
 }

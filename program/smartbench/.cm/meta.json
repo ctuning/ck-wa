@@ -43,5 +43,5 @@
     "workload-automation",
     "smartbench"
   ],
-  "wa_desc": "Smartbench is a multi-core friendly benchmark application that measures the overall performance of an android device. It reports both Productivity and Gaming Index."
+  "wa_desc": "Smartbench is a multi-core friendly benchmark application that measures the overall performance of an android device. It reports both Productivity and Gaming Index"
 }
