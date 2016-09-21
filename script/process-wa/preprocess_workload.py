@@ -8,6 +8,7 @@ import json
 import os
 import re
 
+##########################################################
 default_agenda={
     "config": {
       "instrumentation": [
@@ -20,7 +21,10 @@ default_agenda={
     "workloads": []
 }
 
+##########################################################
 def ck_preprocess(i):
+
+    o=i.get('out','')
 
     ck=i['ck_kernel']
     rt=i['run_time']
@@ -38,7 +42,7 @@ def ck_preprocess(i):
 
     meta=i.get('meta',{})
 
-    params=rt.get('params',{})
+    all_params=i.get('params',{})
 
     device_cfg=i.get('device_cfg',{})
     wa_config=device_cfg.get('wa_config',{})
@@ -47,7 +51,10 @@ def ck_preprocess(i):
     # TBD: WE ALSO NEED TO PASS PREPARE AGENDA TO OUTPUT (state?)
     agenda=default_agenda
 
-    params={}
+    r=ck.merge_dicts({'dict1':agenda, 'dict2':all_params.get('agenda',{})})
+    if r['return']>0: return 
+
+    params=all_params.get('workload_params',{})
 
     wname=meta['data_name']
     agenda['workloads'].append({'name':wname, 'params': params})
@@ -74,6 +81,8 @@ def ck_preprocess(i):
     if 'json'not in acrp:
         acrp.append('json')
 
+    cmd=''
+
     # Prepare temp yaml file
     r=ck.gen_tmp_file({'prefix':'tmp-', 'suffix':'.yaml', 'remove_dir':'yes'})
     if r['return']>0: return r
@@ -83,8 +92,28 @@ def ck_preprocess(i):
     r=ck.save_yaml_to_file({'yaml_file':ta, 'dict':agenda})
     if r['return']>0: return r
 
+    # Finish CMD
+    cmd+=' '+ta
+
+    cmd+=' --iterations=1'
+
+    if all_params.get('verbose','')=='yes':
+       cmd+=' --verbose'
+
     # Pass to CMD this file
-    b=set_env+'CK_WA_CMD='+env_quotes+ta+env_quotes+'\n'
+    b=set_env+'CK_WA_CMD='+env_quotes+ta.strip()+env_quotes+'\n'
+
+    # Print agenda
+    if o=='con':
+       r=ck.dump_json({'dict':agenda, 'sort_keys':'yes'})
+       if r['return']>0: return r
+       s=r['string']
+
+       ck.out('---------------------------------------')
+       ck.out('Prepared agenda in JSON:')
+       ck.out('')
+       ck.out(s)
+       ck.out('---------------------------------------')
 
     return {'return':0, 'bat':b}
 

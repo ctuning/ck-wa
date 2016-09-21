@@ -1,4 +1,5 @@
 * 2016.09.21 - major update of "device" module and compile/run via universal CK program pipeline!
+             - added support to pass 'params' dict to post-processing script to customize agenda via CK
 
 * 2016.09.18 - major update of all interfaces + using universal device from ck-env
 
