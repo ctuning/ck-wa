@@ -42,6 +42,17 @@ def ck_preprocess(i):
 
     env=i['env']
 
+    raw_path=env.get('CK_WA_RAW_RESULT_PATH','')
+
+    if raw_path=='':
+       p=os.getcwd()
+    else:
+       p=raw_path
+
+    pp=os.path.join(p,'wa-output') # otherwise WA overwrites .cm
+    if not os.path.isdir(pp):
+        os.makedirs(pp)
+
     meta=i.get('meta',{})
 
     all_params=i.get('params',{})
@@ -88,14 +99,15 @@ def ck_preprocess(i):
     # Prepare temp yaml file
     r=ck.gen_tmp_file({'prefix':'tmp-', 'suffix':'.yaml', 'remove_dir':'yes'})
     if r['return']>0: return r
-    ta=r['file_name']
+    xta=r['file_name']
+    ta=os.path.join(p,xta)
 
     # Save agenda as YAML
     r=ck.save_yaml_to_file({'yaml_file':ta, 'dict':agenda})
     if r['return']>0: return r
 
     # Finish CMD
-    cmd+=' '+ta
+    cmd+=' '+ta+' -fd '+pp
 
     misc['add_to_state']={'wa_agenda':agenda}
 

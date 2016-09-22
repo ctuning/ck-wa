@@ -18,6 +18,15 @@ def ck_postprocess(i):
 
     env=i.get('env',{})
 
+    raw_path=env.get('CK_WA_RAW_RESULT_PATH','')
+
+    if raw_path=='':
+       p=os.getcwd()
+    else:
+       p=raw_path
+
+    pp=os.path.join(p,'wa-output') # otherwise WA overwrites .cm
+
     #######################################
     ck.out('Loading tmp-output1.tmp ...')
 
@@ -33,11 +42,12 @@ def ck_postprocess(i):
     err=r['string']
 
     #######################################
-    ck.out ('Loading wa_output/results.json ...')
+    ck.out ('Loading results.json ...')
 
-    r=ck.load_json_file({'json_file':'wa_output/results.json'})
+    pr=os.path.join(pp,'results.json')
+    r=ck.load_json_file({'json_file':pr})
     if r['return']>0:
-       return {'return':1, 'error':'wa_output/results.json was not produced - program execution likely failed'}
+       return {'return':1, 'error':pr+' was not produced - program execution likely failed'}
 
     results=r['dict']
 

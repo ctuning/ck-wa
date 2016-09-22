@@ -81,14 +81,15 @@ def wa_list(i):
 ##############################################################################
 # run workload via CK pipeline
 
-def runx(i):
+def run(i):
     """
     Input:  {
-              (data_uoa) - workload to run (see "ck list wa")
+              (data_uoa)   - workload to run (see "ck list wa" or "ck search program --tags=wa")
 
-              (device)   - device UOA (see "ck list device")
+              (target)     - device UOA (see "ck list device")
 
-              (record)   - if 'yes', record result in repository
+              (record)     - if 'yes', record result in repository in 'experiment' standard
+              (record-raw) - if 'yes', record raw results
             }
 
     Output: {
@@ -106,48 +107,6 @@ def runx(i):
     oo=''
     if o=='con': oo=o
 
-    # Check device (search and select if one)
-    device=i.get('device','')
-
-    r=ck.access({'action':'search',
-                 'module_uoa':cfg['module_deps']['wa-device'],
-                 'data_uoa':device})
-    if r['return']>0: return r
-    dl=r['lst']
-    if len(dl)!=1:
-       return {'return':1, 'error':'CK device name is not defined (ck run wa:{workload_name} --device={device_name})'}
-
-    device=dl[0]['data_uid']
-    device_uoa=dl[0]['data_uoa']
-
-    # Load info about device (including configuration)
-    r=ck.access({'action':'load',
-                 'module_uoa':cfg['module_deps']['wa-device'],
-                 'data_uoa':device})
-    if r['return']>0: return r
-    dd=r['dict']
-    pd=r['path']
-
-    dcfg=os.path.join(pd, cfg['device_cfg_file'])
-
-    # Check host/target OS/CPU
-    hos=i.get('host_os','')
-    tos=i.get('target_os','')
-    tdid=i.get('device_id','')
-
-    if tos=='': tos=dd.get('target_os','')
-    if tdid=='': tdid=dd.get('device_id','')
-
-    # Get some info about platforms
-    ii={'action':'detect',
-        'module_uoa':cfg['module_deps']['platform.os'],
-        'host_os':hos,
-        'target_os':tos,
-        'device_id':tdid,
-        'out':oo}
-    r=ck.access(ii)
-    if r['return']>0: return r
-
     # Check workload(s)
     duoa=i.get('data_uoa','')
 
@@ -160,9 +119,12 @@ def runx(i):
     lst=r['lst']
 
     if len(lst)==0:
-       return {'return':1, 'error':'workload is not found (ck run wa:{workload_name})'}
+       return {'return':1, 'error':'workload is not specified or found'}
 
     record=i.get('record','')
+    record_raw=i.get('record-raw','')
+
+    target=i.get('target','')
 
     # Iterate over workloads
     rrr={}
@@ -174,17 +136,41 @@ def runx(i):
 
         meta={'program_uoa':duoa,
               'program_uid':duid,
-              'device_uoa':device_uoa,
-              'device_uid':device}
+              'target':target}
 
         if o=='con':
-           ck.out('Running workload '+duoa+' on device '+device_uoa+' ...')
+            ck.out('Running workload '+duoa+' ...')
+
+        result_path=''
+        if record_raw=='yes':
+            if o=='con':
+                ck.out('  Preparing wa_result entry to store raw results ...')
+
+            ii={'action':'search',
+                'module_uoa':cfg['module_deps']['wa-result'],
+                'search_dict':{'meta':meta}}
+            rx=ck.access(ii)
+
+            lst=rx['lst']
+
+            if len(lst)==0:
+                rx=ck.access({'action':'add',
+                              'module_uoa':cfg['module_deps']['wa-result'],
+                              'dict':{'meta':meta}})
+                if rx['return']>0: return rx
+                result_uid=rx['data_uid']
+                result_path=rx['path']
+            else:
+                result_uid=lst[0]['data_uid']
+                result_path=lst[0]['path']
 
         # Prepare CK pipeline for a given workload
-
         ii={'action':'pipeline',
+
             'module_uoa':cfg['module_deps']['program'],
             'data_uoa':duid,
+
+            'target':target,
 
             'prepare':'yes',
 
@@ -199,17 +185,19 @@ def runx(i):
             'skip_print_timers':'yes',
             'generate_rnd_tmp_dir':'yes',
 
+            'env':{'CK_WA_RAW_RESULT_PATH':result_path},
+
             'out':oo}
         r=ck.access(ii)
         if r['return']>0: return r
 
         fail=r.get('fail','')
         if fail=='yes':
-           return {'return':10, 'error':'pipeline failed ('+r.get('fail_reason','')+')'}
+            return {'return':10, 'error':'pipeline failed ('+r.get('fail_reason','')+')'}
 
         ready=r.get('ready','')
         if ready!='yes':
-           return {'return':11, 'error':'couldn\'t prepare autotuning pipeline'}
+            return {'return':11, 'error':'couldn\'t prepare autotuning pipeline'}
 
         state=r['state']
         tmp_dir=state['tmp_dir']
@@ -512,7 +500,7 @@ def wa_import(i):
 ##############################################################################
 # run workload(s)
 
-def run(i):
+def runx(i):
     """
     Input:  {
               (device)     - device UOA (see "ck list device" or add new "ck add device")
