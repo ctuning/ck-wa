@@ -30,6 +30,8 @@ def ck_preprocess(i):
     rt=i['run_time']
     deps=i['deps']
 
+    misc=i['misc']
+
     hosd=i['host_os_dict']
 
     set_env=hosd.get('env_set','')
@@ -95,13 +97,13 @@ def ck_preprocess(i):
     # Finish CMD
     cmd+=' '+ta
 
-    cmd+=' --iterations=1'
+    misc['add_to_state']={'wa_agenda':agenda}
 
     if all_params.get('verbose','')=='yes':
        cmd+=' --verbose'
 
     # Pass to CMD this file
-    b=set_env+'CK_WA_CMD='+env_quotes+ta.strip()+env_quotes+'\n'
+    b=set_env+'CK_WA_CMD='+env_quotes+cmd.strip()+env_quotes+'\n'
 
     # Print agenda
     if o=='con':
