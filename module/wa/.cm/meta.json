@@ -50,6 +50,13 @@
   "desc": "ARM workload automation wrapper",
   "device_cfg_file": "config.py",
   "license": "See CK LICENSE for licensing details",
+  "linux_based_wa_devices":[
+    "chromeos_test_image",
+    "gem5_linux",
+    "generic_linux",
+    "odroidxu3_linux",
+    "XE503C12"
+  ],
   "module_deps": {
     "device": "5add622b07468cb6",
     "env": "9b9b3208ac44b891",
