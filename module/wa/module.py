@@ -86,7 +86,7 @@ def run(i):
     Input:  {
               (data_uoa)   - workload to run (see "ck list wa" or "ck search program --tags=wa")
 
-              (target)     - device UOA (see "ck list device")
+              (target)     - machine UOA (see "ck list machine")
 
               (record)     - if 'yes', record result in repository in 'experiment' standard
               (record-raw) - if 'yes', record raw results
@@ -496,231 +496,6 @@ def wa_import(i):
 
     return {'return':0}
 
-
-##############################################################################
-# run workload(s)
-
-def runx(i):
-    """
-    Input:  {
-              (device)     - device UOA (see "ck list device" or add new "ck add device")
-
-              data_uoa     - workload name
-                and/or
-              workloads    - workload names separated by comma (to be run in parallel)
-
-
-
-
-
-
-              agendas      - list of agenda files (.yaml/.json/entries)
-                 or
-              workloads    - list of multiple workloads executed in PARALLEL in one agenda template
-
-              (agenda)     - agenda template (.yaml/.json/entries) or ck-agenda:default
-
-              (params)     - params for agenda
-
-              (iterations) - number of statistical repetitions (3 by default)
-
-              (record)     - if 'yes', record to CK
-
-              (verbose)    - if 'yes', use verbose WA mode
-            }
-
-    Output: {
-              return       - return code =  0, if successful
-                                         >  0, if error
-              (error)      - error text if return > 0
-            }
-
-    """
-
-    import os
-    import copy
-
-    o=i.get('out','')
-
-    pc=os.getcwd()
-
-    # Device
-    device=i.get('device','')
-    rx=ck.access({'action':'search',
-                  'module_uoa':cfg['module_deps']['device'],
-                  'tags':'wa',
-                  'data_uoa':device})
-    if rx['return']>0: return rx
-    lst=rx['lst']
-
-    if len(lst)==0:
-       return {'return':1, 'error':'no target device found (you can add one via "ck add device")'}
-    elif len(lst)==1:
-       device=lst[0].get('data_uid','')
-    elif len(lst)>1:
-       ck.out('More than one device found')
-       ck.out('')
-       r=ck.select_uoa({'choices':lst})
-       if r['return']>0: return r
-       device=r['choice']
-       ck.out('')
-
-    if device=='':
-       return {'return':1, 'error':'no target device selected'}
-
-    # Parallel workloads
-    workloads=[]
-
-    ww=i.get('workloads','').strip()
-    if len(ww)>0:
-       for w in ww.split(','):
-           workloads.append(w)
-
-    if i.get('data_uoa','')!='':
-       workloads.append(i['data_uoa'])
-
-    agenda=i.get('agenda',{})
-
-    # Help
-    if (len(workloads)==0 and len(agenda)==0):
-       ck.out('Usage:')
-       ck.out('  ck run wa:{name} --device={device name}')
-       ck.out('                or')
-       ck.out('  ck run wa --workloads={name1,name2,...} --device={device name}')
-       ck.out('                or')
-       ck.out('  ck run wa --agenda={} --device={device name} --workloads={w1,w2,w3} --agenda={template.yaml}')
-       ck.out('')
-       ck.out('Notes:')
-       ck.out('  * You can list available workloads via "ck list wa"')
-       ck.out('  * You can import all workloads from WA via "ck import wa"')
-       ck.out('  * You can add more target devices via "ck add device"')
-
-       return {'return':0}
-
-    # Parameters
-    if len(agenda)==0:
-       agenda=cfg['default_agenda']
-
-    params=i.get('params',{})
-
-    iters=i.get('iterations','')
-    if iters=='': iters=3
-    iters=int(iters)
-
-    record=i.get('record','')
-
-    # Loading device configuration
-    ck.out('Loading device configuration: '+device)
-    r=ck.access({'action':'load',
-                 'module_uoa':cfg['module_deps']['device'],
-                 'data_uoa':device})
-    if r['return']>0: return r
-    dev_uid=r['data_uid']
-    dev_uoa=r['data_uoa']
-
-    dd=r['dict']
-
-    ddc=dd.get('extra_cfg',{}).get('wa_config',{}) # default device meta
-    ddf=dd.get('features',{})
-
-    pd=r['path']
-
-    pcfg=os.path.join(pd, cfg['device_cfg_file'])
-
-    # Prepare agenda
-    ck.out('')
-    for w in workloads:
-        ck.out('Adding workload: '+w)
-        agenda['workloads'].append({'name':w, 'params': params})
-
-    # Get first name of a workload in agenda (to record in CK)
-    wname=''
-    for q in agenda.get('workloads',[]):
-        name=q.get('name','')
-        if name!='':
-           wname=name
-           break
-
-    # Run agenda and record if needed
-    if 'global' not in agenda:
-        agenda['global']={}
-
-    ag=agenda['global']
-
-    if ag.get('iterations','')=='':
-        ag['iterations']=iters
-
-    ck.out('')
-    ck.out('Iterations: '+str(iters))
-
-    if 'config' not in agenda:
-        agenda['config']={}
-
-    ac=agenda['config']
-
-    ac.update(ddc) # Update config from device description
-
-    if 'result_processors' not in ac:
-        ac['result_processors']=[]
-
-    acrp=ac['result_processors']
-    if 'json'not in acrp:
-        acrp.append('json')
-
-    # Create CK entry (where to record results)
-    p=pc
-    if record=='yes':
-        dd={'meta':{
-                    'workload_name':wname,
-                    'workloads':workloads,
-                    'params':params,
-                    'device_features':ddf,
-                    'device_config':agenda,
-                    'local_device_uid':dev_uid,
-                    'local_device_uoa':dev_uoa
-                   }}
-
-        r=ck.access({'action':'add',
-                     'module_uoa':cfg['module_deps']['wa-result'],
-                     'dict':dd
-                   })
-        if r['return']>0: return r
-        p=r['path']
-        euid=r['data_uid']
-
-        ck.out('Experiment UID: '+euid)
-
-    px=p
-    p=os.path.join(p,'results') # otherwise WA overwrites .cm
-    if not os.path.isdir(p):
-        os.makedirs(p)
-
-    # Prepare temp yaml file
-    if record=='yes':
-        ta=os.path.join(px, cfg['agenda_file'])
-    else:
-        r=ck.gen_tmp_file({'prefix':'tmp-', 'suffix':'.yaml'})
-        if r['return']>0: return r
-        ta=r['file_name']
-
-    # Save agenda as YAML
-    r=ck.save_yaml_to_file({'yaml_file':ta, 'dict':agenda})
-    if r['return']>0: return r
-
-    # Prepare CMD
-    cmd='wa run '+ta+' -c '+pcfg+' -fd '+p
-
-    if i.get('verbose','')=='yes':
-       cmd+=' --verbose'
-
-    ck.out('CMD:            '+cmd)
-
-    # Run WA
-    ck.out('')
-    r=os.system(cmd)
-
-    return {'return':0}
-
 ##############################################################################
 # replay a given experiment
 
@@ -749,7 +524,7 @@ def replay(i):
        ck.out('')
        ck.out('Notes:')
        ck.out('  * You can list available experiments via "ck list wa-result"')
-       ck.out('  * You can view experiments via web-based WA dashboard ("ck dashboard wa"')
+       ck.out('  * You can view experiments via web-based WA dashboard "ck dashboard wa"')
 
        return {'return':0}
 
@@ -763,34 +538,7 @@ def replay(i):
 
     dm=d.get('meta',{})
 
-    lduid=dm.get('local_device_uid','')
-    lduoa=dm.get('local_device_uoa','')
-    lwname=dm.get('workload_name','')
-
-    pagenda=os.path.join(p,cfg['agenda_file'])
-
-    # Loading device configuration
-    ck.out('Loading device configuration: '+lduoa)
-    r=ck.access({'action':'load',
-                 'module_uoa':cfg['module_deps']['wa-device'],
-                 'data_uoa':lduid})
-    if r['return']>0: return r
-    dd=r['dict']
-    pd=r['path']
-
-    dev_uid=r['data_uid']
-    dev_uoa=r['data_uoa']
-
-    pcfg=os.path.join(pd, cfg['device_cfg_file'])
-
-    # Prepare CMD
-    cmd='wa run '+pagenda+' -c '+pcfg
-
-    ck.out('CMD:            '+cmd)
-
-    # Run WA
-    ck.out('')
-    r=os.system(cmd)
+    ck.out('TBD')
 
     return {'return':0}
 
