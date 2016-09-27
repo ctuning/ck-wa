@@ -579,7 +579,7 @@ def configure(i):
     dcfg=r['dict']
 
     # Select WA device
-    device=i.get('wa_d[1;5Hevice','')
+    device=i.get('wa_device','')
     if device=='' and o=='con':
         ck.out('')
 
