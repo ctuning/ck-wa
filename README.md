@@ -44,7 +44,7 @@ Local Usage
 ===========
 
 First, you need to register a target machine in CK as 
-described in detail in [https://github.com/ctuning/ck/wiki/Farms-of-CK-machines CK wiki]:
+described in detail in [CK wiki](https://github.com/ctuning/ck/wiki/Farms-of-CK-machines CK wiki):
 
 ```
  $ ck add machine:my-target-machine
