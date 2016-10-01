@@ -43,34 +43,27 @@ Install Workload Automation via CK:
 Local Usage
 ===========
 
-First, add a description of a connected Android-based device to CK
-(main properties will be automatically detected by CK).
+First, you need to register a target machine in CK as 
+described in detail in [https://github.com/ctuning/ck/wiki/Farms-of-CK-machines CK wiki]:
+
 ```
- $ ck add wa-device
+ $ ck add machine:my-target-machine
 ```
 
-Check that your device was recorded in CK:
-```
- $ ck list wa-device
-```
+Please, select either ''2) WA: Android machine accessed via ARM's workload automation framework''
+for Android based machine or ''3) WA: Linux machine accessed via ARM's workload automation''
+for Linux based machine. 
 
-For example, if you have Samsung Galaxy S7 conected, 
-you should see CK entry "samsung-sm-g930f".
-
-Check available workloads in CK format:
+Now you can try to run dhrystone workload via CK universal pipeline 
+(results will be recorded in a local ''wa_output directory''):
 ```
- $ ck list wa
-```
-
-Run dhrystone workload via CK (results will be recorded in a local wa_output directory):
-```
- $ ck run wa:dhrystone --device=samsung-sm-g930f
+ $ ck run wa:dhrystone --target=my-target-machine
 ```
 
 Run dhrystone workload via CK and record results in the CK repository
 (using experiment module):
 ```
- $ ck run wa:dhrystone --device=samsung-sm-g930f --record
+ $ ck run wa:dhrystone --target=my-target-machine --record
 ```
 
 Raw results as well as unified JSON meta description will be recorded
@@ -123,7 +116,8 @@ Remote Access
 WA can be accessed via CK web service with unified JSON API.
 
 For internal tests, we have a CK-powered WA service running 
-on a 'cknowledge.ddns.net' host machine with 7344 port. 
+on a 'cknowledge.ddns.net' host machine with 7344 port
+(please, ping us in advance to start this service). 
 
 You can see CK dashboard via http://cknowledge.ddns.net:7344/?template=arm-wa
 
