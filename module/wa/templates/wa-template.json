@@ -7,6 +7,7 @@
   "data_name": "$#wa_name#$",
   "deps": {
     "wa": {
+      "force_target_as_host": "yes",
       "env_key": "WA",
       "local": "yes",
       "name": "ARM Workload Automation",

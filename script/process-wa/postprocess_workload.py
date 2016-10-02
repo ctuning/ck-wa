@@ -42,6 +42,19 @@ def ck_postprocess(i):
     err=r['string']
 
     #######################################
+    ck.out ('Loading status.txt ...')
+
+    r=ck.load_text_file({'text_file':os.path.join(pp,'status.txt')})
+    if r['return']==0:
+        ss=r['string']
+
+        j=ss.find(' FAILED ')
+        if j>=0:
+            j1=ss.find('\n',j)
+            if j1<0: j1=ss.length()
+            return {'return':1, 'error':ss[j+8:j1]}
+
+    #######################################
     ck.out ('Loading results.json ...')
 
     pr=os.path.join(pp,'results.json')

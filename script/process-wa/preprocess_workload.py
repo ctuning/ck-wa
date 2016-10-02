@@ -24,6 +24,8 @@ default_agenda={
 ##########################################################
 def ck_preprocess(i):
 
+    import copy
+
     o=i.get('out','')
 
     ck=i['ck_kernel']
@@ -62,7 +64,7 @@ def ck_preprocess(i):
 
     # How to pass agenda from outside or params + what to measure (choices???)+ extra workloads + name
     # TBD: WE ALSO NEED TO PASS PREPARE AGENDA TO OUTPUT (state?)
-    agenda=default_agenda
+    agenda=copy.deepcopy(default_agenda)
 
     r=ck.merge_dicts({'dict1':agenda, 'dict2':all_params.get('agenda',{})})
     if r['return']>0: return 

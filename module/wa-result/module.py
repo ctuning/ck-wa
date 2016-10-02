@@ -81,16 +81,18 @@ def show(i):
     h+='<table border="1" cellpadding="7" cellspacing="0">\n'
 
     h+='  <tr>\n'
-    h+='   <td align="center"><b>CK UID</b></td>\n'
+    h+='   <td align="center"><b>Raw results (json)</b></td>\n'
     h+='   <td align="center"><b>Workload</b></td>\n'
     h+='   <td align="center"><b>Platform</b></td>\n'
     h+='   <td align="center"><b>CPU</b></td>\n'
     h+='   <td align="center"><b>GPU</b></td>\n'
     h+='   <td align="center"><b>OS</b></td>\n'
+    h+='   <td align="center"><b>Fail?</b></td>\n'
+    h+='   <td align="center"><b>Time</b></td>\n'
     h+='   <td align="center"><b>Raw results (json)</b></td>\n'
     h+='  <tr>\n'
 
-    for q in lst:
+    for q in sorted(lst, key=lambda x: x.get('meta',{}).get('meta',{}).get('workload_name','')):
         duid=q['data_uid']
         d=q['meta']
 
@@ -108,7 +110,18 @@ def show(i):
         os_name=meta.get('os_name','')
         gpu_name=meta.get('gpu_name','')
 
-        h+='  <tr>\n'
+        bgc='afffaf'
+        fail=d.get('state',{}).get('fail','')
+        fail_reason=d.get('state',{}).get('fail_reason','')
+        if fail=='yes':
+            if fail_reason=='': fail_reason='yes'
+            bgc='ffafaf'
+
+        bg=' style="background-color:#'+bgc+';"'
+
+        tet=d.get('characteristics',{}).get('total_execution_time',0)
+
+        h+='  <tr'+bg+'>\n'
 
         h+='   <td align="center"><a href="'+url0+'&wcid='+work['self_module_uid']+':'+duid+'">'+duid+'</a></td>\n'
 
@@ -124,6 +137,12 @@ def show(i):
         h+='   <td align="center">'+cpu_name+'</td>\n'
         h+='   <td align="center">'+gpu_name+'</td>\n'
         h+='   <td align="center">'+os_name+'</td>\n'
+
+        h+='   <td align="center">'+fail_reason+'</td>\n'
+
+        x=''
+        if tet>0: x=('%.3f'%tet)+' sec.'
+        h+='   <td align="center">'+x+'</td>\n'
 
         h+='   <td align="center"><a href="'+url0+'action=pull&common_action=yes&cid='+work['self_module_uid']+':'+duid+'&filename=results/results.json">view</a></td>\n'
 

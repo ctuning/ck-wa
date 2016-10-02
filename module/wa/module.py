@@ -138,6 +138,8 @@ def run(i):
     target_uid=r['data_uid']
     features=r['dict']['features']
 
+    device_id=r['dict'].get('device_id','')
+
     fplat=features.get('platform',{})
     fos=features.get('os',{})
     fcpu=features.get('cpu',{})
@@ -182,6 +184,8 @@ def run(i):
             if o=='con':
                 ck.out('  Preparing wa_result entry to store raw results ...')
 
+            ddd={'meta':mmeta}
+
             ii={'action':'search',
                 'module_uoa':cfg['module_deps']['wa-result'],
                 'search_dict':{'meta':meta}}
@@ -192,13 +196,21 @@ def run(i):
             if len(lst)==0:
                 rx=ck.access({'action':'add',
                               'module_uoa':cfg['module_deps']['wa-result'],
-                              'dict':{'meta':mmeta}})
+                              'dict':ddd,
+                              'sort_keys':'yes'})
                 if rx['return']>0: return rx
                 result_uid=rx['data_uid']
                 result_path=rx['path']
             else:
                 result_uid=lst[0]['data_uid']
                 result_path=lst[0]['path']
+
+                # Load entry
+                rx=ck.access({'action':'load',
+                              'module_uoa':cfg['module_deps']['wa-result'],
+                              'data_uoa':result_uid})
+                if rx['return']>0: return rx
+                ddd=rx['dict']
 
             # Record input
             finp=os.path.join(result_path,'ck-input.json')
@@ -216,6 +228,7 @@ def run(i):
             'data_uoa':duid,
 
             'target':target,
+            'device_id':device_id,
 
             'prepare':'yes',
 
@@ -233,31 +246,39 @@ def run(i):
             'env':{'CK_WA_RAW_RESULT_PATH':result_path},
 
             'out':oo}
-        r=ck.access(ii)
-        if r['return']>0: return r
+        rr=ck.access(ii)
+        if rr['return']>0: return rr
 
-        fail=r.get('fail','')
+        fail=rr.get('fail','')
         if fail=='yes':
-            return {'return':10, 'error':'pipeline failed ('+r.get('fail_reason','')+')'}
+            return {'return':10, 'error':'pipeline failed ('+rr.get('fail_reason','')+')'}
 
-        ready=r.get('ready','')
+        ready=rr.get('ready','')
         if ready!='yes':
             return {'return':11, 'error':'couldn\'t prepare universal CK program workflow'}
 
-        state=r['state']
+        state=rr['state']
         tmp_dir=state['tmp_dir']
 
         # Clean pipeline
-        if 'ready' in r: del(r['ready'])
-        if 'fail' in r: del(r['fail'])
-        if 'return' in r: del(r['return'])
+        if 'ready' in rr: del(rr['ready'])
+        if 'fail' in rr: del(rr['fail'])
+        if 'return' in rr: del(rr['return'])
 
-        pipeline=copy.deepcopy(r)
+        pipeline=copy.deepcopy(rr)
+
+        # Save pipeline
+        if record_raw=='yes':
+            fpip=os.path.join(result_path,'ck-pipeline-in.json')
+            r=ck.save_json_to_file({'json_file':fpip, 'dict':pipeline})
+            if r['return']>0: return r
 
         # Run CK pipeline *****************************************************
         ii={'action':'autotune',
             'module_uoa':cfg['module_deps']['pipeline'],
             'data_uoa':cfg['module_deps']['program'],
+
+            'device_id':device_id,
 
             'iterations':1,
             'repetitions':1,
@@ -284,6 +305,31 @@ def run(i):
 
         rrr=ck.access(ii)
         if rrr['return']>0: return rrr
+
+        ls=rrr.get('last_iteration_output',{})
+        fail=ls.get('fail','')
+        fail_reason=ls.get('fail_reason','')
+
+        ch=ls.get('characteristics',{})
+        tet=ch.get('run',{}).get('total_execution_time',0)
+
+        # Save pipeline
+        if record_raw=='yes':
+            ddd['state']={'fail':fail, 'fail_reason':fail_reason}
+            ddd['characteristics']={'total_execution_time':tet}
+
+            fpip=os.path.join(result_path,'ck-pipeline-out.json')
+            r=ck.save_json_to_file({'json_file':fpip, 'dict':rrr})
+            if r['return']>0: return r
+
+            # Update meta
+            rx=ck.access({'action':'update',
+                          'module_uoa':cfg['module_deps']['wa-result'],
+                          'data_uoa':result_uid,
+                          'dict':ddd,
+                          'substitute':'yes',
+                          'sort_keys':'yes'})
+            if rx['return']>0: return rx
 
     return rrr
 
@@ -523,7 +569,7 @@ def wa_import(i):
         ck.out('  '+s+' entry "'+ww+'" ...')
 
         d["backup_data_uid"]=duid
-        d["data_name"]='WA workload: w'
+        d["data_name"]='WA workload: '+w
         d["wa_alias"]=w
 
         # Trying to find workload in WA (if installed from GitHub ia CK):
@@ -585,11 +631,13 @@ def wa_import(i):
 
 ##############################################################################
 # replay a given experiment
+# TBD: not finished!
 
 def replay(i):
     """
     Input:  {
               data_uoa - experiment UID (see "ck list wa-result")
+              (target) - force target machine
             }
 
     Output: {
@@ -602,7 +650,13 @@ def replay(i):
 
     import os
 
+    o=i.get('out','')
+    oo=''
+    if o=='con': oo=o
+
     duoa=i.get('data_uoa','')
+
+    target=i.get('target','')
 
     # Help
     if (duoa==''):
@@ -625,12 +679,18 @@ def replay(i):
 
     dm=d.get('meta',{})
 
+    program_uoa=dm.get('program_uoa','')
+    if target=='':
+        target=dm.get('local_target_uoa','')
 
+    ii={'data_uoa':program_uoa,
+        'target':target,
+        'out':oo}
 
+    r=run(ii)
+    if r['return']>0: return r
 
-    ck.out('TBD')
-
-    return {'return':0}
+    return r
 
 ##############################################################################
 # configure device for WA

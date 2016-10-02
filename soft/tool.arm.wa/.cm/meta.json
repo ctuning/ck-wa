@@ -23,6 +23,7 @@
   },
   "deps": {
     "python": {
+      "force_target_as_host": "yes",
       "local": "yes",
       "name": "Python compiler (v2.x)",
       "sort": 10,

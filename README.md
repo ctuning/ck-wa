@@ -1,6 +1,16 @@
 Workload Automation for ARM
 ===========================
 
+Introduction
+============
+
+This Collective Knowledge repository is a high level
+abstraction for ARM Workload Automation framework. 
+It automates and unifies experiments, machines,
+optimization knowledge, etc. Before using it,
+please read [CK Getting Started Guide](http://github.com/ctuning/ck/wiki)
+to understand CK concepts.
+
 Status
 ======
 Heavy development phase ...
