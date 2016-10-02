@@ -3,6 +3,10 @@
     "local_device_uid": "huawei-mate-8",
     "local_device_uoa": "",
     "workload_name": "gmail",
-    "workload_uid": ""
+    "workload_uid": "",
+
+    "plat_name": "HUAWEI MATE 8",
+    "program_uoa": "gmail",
+    "program_uid": ""
   }
 }

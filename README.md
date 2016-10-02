@@ -35,10 +35,12 @@ or
  $ ck pull repo --url=git@github.com:dividiti/ck-wa
 ```
 
-Install Workload Automation via CK:
-```
- $ ck install package:arm-wa-github
-```
+Note that other CK repositories (dependencies) will be also
+automatically pulled. For example, you will obtain
+''ck-wa-workloads'' repository with all WA workloads
+shared in the CK format. We expect that later other users
+will be able to easily share, plug in and reuse their workloads
+(or use then in private workgroups).
 
 Local Usage
 ===========
@@ -54,16 +56,23 @@ Please, select either ''2) WA: Android machine accessed via ARM's workload autom
 for Android based machine or ''3) WA: Linux machine accessed via ARM's workload automation''
 for Linux based machine. 
 
-Now you can try to run dhrystone workload via CK universal pipeline 
-(results will be recorded in a local ''wa_output directory''):
+Now you can see available WA workloads via
 ```
- $ ck run wa:dhrystone --target=my-target-machine
+ $ ck search program --tags=wa
+   or
+ $ ck list program:wa-*
 ```
 
-Run dhrystone workload via CK and record results in the CK repository
-(using experiment module):
+Now you can try to run youtube workload via CK universal pipeline
+using Android mobile device connected via ADB
+(results will be recorded in a local ''wa_output directory''):
 ```
- $ ck run wa:dhrystone --target=my-target-machine --record
+ $ ck run wa:wa-youtube --target=my-target-machine
+```
+
+You can also record all raw results using flat ''--record-raw'':
+```
+ $ ck run wa:wa-youtube --target=my-target-machine --record-raw
 ```
 
 Raw results as well as unified JSON meta description will be recorded
@@ -72,19 +81,49 @@ using ck-result module. You can see them via
  $ ck list wa-result
 ```
 
+Note, that results for the same workload will be currently rewritten
+in ''wa-result''. Later we plan to add statistical analysis of multiple results.
+
 You can also browse results in a user-friendy way via web-based WA dashboard:
 ```
  $ ck dashboard wa
 ```
 
+Workloads which have C sources (currently '''dhrystone''' and '''memcpy''') 
+are converted into universal CK program format. This allows users to
+reuse powerful crowd-benchmarking, autotuning and crowd-tuning functionality
+in the CK which works across different hardware, operating systems and compilers.
+
+For example, you can compile dhrystone workload via
+```
+ $ ck compile program:dhrystone --speed --target=my-target-machine
+```
+
+You can then run dhrystone workload via CK and record results in the tmp directory via
+```
+ $ ck run program:dhrystone --target=my-target-machine
+ $ ck ls `ck find program:dhrystone`/tmp
+```
+
+
+
+
 You can replay a given WA run using above UIDs via
 ```
- $ ck replay wa:{UID}
+ $ ck replay wa-result:{UID}
 ```
 
 You can delete all above results via
 ```
  $ ck rm wa-result:* --force
+```
+
+Updating WA via CK
+==================
+
+You can install latest WA from GitHub for a given target machine via CK via
+```
+ $ ck install package:arm-wa-github --target={machine name}
 ```
 
 Using Docker image
@@ -110,8 +149,12 @@ from the 'ck-docker' repository:
  $ ck show repo:ck-docker
 ```
 
-Remote Access
-=============
+
+
+
+
+Remote Access - NEED TO BE UPDATED using new functionality!!!
+=============================================================
 
 WA can be accessed via CK web service with unified JSON API.
 

@@ -69,7 +69,7 @@ def ck_preprocess(i):
 
     params=all_params.get('workload_params',{})
 
-    wname=meta['data_name']
+    wname=meta['wa_alias']
     agenda['workloads'].append({'name':wname, 'params': params})
 
     # Prepare agenda

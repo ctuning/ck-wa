@@ -82,8 +82,11 @@ def show(i):
 
     h+='  <tr>\n'
     h+='   <td align="center"><b>CK UID</b></td>\n'
+    h+='   <td align="center"><b>Workload</b></td>\n'
     h+='   <td align="center"><b>Platform</b></td>\n'
-    h+='   <td align="center"><b>WA</b></td>\n'
+    h+='   <td align="center"><b>CPU</b></td>\n'
+    h+='   <td align="center"><b>GPU</b></td>\n'
+    h+='   <td align="center"><b>OS</b></td>\n'
     h+='   <td align="center"><b>Raw results (json)</b></td>\n'
     h+='  <tr>\n'
 
@@ -92,25 +95,35 @@ def show(i):
         d=q['meta']
 
         meta=d.get('meta',{})
+
+        pname=meta.get('program_uoa','')
         wname=meta.get('workload_name','')
-        wuid=meta.get('workload_uid','')
+        wuid=meta.get('program_uid','')
 
-        df=meta.get('device_features',{})
-        dp=df.get('platform',{})
-        dname=dp.get('name','')
+        ltarget_uoa=meta.get('local_target_uoa','')
+        ltarget_uid=meta.get('local_target_uid','')
 
-        puid=df.get('platform_uid','')
+        plat_name=meta.get('plat_name','')
+        cpu_name=meta.get('cpu_name','')
+        os_name=meta.get('os_name','')
+        gpu_name=meta.get('gpu_name','')
 
         h+='  <tr>\n'
 
         h+='   <td align="center"><a href="'+url0+'&wcid='+work['self_module_uid']+':'+duid+'">'+duid+'</a></td>\n'
 
-        x=dname
-        if puid!='':
-           x='<a href="'+url0+'&wcid='+cfg['module_deps']['platform']+':'+puid+'">'+dname+'</a>'
+        x=wname
+        if wuid!='': x='<a href="'+url0+'&wcid='+cfg['module_deps']['program']+':'+wuid+'">'+x+'</a>'
         h+='   <td align="center">'+x+'</td>\n'
 
-        h+='   <td align="center"><a href="'+url0+'&wcid='+cfg['module_deps']['program']+':'+wuid+'">'+wname+'</a></td>\n'
+        x=plat_name
+        if ltarget_uid!='':
+           x='<a href="'+url0+'&wcid='+cfg['module_deps']['machine']+':'+ltarget_uid+'">'+x+'</a>'
+        h+='   <td align="center">'+x+'</td>\n'
+
+        h+='   <td align="center">'+cpu_name+'</td>\n'
+        h+='   <td align="center">'+gpu_name+'</td>\n'
+        h+='   <td align="center">'+os_name+'</td>\n'
 
         h+='   <td align="center"><a href="'+url0+'action=pull&common_action=yes&cid='+work['self_module_uid']+':'+duid+'&filename=results/results.json">view</a></td>\n'
 

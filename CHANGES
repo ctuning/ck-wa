@@ -1,3 +1,5 @@
+* 2016.10.02 * moving WA workloads in the CK format to ''ck-wa-workloads'' repository
+
 * 2016.09.26 * changing 'device' to 'machine'
 
 * 2016.09.21 - major update of "device" module and compile/run via universal CK program pipeline!

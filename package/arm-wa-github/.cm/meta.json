@@ -11,8 +11,8 @@
     "git_src_dir":"src"
   }, 
   "end_full_path": {
-    "linux": "src/Scripts/wa",
-    "android": "src$#sep#$Scripts$#sep#$wa" 
+    "linux": "src/scripts/wa",
+    "android": "src$#sep#$scripts$#sep#$wa" 
   }, 
   "only_for_host_os_tags": [
     "linux",

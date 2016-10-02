@@ -3,6 +3,10 @@
     "local_device_uid": "lenovo_yoga_tab_3_pro",
     "local_device_uoa": "",
     "workload_name": "gmail",
-    "workload_uid": ""
+    "workload_uid": "",
+
+    "plat_name": "LENOVO YOGA TAB 3 PRO",
+    "program_uoa": "gmail",
+    "program_uid": ""
   }
 }

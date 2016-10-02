@@ -102,6 +102,7 @@ def run(i):
 
     import os
     import copy
+    import time
 
     o=i.get('out','')
     oo=''
@@ -124,7 +125,29 @@ def run(i):
     record=i.get('record','')
     record_raw=i.get('record-raw','')
 
+    # Get target features
     target=i.get('target','')
+    if target=='':
+        return {'return':1, 'error':'--target machine is not specified (see "ck list machine")'}
+
+    r=ck.access({'action':'load',
+                 'module_uoa':cfg['module_deps']['machine'],
+                 'data_uoa':target})
+    if r['return']>0: return r
+    target_uoa=r['data_uoa']
+    target_uid=r['data_uid']
+    features=r['dict']['features']
+
+    fplat=features.get('platform',{})
+    fos=features.get('os',{})
+    fcpu=features.get('cpu',{})
+    fgpu=features.get('gpu',{})
+
+    plat_name=fplat.get('name','')
+    os_name=fos.get('name','')
+    cpu_name=fcpu.get('name','')
+    if cpu_name=='': cpu_name='unknown-'+fcpu.get('cpu_abi','')
+    gpu_name=fgpu.get('name','')
 
     # Iterate over workloads
     rrr={}
@@ -134,12 +157,25 @@ def run(i):
         dw=wa['meta']
         dp=wa['path']
 
+        ww=dw['wa_alias']
+
         meta={'program_uoa':duoa,
               'program_uid':duid,
-              'target':target}
+              'cpu_name':cpu_name,
+              'os_name':os_name,
+              'plat_name':plat_name,
+              'gpu_name':gpu_name}
+
+        mmeta=copy.deepcopy(meta)
+        mmeta['local_target_uoa']=target_uoa
+        mmeta['local_target_uid']=target_uid
+        mmeta['workload_name']=ww
 
         if o=='con':
-            ck.out('Running workload '+duoa+' ...')
+            ck.out(line)
+            ck.out('Running workload '+ww+' (CK UOA='+duoa+') ...')
+
+            time.sleep(2)
 
         result_path=''
         if record_raw=='yes':
@@ -156,13 +192,22 @@ def run(i):
             if len(lst)==0:
                 rx=ck.access({'action':'add',
                               'module_uoa':cfg['module_deps']['wa-result'],
-                              'dict':{'meta':meta}})
+                              'dict':{'meta':mmeta}})
                 if rx['return']>0: return rx
                 result_uid=rx['data_uid']
                 result_path=rx['path']
             else:
                 result_uid=lst[0]['data_uid']
                 result_path=lst[0]['path']
+
+            # Record input
+            finp=os.path.join(result_path,'ck-input.json')
+            r=ck.save_json_to_file({'json_file':finp, 'dict':i})
+            if r['return']>0: return r
+
+            ff=os.path.join(result_path,'ck-platform-features.json')
+            r=ck.save_json_to_file({'json_file':ff, 'dict':features})
+            if r['return']>0: return r
 
         # Prepare CK pipeline for a given workload
         ii={'action':'pipeline',
@@ -197,7 +242,7 @@ def run(i):
 
         ready=r.get('ready','')
         if ready!='yes':
-            return {'return':11, 'error':'couldn\'t prepare autotuning pipeline'}
+            return {'return':11, 'error':'couldn\'t prepare universal CK program workflow'}
 
         state=r['state']
         tmp_dir=state['tmp_dir']
@@ -271,6 +316,7 @@ def dashboard(i):
 def wa_import(i):
     """
     Input:  {
+              (target_repo_uoa) - where to record imported workloads
             }
 
     Output: {
@@ -283,12 +329,16 @@ def wa_import(i):
 
     import os
     import copy
+    import shutil
 
     o=i.get('out','')
     oo=''
     if o=='con': oo=o
 
+    ruoa=i.get('target_repo_uoa','')
+
     # Get platform params
+    target=i.get('target','')
     hos=i.get('host_os','')
     tos=i.get('target_os', '')
     tdid=i.get('device_id', '')
@@ -300,6 +350,7 @@ def wa_import(i):
         'module_uoa':cfg['module_deps']['platform'],
         'out':oo,
         'host_os':hos,
+        'target':target,
         'target_os':tos,
         'target_device_id':tdid}
     rpp=ck.access(ii)
@@ -370,9 +421,11 @@ def wa_import(i):
     r=ck.access(ii)
     if r['return']>0: return r
 
+    pwlauto=r['env']['CK_ENV_TOOL_ARM_WA_WLAUTO']
+
     bat=r['bat']
 
-    # Prepare tmp bat file and tmp output file
+    # Prepare tmp bat file
     rx=ck.gen_tmp_file({'prefix':'tmp-', 'suffix':sext})
     if rx['return']>0: return rx
     fbat=rx['file_name']
@@ -381,10 +434,11 @@ def wa_import(i):
     if rx['return']>0: return rx
     ftmp=rx['file_name']
 
-    # Write bat file
+    # Prepare cmd
     bat+='\n'
     bat+='wa list workloads > '+ftmp
 
+    # Write bat file
     rx=ck.save_text_file({'text_file':fbat, 'string':bat})
     if rx['return']>0: return rx
 
@@ -436,7 +490,12 @@ def wa_import(i):
     wtd=r['dict']
 
     # Add entries
+    ck.out('')
     for w in wa:
+        xruoa=ruoa
+
+        ww='wa-'+w
+
         wd=wa[w]
 
         duid=''
@@ -446,12 +505,13 @@ def wa_import(i):
         s='Adding new'
         ii={'action':'load',
             'module_uoa':cfg['module_deps']['program'],
-            'data_uoa':w}
+            'data_uoa':ww}
         r=ck.access(ii)
         if r['return']==0:
            duid=r['data_uid']
            d=r['dict']
            s='Updating'
+           xruoa=r['repo_uid']
         else:
            rx=ck.gen_uid({})
            if rx['return']>0: return rx
@@ -460,10 +520,14 @@ def wa_import(i):
            d=copy.deepcopy(wtd)
 
         # Adding/updating entry
-        ck.out('  '+s+' entry "'+w+'" ...')
+        ck.out('  '+s+' entry "'+ww+'" ...')
 
         d["backup_data_uid"]=duid
-        d["data_name"]=w
+        d["data_name"]='WA workload: w'
+        d["wa_alias"]=w
+
+        # Trying to find workload in WA (if installed from GitHub ia CK):
+        pw=os.path.join(pwlauto,'workloads',w)
 
         # Cleaning up wd
         if wd.endswith('.'): wd=wd[:-1]
@@ -487,12 +551,35 @@ def wa_import(i):
 
         ii={'action':'update',
             'module_uoa':cfg['module_deps']['program'],
-            'data_uoa':w,
+            'data_uoa':ww,
             'data_uid':duid,
-            'repo_uoa':'ck-wa',
+            'repo_uoa':xruoa,
             'dict':d}
         r=ck.access(ii)
         if r['return']>0: return r
+
+        pnew=r['path']
+        print (pnew)
+
+        if os.path.isdir(pw):
+            # Copying files to CK entry
+            if o=='con':
+                ck.out('    Copying files ...')
+
+            r=ck.list_all_files({'path':pw})
+            if r['return']>0: return r
+
+            lst=r['list']
+
+            for fn in lst:
+                p1=os.path.join(pw,fn)
+                p2=os.path.join(pnew,fn)
+
+                pd2=os.path.dirname(p2)
+                if not os.path.isdir(pd2):
+                    os.makedirs(pd2)
+
+                shutil.copy2(p1,p2)
 
     return {'return':0}
 
@@ -537,6 +624,9 @@ def replay(i):
     d=r['dict']
 
     dm=d.get('meta',{})
+
+
+
 
     ck.out('TBD')
 

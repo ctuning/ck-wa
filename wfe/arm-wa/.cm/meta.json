@@ -5,11 +5,11 @@
       "module_uoas": [
         ""
       ], 
-      "url_extra": "action=index&module_uoa=wfe&native_action=show&native_module_uoa=device", 
-      "native_module_uoa":"device",
+      "url_extra": "action=index&module_uoa=wfe&native_action=show&native_module_uoa=machine", 
+      "native_module_uoa":"machine",
       "native_action":"show",
       "default":"yes",
-      "name": "Devices"
+      "name": "Targets"
     }, 
     {
       "module_uoa": "", 

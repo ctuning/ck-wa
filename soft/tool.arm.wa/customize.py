@@ -79,8 +79,6 @@ def setup(i):
 
     fp=cus.get('full_path','')
 
-    env[ep+'_SRC']=fp
-
     if cus.get('force_path',''):
        fp=cus['force_path'] # usually passed from CK package
 
@@ -97,6 +95,8 @@ def setup(i):
 
     env[ep]=pi
     env[ep+'_BIN']=p1
+    env[ep+'_SRC']=pi
+    env[ep+'_WLAUTO']=os.path.join(pi,'wlauto')
 
     if p1!='':
        ############################################################
