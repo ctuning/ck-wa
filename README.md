@@ -5,10 +5,10 @@ Introduction
 ============
 
 This Collective Knowledge repository is a high level
-abstraction for ARM Workload Automation framework. 
-It automates and unifies experiments, machines,
-optimization knowledge, etc. Before using it,
-please read [CK Getting Started Guide](http://github.com/ctuning/ck/wiki)
+abstraction for ARM Workload Automation framework (WA). 
+It provides unified JSON API to WA, automates experiments 
+across farms of machines, enabless optimization knowledge sharing, etc. 
+Before using it, please read [CK Getting Started Guide](http://github.com/ctuning/ck/wiki)
 to understand CK concepts.
 
 Status

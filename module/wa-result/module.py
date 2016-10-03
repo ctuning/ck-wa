@@ -81,7 +81,7 @@ def show(i):
     h+='<table border="1" cellpadding="7" cellspacing="0">\n'
 
     h+='  <tr>\n'
-    h+='   <td align="center"><b>Raw results (json)</b></td>\n'
+    h+='   <td align="center"><b>Experiment UID</b></td>\n'
     h+='   <td align="center"><b>Workload</b></td>\n'
     h+='   <td align="center"><b>Platform</b></td>\n'
     h+='   <td align="center"><b>CPU</b></td>\n'
