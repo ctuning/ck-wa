@@ -7,7 +7,8 @@
   },
   "module_deps": {
     "program": "b0ac08fe1d3c2615",
-    "machine": "84be34883a81b2a9"
+    "machine": "84be34883a81b2a9",
+    "wfe": "1e4e644996b7f2a0"
   },
   "copyright": "See CK COPYRIGHT.txt for copyright details",
   "desc": "WA results",

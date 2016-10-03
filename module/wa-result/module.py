@@ -12,6 +12,8 @@ work={} # Will be updated by CK (temporal data)
 ck=None # Will be updated by CK (initialized CK kernel) 
 
 # Local settings
+form_name='wa_web_form'
+onchange='document.'+form_name+'.submit();'
 
 ##############################################################################
 # Initialize module
@@ -78,6 +80,65 @@ def show(i):
 
     lst=r['lst']
 
+    # Check unique entries
+    selector=[{'name':'Workload', 'key':'workload_name'},
+              {'name':'Platform', 'key':'plat_name'},
+              {'name':'CPU', 'key':'cpu_name'},
+              {'name':'OS', 'key':'os_name'},
+              {'name':'GPU', 'key':'gpu_name'}]
+    choices={}
+    wchoices={}
+
+    for q in lst:
+        d=q['meta']
+        meta=d.get('meta',{})
+
+        for kk in selector:
+            k=kk['key']
+
+            if k not in choices: 
+                choices[k]=[]
+                wchoices[k]=[{'name':'','value':''}]
+
+            v=meta.get(k,'')
+            if v!='':
+                if v not in choices[k]: 
+                    choices[k].append(v)
+                    wchoices[k].append({'name':v, 'value':v})
+
+    # Prepare query div ***************************************************************
+    # Start form + URL (even when viewing entry)
+    r=ck.access({'action':'start_form',
+                 'module_uoa':cfg['module_deps']['wfe'],
+                 'url':url1,
+                 'name':form_name})
+    if r['return']>0: return r
+    h+=r['html']
+
+    for kk in selector:
+        k=kk['key']
+        n=kk['name']
+
+        if i.get(k,'')!='':
+            v=i[k]
+            kk['value']=v
+
+        # Show hardware
+        ii={'action':'create_selector',
+            'module_uoa':cfg['module_deps']['wfe'],
+            'data':wchoices[k],
+            'name':k,
+            'onchange':onchange, 
+            'skip_sort':'no',
+            'selected_value':v}
+        r=ck.access(ii)
+        if r['return']>0: return r
+
+        h+='<b>'+n+':</b> '+r['html']+'\n'
+
+    h+='<br><br>'
+
+    # Prepare table
     h+='<table border="1" cellpadding="7" cellspacing="0">\n'
 
     h+='  <tr>\n'
@@ -97,6 +158,19 @@ def show(i):
         d=q['meta']
 
         meta=d.get('meta',{})
+
+        # Check selector
+        skip=False
+        for kk in selector:
+            k=kk['key']
+            n=kk['name']
+            v=kk.get('value','')
+
+            if v!='' and meta.get(k,'')!=v:
+                skip=True
+
+        if skip:
+            continue
 
         pname=meta.get('program_uoa','')
         wname=meta.get('workload_name','')
@@ -150,5 +224,7 @@ def show(i):
 
     h+='</table>\n'
     h+='</center>\n'
+
+    h+='</form>\n'
 
     return {'return':0, 'html':h, 'style':st}

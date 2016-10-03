@@ -4,11 +4,12 @@ Workload Automation for ARM
 Introduction
 ============
 
-This Collective Knowledge repository is a high level
-abstraction for ARM Workload Automation framework (WA). 
-It provides unified JSON API to WA, automates experiments 
-across farms of machines, enabless optimization knowledge sharing, etc. 
-Before using it, please read [CK Getting Started Guide](http://github.com/ctuning/ck/wiki)
+This Collective Knowledge repository provides high level
+abstraction for ARM Workload Automation framework (WA).
+It includes unified JSON API to WA, automated experiments 
+across farms of machines, optimization knowledge sharing, etc. 
+Before using it, please read 
+[CK Getting Started Guide](http://github.com/ctuning/ck/wiki)
 to understand CK concepts.
 
 Status
@@ -18,9 +19,11 @@ Heavy development phase ...
 Prerequisites
 =============
 * Collective Knowledge framework ([@GitHub](http://github.com/ctuning/ck))
-* (ARM WA) python2
-* (ARM WA) pip (install via apt-get install python-pip)
-* (ARM WA) yaml (install via apt-get install libyaml-dev)
+
+ARM WA requires:
+* python2
+* pip (install via apt-get install python-pip)
+* yaml (install via apt-get install libyaml-dev)
 
 Authors
 =======
