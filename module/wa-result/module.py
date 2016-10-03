@@ -81,7 +81,7 @@ def show(i):
     h+='<table border="1" cellpadding="7" cellspacing="0">\n'
 
     h+='  <tr>\n'
-    h+='   <td align="center"><b>Experiment UID</b></td>\n'
+    h+='   <td align="center"><b>All raw files</b></td>\n'
     h+='   <td align="center"><b>Workload</b></td>\n'
     h+='   <td align="center"><b>Platform</b></td>\n'
     h+='   <td align="center"><b>CPU</b></td>\n'
@@ -89,7 +89,7 @@ def show(i):
     h+='   <td align="center"><b>OS</b></td>\n'
     h+='   <td align="center"><b>Fail?</b></td>\n'
     h+='   <td align="center"><b>Time</b></td>\n'
-    h+='   <td align="center"><b>Raw results (json)</b></td>\n'
+    h+='   <td align="center"><b>JSON results</b></td>\n'
     h+='  <tr>\n'
 
     for q in sorted(lst, key=lambda x: x.get('meta',{}).get('meta',{}).get('workload_name','')):
@@ -144,7 +144,7 @@ def show(i):
         if tet>0: x=('%.3f'%tet)+' sec.'
         h+='   <td align="center">'+x+'</td>\n'
 
-        h+='   <td align="center"><a href="'+url0+'action=pull&common_action=yes&cid='+work['self_module_uid']+':'+duid+'&filename=results/results.json">view</a></td>\n'
+        h+='   <td align="center"><a href="'+url0+'action=pull&common_action=yes&cid='+work['self_module_uid']+':'+duid+'&filename=wa-output/results.json">view</a></td>\n'
 
         h+='  <tr>\n'
 
