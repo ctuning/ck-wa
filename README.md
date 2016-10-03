@@ -115,10 +115,15 @@ You can then run dhrystone workload via CK and record results in the tmp directo
  $ ck ls `ck find program:dhrystone`/tmp
 ```
 
+You can autotune above program (using shared autotuning plugins) via
+```
+ $ ck autotune program:dhrystone --target=my-target-machine
+```
 
+When autotuning/exploration is finished, you will see information
+how to plot a graph with results.
 
-
-You can replay a given WA run using above UIDs via
+You can also replay a given WA run using above UIDs via
 ```
  $ ck replay wa-result:{UID}
 ```
