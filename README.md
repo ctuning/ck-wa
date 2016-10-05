@@ -21,7 +21,13 @@ License
 
 Status
 ======
-Heavy development phase led by [dividiti](http://dividiti.com). 
+Heavy development phase led by [dividiti](http://dividiti.com).
+We plan to connect WA to our crowd-benchmarking and crowd-tuning
+infrastructure while reusing multiple platforms provided by
+users and their features:
+* http://cknowledge.org/repo
+* http://github.com/ctuning/ck-crowdtuning
+* https://github.com/ctuning/ck-crowdtuning-platforms
 
 News
 ====
