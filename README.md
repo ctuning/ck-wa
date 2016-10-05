@@ -1,5 +1,5 @@
-Workload Automation for ARM powered by CK
-=========================================
+Workload Automation powered by Collective Knowledge
+===================================================
 
 Introduction
 ============
@@ -8,8 +8,10 @@ This Collective Knowledge repository provides high level
 abstraction for ARM Workload Automation framework (WA).
 It includes unified JSON API to WA, automated experiments 
 across farms of machines, optimization knowledge sharing, etc. 
-Before using it, please read 
-[CK Getting Started Guide](http://github.com/ctuning/ck/wiki)
+You may want to read 
+[CK Getting Started Guide](http://github.com/ctuning/ck/wiki),
+[DATE'16 paper](http://bit.ly/ck-date16) and 
+[CPC'15 article](https://arxiv.org/abs/1506.06256)
 to understand CK concepts for collaborative and reproducible
 experimentation.
 
