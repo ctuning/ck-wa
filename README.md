@@ -258,7 +258,4 @@ The concepts has been described in the following publications:
 * http://arxiv.org/abs/1506.06256 (CPC'15)
 * http://hal.inria.fr/hal-01054763 (Journal of Scientific Programming'14)
 
-If you found CK useful and/or interesting, you are welcome
-to reference any of the above publications in your articles
-and reports. You can download the above references in the 
-BibTex format [here](https://raw.githubusercontent.com/ctuning/ck-guide-images/master/collective-knowledge-refs.bib).
+You can download all above references in the BibTex format [here](https://raw.githubusercontent.com/ctuning/ck-guide-images/master/collective-knowledge-refs.bib).
