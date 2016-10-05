@@ -6,18 +6,22 @@ Introduction
 
 This Collective Knowledge repository provides high level
 abstraction for [ARM Workload Automation framework (WA)](https://github.com/ARM-software/workload-automation).
-It includes unified JSON API to WA, automated experiments 
-across farms of machines, optimization knowledge sharing, etc. 
-You may want to read 
+It includes unified JSON API to WA, automated experimentation,
+benchmarking and tuning across farms of machines, 
+optimization knowledge sharing, etc. Please, read
 [CK Getting Started Guide](http://github.com/ctuning/ck/wiki),
 [DATE'16 paper](http://bit.ly/ck-date16) and 
 [CPC'15 article](https://arxiv.org/abs/1506.06256)
-to understand CK concepts for collaborative and reproducible
-experimentation.
+for more details about CK and our vision of collaborative,
+reproducible and systematic experimentation.
+
+License
+=======
+* BSD, 3-clause 
 
 Status
 ======
-Heavy development phase. 
+Heavy development phase lead by [dividiti](http://dividiti.com). 
 
 Prerequisites
 =============
@@ -34,13 +38,9 @@ In the future, we plan to provide support for python 3+ and Windows/Linux/MacOS 
 Authors
 =======
 
-* Grigori Fursin, dividiti (UK)
-* Anton Lokhmotov, dividiti (UK)
-* Ed Plowman, ARM (UK)
-
-License
-=======
-* BSD, 3-clause
+* [Grigori Fursin](http://fursin.net/research.html), dividiti / cTuning foundation
+* [Anton Lokhmotov](https://www.hipeac.net/~anton), dividiti
+* [Ed Plowman](https://uk.linkedin.com/in/ed-plowman-b3738b1), ARM
 
 Installation
 ============
