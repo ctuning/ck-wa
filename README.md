@@ -51,7 +51,7 @@ Obtain CK repository for Workload Automation:
 ```
 
 Note that other CK repositories (dependencies) will be also
-automatically pulled. For example, ''ck-wa-workloads'' repository 
+automatically pulled. For example, ''[ck-wa-workloads](https://github.com/ctuning/ck-wa-workloads)'' repository 
 with all WA workloads shared in the CK format will also be installed
 from GitHub. We expect that later other users will be able to easily 
 share, plug in and reuse their workloads (or use them in private workgroups).
