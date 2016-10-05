@@ -1,3 +1,5 @@
+* 2016.10.06 - added reading of default parameters during WA import
+
 * 2016.10.05 - moved repo to github.com/ctuning to simplify installation
              - improved format of wa-result after meeting with Michael McGeagh
              - added ARM's assets to device config

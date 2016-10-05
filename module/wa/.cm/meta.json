@@ -30,8 +30,8 @@
     }
   },
   "actions_redirect": {
-    "import": "wa_import",
-    "list": "wa_list"
+    "import": "import_wa",
+    "list": "list_wa"
   },
   "agenda_file": "agenda.yaml",
   "copyright": "See CK COPYRIGHT for copyright details",

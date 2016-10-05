@@ -34,7 +34,7 @@ def init(i):
 ##############################################################################
 # list workloads (using module "program" with tags "wa")
 
-def wa_list(i):
+def list_wa(i):
     """
     Input:  {
               (data_uoa) - workload names (can have wild cards)
@@ -438,7 +438,7 @@ def dashboard(i):
 ##############################################################################
 # import workloads from original WA
 
-def wa_import(i):
+def import_wa(i):
     """
     Input:  {
               (target_repo_uoa) - where to record imported workloads
@@ -653,6 +653,54 @@ def wa_import(i):
 
         # Trying to find workload in WA (if installed from GitHub ia CK):
         pw=os.path.join(pwlauto,'workloads',w)
+
+        # Check __init__.py - scary hacking - would be much simpler if WA used CK format directly
+        cs=None
+        rxx=ck.load_module_from_path({'path':pw, 'module_code_name':'__init__', 'skip_init':'yes'})
+        if rxx['return']==0:
+            ck.out('      Obtaining params from __init__.py ...')
+
+            cs=rxx['code']
+
+            import inspect
+
+            wa_name=''
+            j=0
+            for name, obj in inspect.getmembers(cs):
+                if inspect.isclass(obj):
+                    j+=1
+                    if j==2:
+                        wa_name=name
+                        break
+
+            if name!='':
+                ck.out('         WA class: '+wa_name)
+
+                addr=getattr(cs, wa_name)
+
+                imported_params={}
+
+                pp=None
+                try:
+                    pp=addr.parameters
+                except Exception as e:
+                    pass
+
+                if pp!=None:
+                    for p in pp:
+                        for name, obj in inspect.getmembers(p):
+                            if type(obj)==dict:
+                                pn=obj['name']
+                                pd=obj['default']
+                                pdesc=obj['description']
+                                pa=obj['allowed_values']
+
+                                imported_params[pn]={'default':pd, 'desc':pdesc, 'allowed_values':pa}
+
+                                break
+
+                    if len(imported_params)>0:
+                        d['params']=imported_params
 
         # Cleaning up wd
         if wd.endswith('.'): wd=wd[:-1]
