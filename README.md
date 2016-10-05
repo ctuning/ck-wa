@@ -149,10 +149,12 @@ You can delete all above results via
 Updating WA via CK
 ==================
 
-You can install latest WA from GitHub for a given target machine via CK via
+You can install or update latest WA from GitHub for a given target machine via CK via
 ```
- $ ck install package:arm-wa-github --target={machine name}
+ $ ck install package:arm-wa-github
 ```
+
+Just follow online instructions to reinstall WA on your machine.
 
 Using Docker image
 ==================
