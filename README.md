@@ -56,8 +56,8 @@ with all WA workloads shared in the CK format will also be installed
 from GitHub. We expect that later other users will be able to easily 
 share, plug in and reuse their workloads (or use them in private workgroups).
 
-Local Usage
-===========
+Usage
+=====
 
 First, you need to register a target machine in CK as 
 described in detail in [CK wiki](https://github.com/ctuning/ck/wiki/Farms-of-CK-machines CK wiki):
