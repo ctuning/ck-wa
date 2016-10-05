@@ -71,6 +71,7 @@ def ck_preprocess(i):
 
     params=all_params.get('workload_params',{})
 
+
     wname=meta['wa_alias']
     agenda['workloads'].append({'name':wname, 'params': params})
 
@@ -85,12 +86,12 @@ def ck_preprocess(i):
     if 'config' not in agenda:
         agenda['config']={}
 
+    # Next is device config !
     ac=agenda['config']
 
     ac.update(wa_config) # Update config from device description
 
-    if 'result_processors' not in ac:
-        ac['result_processors']=[]
+    ac["remote_assets_url"]="https://raw.githubusercontent.com/ARM-software/workload-automation-assets/master/dependencies"
 
     acrp=ac['result_processors']
     if 'json'not in acrp:

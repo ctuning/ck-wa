@@ -1,4 +1,6 @@
 * 2016.10.05 - moved repo to github.com/ctuning to simplify installation
+             - improved format of wa-result after meeting with Michael McGeagh
+             - added ARM's assets to device config
 
 * 2016.10.02 - moved WA workloads in the CK format to ''ck-wa-workloads'' repository
 
