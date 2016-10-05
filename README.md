@@ -21,7 +21,7 @@ License
 
 Status
 ======
-Heavy development phase lead by [dividiti](http://dividiti.com). 
+Heavy development phase led by [dividiti](http://dividiti.com). 
 
 News
 ====
