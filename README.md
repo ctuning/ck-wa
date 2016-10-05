@@ -259,3 +259,9 @@ The concepts has been described in the following publications:
 * http://hal.inria.fr/hal-01054763 (Journal of Scientific Programming'14)
 
 You can download all above references in the BibTex format [here](https://raw.githubusercontent.com/ctuning/ck-guide-images/master/collective-knowledge-refs.bib).
+
+Feedback
+========
+If you have questions or comments, feel free to get in touch with us 
+via our [public mailing list](http://groups.google.com/group/collective-knowledge).
+
