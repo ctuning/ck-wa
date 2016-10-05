@@ -37,7 +37,8 @@ def init(i):
 def wa_list(i):
     """
     Input:  {
-              (data_uoa) - can be wild cards
+              (data_uoa) - workload names (can have wild cards)
+              (repo_uoa) - repository
             }
 
     Output: {
@@ -53,10 +54,16 @@ def wa_list(i):
     if o=='con': oo=o
 
     duoa=i.get('data_uoa','')
+    if duoa!='':
+        duoa='wa-'+duoa
+
+    ruoa=i.get('repo_uoa','')
 
     ii={'action':'search',
         'module_uoa':cfg['module_deps']['program'],
         'tags':'wa',
+        'data_uoa':duoa,
+        'repo_uoa':ruoa,
         'add_meta':'yes'}
     rr=ck.access(ii)
     if rr['return']>0: return rr
@@ -65,6 +72,9 @@ def wa_list(i):
        lst=rr['lst']
        for x in lst:
            duoa=x['data_uoa']
+           if duoa.startswith('wa-'):
+               duoa=duoa[3:]
+
            duid=x['data_uid']
 
            meta=x['meta']
@@ -84,12 +94,13 @@ def wa_list(i):
 def run(i):
     """
     Input:  {
-              (data_uoa)   - workload to run (see "ck list wa" or "ck search program --tags=wa")
+              (data_uoa)        - workload to run (see "ck list wa").
 
-              (target)     - machine UOA (see "ck list machine")
+              (target)          - machine UOA (see "ck list machine")
 
-              (record)     - if 'yes', record result in repository in 'experiment' standard
-              (record-raw) - if 'yes', record raw results
+              (record)          - if 'yes', record result in repository in 'experiment' standard
+              (skip-record-raw) - if 'yes', skip record raw results
+              (overwrite)       - if 'yes', do not record date and time in result directory, but overwrite wa-results
             }
 
     Output: {
@@ -110,6 +121,8 @@ def run(i):
 
     # Check workload(s)
     duoa=i.get('data_uoa','')
+    if duoa!='':
+        duoa='wa-'+duoa
 
     r=ck.access({'action':'search',
                  'module_uoa':cfg['module_deps']['program'],
@@ -123,13 +136,52 @@ def run(i):
        return {'return':1, 'error':'workload is not specified or found'}
 
     record=i.get('record','')
-    record_raw=i.get('record-raw','')
+    skip_record_raw=i.get('skip-record-raw','')
+    overwrite=i.get('overwrite','')
 
     # Get target features
     target=i.get('target','')
+
+    if target=='':
+        # Check and possibly select target machines
+        r=ck.search({'module_uoa':cfg['module_deps']['machine'], 'data_uoa':target, 'add_meta':'yes'})
+        if r['return']>0: return r
+
+        dlst=r['lst']
+
+        # Prune search by only required devices
+        rdat=['wa_linux', 'wa_android']
+
+        xlst=[]
+
+        if len(rdat)==0:
+            xlst=dlst
+        else:
+            for q in dlst:
+                if q.get('meta',{}).get('access_type','') in rdat:
+                    xlst.append(q)
+
+        if len(xlst)==0:
+            return {'return':1, 'error':'no suitable target devices found (use "ck add device" to register new device)'}
+        elif len(xlst)==1:
+            target=xlst[0]['data_uoa']
+        else:
+            # SELECTOR *************************************
+            ck.out('')
+            ck.out('Please select target device to run your workloads on:')
+            ck.out('')
+            r=ck.select_uoa({'choices':xlst})
+            if r['return']>0: return r
+            target=r['choice']
+
     if target=='':
         return {'return':1, 'error':'--target machine is not specified (see "ck list machine")'}
 
+    ck.out('')
+    ck.out('Selected target machine: '+target)
+    ck.out('')
+
+    # Load target machine description
     r=ck.access({'action':'load',
                  'module_uoa':cfg['module_deps']['machine'],
                  'data_uoa':target})
@@ -150,6 +202,7 @@ def run(i):
     cpu_name=fcpu.get('name','')
     if cpu_name=='': cpu_name='unknown-'+fcpu.get('cpu_abi','')
     gpu_name=fgpu.get('name','')
+    sn=fos.get('serial_number','')
 
     # Iterate over workloads
     rrr={}
@@ -163,24 +216,25 @@ def run(i):
 
         meta={'program_uoa':duoa,
               'program_uid':duid,
+              'workload_name':ww,
               'cpu_name':cpu_name,
               'os_name':os_name,
               'plat_name':plat_name,
-              'gpu_name':gpu_name}
+              'gpu_name':gpu_name,
+              'serial_number':sn}
 
         mmeta=copy.deepcopy(meta)
         mmeta['local_target_uoa']=target_uoa
         mmeta['local_target_uid']=target_uid
-        mmeta['workload_name']=ww
 
         if o=='con':
             ck.out(line)
             ck.out('Running workload '+ww+' (CK UOA='+duoa+') ...')
 
-            time.sleep(2)
+            time.sleep(1)
 
         result_path=''
-        if record_raw=='yes':
+        if skip_record_raw!='yes':
             if o=='con':
                 ck.out('  Preparing wa_result entry to store raw results ...')
 
@@ -211,6 +265,31 @@ def run(i):
                               'data_uoa':result_uid})
                 if rx['return']>0: return rx
                 ddd=rx['dict']
+
+            # Possible directory extension (date-time)
+            if overwrite!='yes':
+                rx=ck.get_current_date_time({})
+                if rx['return']>0: return rx
+
+                aa=rx['array']
+
+                ady=str(aa['date_year'])
+                adm=str(aa['date_month'])
+                adm=('0'*(2-len(adm)))+adm
+                add=str(aa['date_day'])
+                add=('0'*(2-len(add)))+add
+                ath=str(aa['time_hour'])
+                ath=('0'*(2-len(ath)))+ath
+                atm=str(aa['time_minute'])
+                atm=('0'*(2-len(atm)))+atm
+                ats=str(aa['time_second'])
+                ats=('0'*(2-len(ats)))+ats
+
+                pe=ady+adm+add+'-'+ath+atm+ats
+
+                result_path=os.path.join(result_path,pe)
+                if not os.path.isdir(result_path):
+                    os.makedirs(result_path)
 
             # Record input
             finp=os.path.join(result_path,'ck-input.json')
@@ -268,7 +347,7 @@ def run(i):
         pipeline=copy.deepcopy(rr)
 
         # Save pipeline
-        if record_raw=='yes':
+        if skip_record_raw!='yes':
             fpip=os.path.join(result_path,'ck-pipeline-in.json')
             r=ck.save_json_to_file({'json_file':fpip, 'dict':pipeline})
             if r['return']>0: return r
@@ -314,7 +393,7 @@ def run(i):
         tet=ch.get('run',{}).get('total_execution_time',0)
 
         # Save pipeline
-        if record_raw=='yes':
+        if skip_record_raw!='yes':
             ddd['state']={'fail':fail, 'fail_reason':fail_reason}
             ddd['characteristics']={'total_execution_time':tet}
 

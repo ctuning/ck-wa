@@ -86,35 +86,30 @@ for Linux based machine.
 
 Now you can see available WA workloads via
 ```
- $ ck search program --tags=wa
-   or
- $ ck list program:wa-*
+ $ ck list wa
 ```
 
 Now you can try to run youtube workload via CK universal pipeline
 using Android mobile device connected via ADB
 (results will be recorded in a local ''wa_output directory''):
 ```
- $ ck run wa:wa-youtube --target=my-target-machine
+ $ ck run wa:youtube --target=my-target-machine
 ```
 
-You can also record all raw results using flat ''--record-raw'':
-```
- $ ck run wa:wa-youtube --target=my-target-machine --record-raw
-```
-
-Raw results as well as unified JSON meta description will be recorded
-using ck-result module. You can see them via
+Note, that all raw and unified results will be automatically recorded 
+in ''wa-result'' entries. You can see these entries via
 ```
  $ ck list wa-result
 ```
 
-Note, that results for the same workload will be currently rewritten
-in ''wa-result''. Later we plan to add statistical analysis of multiple results.
-
 You can also browse results in a user-friendly way via web-based WA dashboard:
 ```
  $ ck dashboard wa
+```
+
+You can easily clean all results via:
+```
+ $ ck rm wa-result:* --force
 ```
 
 Workloads which have C sources (currently '''dhrystone''' and '''memcpy''') 
