@@ -1,5 +1,5 @@
-Workload Automation for ARM
-===========================
+Workload Automation for ARM powered by CK
+=========================================
 
 Introduction
 ============
@@ -10,7 +10,8 @@ It includes unified JSON API to WA, automated experiments
 across farms of machines, optimization knowledge sharing, etc. 
 Before using it, please read 
 [CK Getting Started Guide](http://github.com/ctuning/ck/wiki)
-to understand CK concepts.
+to understand CK concepts for collaborative and reproducible
+experimentation.
 
 Status
 ======
@@ -41,19 +42,14 @@ Installation
 Obtain CK repository for Workload Automation:
 
 ```
- $ ck pull repo --url=https://github.com/dividiti/ck-wa
-```
-or
-```
- $ ck pull repo --url=git@github.com:dividiti/ck-wa
+ $ ck pull repo:ck-wa
 ```
 
 Note that other CK repositories (dependencies) will be also
-automatically pulled. For example, you will obtain
-''ck-wa-workloads'' repository with all WA workloads
-shared in the CK format. We expect that later other users
-will be able to easily share, plug in and reuse their workloads
-(or use then in private workgroups).
+automatically pulled. For example, ''ck-wa-workloads'' repository 
+with all WA workloads shared in the CK format will also be installed
+from GitHub. We expect that later other users will be able to easily 
+share, plug in and reuse their workloads (or use them in private workgroups).
 
 Local Usage
 ===========

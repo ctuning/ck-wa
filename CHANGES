@@ -1,6 +1,8 @@
-* 2016.10.02 * moving WA workloads in the CK format to ''ck-wa-workloads'' repository
+* 2016.10.05 - moved repo to github.com/ctuning to simplify installation
 
-* 2016.09.26 * changing 'device' to 'machine'
+* 2016.10.02 - moved WA workloads in the CK format to ''ck-wa-workloads'' repository
+
+* 2016.09.26 - changed 'device' to 'machine'
 
 * 2016.09.21 - major update of "device" module and compile/run via universal CK program pipeline!
              - added support to pass 'params' dict to post-processing script to customize agenda via CK
