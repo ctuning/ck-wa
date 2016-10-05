@@ -25,7 +25,7 @@ Heavy development phase lead by [dividiti](http://dividiti.com).
 
 News
 ====
-* Upcoming CK presentation at [ARM TechCon'16 (Oct. 27)](http://schedule.armtechcon.com/session/know-your-workloads-design-more-efficient-systems);
+* Upcoming CK presentation and demo at [ARM TechCon'16 (Oct. 27)](http://schedule.armtechcon.com/session/know-your-workloads-design-more-efficient-systems);
 * Press-release: ARM and dividiti use CK to accelerate computer engineering (2016, [HiPEAC Info'45](https://www.hipeac.net/assets/public/publications/newsletter/hipeacinfo45.pdf), page 17)
 
 Prerequisites
@@ -64,8 +64,8 @@ share, plug in and reuse their workloads (or use them in private workgroups).
 Usage
 =====
 
-First, you need to register a target machine in CK as 
-described in detail in [CK wiki](https://github.com/ctuning/ck/wiki/Farms-of-CK-machines CK wiki):
+First, you need to register a target machine in the CK as 
+described in detail in the [CK wiki](https://github.com/ctuning/ck/wiki/Farms-of-CK-machines CK wiki):
 
 ```
  $ ck add machine:my-target-machine
