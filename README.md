@@ -45,6 +45,9 @@ Authors
 
 * [Grigori Fursin](http://fursin.net/research.html), dividiti / cTuning foundation
 * [Anton Lokhmotov](https://www.hipeac.net/~anton), dividiti
+* [Sergei Trofimov](https://uk.linkedin.com/in/sergei-trofimov-0206a55), ARM
+* [Michael McGeagh](https://uk.linkedin.com/in/mcgeagh), ARM
+* Dave Butcher, ARM
 * [Ed Plowman](https://uk.linkedin.com/in/ed-plowman-b3738b1), ARM
 
 Installation
