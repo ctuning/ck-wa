@@ -93,7 +93,7 @@ using ck-result module. You can see them via
 Note, that results for the same workload will be currently rewritten
 in ''wa-result''. Later we plan to add statistical analysis of multiple results.
 
-You can also browse results in a user-friendy way via web-based WA dashboard:
+You can also browse results in a user-friendly way via web-based WA dashboard:
 ```
  $ ck dashboard wa
 ```
@@ -219,3 +219,36 @@ It will then be possible to list and run workloads on the remote server via
  $ ck list workgroup-wa-repo:wa:
  $ ck run workgroup-wa-repo:wa:dhrystone
 ```
+
+Main reference
+==============
+
+@inproceedings{cm:29db2248aba45e5:9671da4c2f971915,
+   title =     {Collective Knowledge: towards R&D sustainability},
+   author =    {Fursin, Grigori and Lokhmotov, Anton and Plowman, Ed},
+   booktitle = {Proceedings of DATE 2016 (Design, Automation and Test in Europe)},
+   year =      {2016},
+   month =     {March},
+   keys =      {http://www.date-conference.com},
+   url =       {http://bit.ly/ck-date16}
+}
+
+Publications
+============
+The concepts has been described in the following publications:
+
+* http://bit.ly/ck-date16 (DATE'16)
+* http://arxiv.org/abs/1506.06256 (CPC'15)
+* http://hal.inria.fr/hal-01054763 (Journal of Scientific Programming'14)
+
+If you found CK useful and/or interesting, you are welcome
+to reference any of the above publications in your articles
+and reports. You can download the above references in the 
+BibTex format here:
+
+* https://raw.githubusercontent.com/ctuning/ck-guide-images/master/collective-knowledge-refs.bib
+
+Testimonials and awards
+=======================
+* HiPEAC technology transfer award (2014, [HiPEAC TT winners](https://www.hipeac.net/research/technology-transfer-awards/2014))
+* ARM and dividiti use CK to accelerate computer engineering (2016, [HiPEAC Info'45](https://www.hipeac.net/assets/public/publications/newsletter/hipeacinfo45.pdf), page 17)
