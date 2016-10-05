@@ -5,7 +5,7 @@ Introduction
 ============
 
 This Collective Knowledge repository provides high level
-abstraction for ARM Workload Automation framework (WA).
+abstraction for [ARM Workload Automation framework (WA)](https://github.com/ARM-software/workload-automation).
 It includes unified JSON API to WA, automated experiments 
 across farms of machines, optimization knowledge sharing, etc. 
 You may want to read 
@@ -17,16 +17,19 @@ experimentation.
 
 Status
 ======
-Heavy development phase ...
+Heavy development phase. 
 
 Prerequisites
 =============
 * Collective Knowledge framework ([@GitHub](http://github.com/ctuning/ck))
 
-ARM WA requires:
+[ARM WA](https://github.com/ARM-software/workload-automation) will be automatically installed by CK. 
+It requires:
 * python2
 * pip (install via apt-get install python-pip)
 * yaml (install via apt-get install libyaml-dev)
+
+In the future, we plan to provide support for python 3+ and Windows/Linux/MacOS host platforms in the WA via CK unified routines.
 
 Authors
 =======
@@ -221,6 +224,11 @@ It will then be possible to list and run workloads on the remote server via
  $ ck list workgroup-wa-repo:wa:
  $ ck run workgroup-wa-repo:wa:dhrystone
 ```
+
+Future work
+===========
+* Current WA can work only with Python 2.x and does not support Windows. Hence, we plan to provide tighter integration with the CK to make WA support Python 3.x and all Linux/MacOS/Windows via CK unified routines.
+* We continuing unifying high-level API to crowd-benchmark and crowd-tune shared workloads (see [1](http://bit.ly/ck-date16), [2](http://hal.inria.fr/hal-01054763) and [3](http://arxiv.org/abs/1506.06256) to know more about our vision).
 
 Main reference
 ==============
