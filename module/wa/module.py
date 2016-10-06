@@ -107,6 +107,8 @@ def run(i):
               (config)          - customize config
               (params)          - workload params
               (scenario)        - use pre-defined scenario (see ck list wa-scenario)
+
+              (keep)            - if 'yes', keep tmp file in workload (program) directory
             }
 
     Output: {
@@ -120,6 +122,7 @@ def run(i):
     import os
     import copy
     import time
+    import shutil
 
     o=i.get('out','')
     oo=''
@@ -417,17 +420,26 @@ def run(i):
         rrr=ck.access(ii)
         if rrr['return']>0: return rrr
 
+        ck.save_json_to_file({'json_file':'/tmp/xyz222.json','dict':rrr})
+
         ls=rrr.get('last_iteration_output',{})
+
+        # Clean tmp dir
+        tmp_dir=ls.get('state',{}).get('tmp_dir','')
+        if dp!='' and tmp_dir!='' and i.get('keep','')!='yes':
+            shutil.rmtree(os.path.join(dp,tmp_dir))
+
         fail=ls.get('fail','')
         fail_reason=ls.get('fail_reason','')
 
         ch=ls.get('characteristics',{})
-        tet=ch.get('run',{}).get('total_execution_time',0)
+
+#        tet=ch.get('run',{}).get('total_execution_time',0)
 
         # Save pipeline
         if skip_record_raw!='yes':
             ddd['state']={'fail':fail, 'fail_reason':fail_reason}
-            ddd['characteristics']={'total_execution_time':tet}
+            ddd['characteristics']=ch
 
             fpip=os.path.join(result_path,'ck-pipeline-out.json')
             r=ck.save_json_to_file({'json_file':fpip, 'dict':rrr})
@@ -765,7 +777,6 @@ def import_wa(i):
         if r['return']>0: return r
 
         pnew=r['path']
-        print (pnew)
 
         if os.path.isdir(pw):
             # Copying files to CK entry

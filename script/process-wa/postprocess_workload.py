@@ -70,19 +70,23 @@ def ck_postprocess(i):
     for x in results:
         metrics=x.get('metrics',[])
         for m in metrics:
-            if m.get('name','')=='execution_time':
-               ttp=m['value']
-               break
+            name=m.get('name','')
+            if name!='':
+                value=m.get('value',None)
+                if m.get('name','')=='execution_time':
+                    ttp=value
+                    break
+                d[name]=value
 
     if ttp!=0:
        d['execution_time']=ttp
        d['execution_time_kernel_0']=ttp
 
-    d['results']=results
-    d['log_stdout']=log
-    d['log_stderr']=err
+#    d['results']=results
+#    d['log_stdout']=log
+#    d['log_stderr']=err
 
-    d['post_processed']='yes'
+#    d['post_processed']='yes'
 
     # Write CK json
     r=ck.save_json_to_file({'json_file':'tmp-ck-timer.json', 'dict':d})
