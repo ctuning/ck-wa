@@ -1,5 +1,9 @@
 {
-  "actions": {},
+  "actions": {
+    "add": {
+      "desc": "add scenario (semi-manual)"
+    }
+  },
   "copyright": "See CK-WA COPYRIGHT.txt for copyright details",
   "desc": "common workload automation scenarios",
   "developer": "cTuning foundation",

@@ -1,0 +1,10 @@
+{
+  "config": {
+    "result_processors": [
+      "uxperf"
+    ]
+  },
+  "params": {
+    "markers_enabled": true
+  }
+}

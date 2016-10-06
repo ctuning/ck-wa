@@ -1,0 +1,12 @@
+{
+  "config": {
+    "fps": {
+      "crash_check": false,
+      "drop_threshold": 0
+    },
+    "instrumentation": [
+      "fps"
+    ]
+  },
+  "params": {}
+}

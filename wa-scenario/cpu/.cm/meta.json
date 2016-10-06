@@ -1,0 +1,17 @@
+{
+  "config": {
+    "instrumentation": [
+      "trace-cmd"
+    ],
+    "result_processors": [
+      "cpustates"
+    ],
+    "trace-cmd": {
+      "events": [
+        "cpu_idle",
+        "cpu_frequency"
+      ]
+    }
+  },
+  "params": {}
+}
