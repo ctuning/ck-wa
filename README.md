@@ -5,11 +5,11 @@ Introduction
 ============
 
 This Collective Knowledge repository provides high level
-abstraction for [ARM Workload Automation framework (WA)](https://github.com/ARM-software/workload-automation).
+front-end for [ARM Workload Automation framework (WA)](https://github.com/ARM-software/workload-automation).
 It includes unified JSON API to WA, automated experimentation,
 benchmarking and tuning across farms of machines, 
-optimization knowledge sharing, etc. Please, read
-[CK Getting Started Guide](http://github.com/ctuning/ck/wiki),
+web-based dashboard, optimization knowledge sharing, etc.
+ Please, read [CK Getting Started Guide](http://github.com/ctuning/ck/wiki),
 [DATE'16 paper](http://bit.ly/ck-date16) and 
 [CPC'15 article](https://arxiv.org/abs/1506.06256)
 for more details about CK and our vision of collaborative,
@@ -271,3 +271,11 @@ Feedback
 If you have questions or comments, feel free to get in touch with us 
 via our [public mailing list](http://groups.google.com/group/collective-knowledge).
 
+Acknowledgments
+===============
+CK development is coordinated by [dividiti](http://dividiti.com), [cTuning
+foundation](http://cTuning.org) and [ARM](http://www.arm.com).
+We would like to thank all volunteers for their valuable feedback 
+and contributions.
+
+![logo](https://github.com/ctuning/ck-guide-images/blob/master/logo-validated-by-the-community-simple.png)
