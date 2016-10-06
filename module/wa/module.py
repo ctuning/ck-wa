@@ -441,6 +441,7 @@ def dashboard(i):
 def import_wa(i):
     """
     Input:  {
+              (workload)        - import only this workload
               (target_repo_uoa) - where to record imported workloads
             }
 
@@ -455,6 +456,7 @@ def import_wa(i):
     import os
     import copy
     import shutil
+    import inspect
 
     o=i.get('out','')
     oo=''
@@ -589,23 +591,26 @@ def import_wa(i):
        os.remove(fbat)
 
     # Parse descriptions
+    workload=i.get('workload','')
+
     wa={}
     wk=''
     wv=''
     for l in lst:
         if l!='':
-           j=l.find(': ')
-           if j>0:
-              if wk!='':
-                 wa[wk]=wv
-                 wk=''
-                 wv=''
-              wk=l[:j].strip()
-              wv=l[j+2:].strip()
-           else:
-              wv+=' '+l.strip()
+            j=l.find(': ')
+            if j>0:
+                if wk!='':
+                    if workload=='' or workload==wk:
+                        wa[wk]=wv
+                        wk=''
+                        wv=''
+                wk=l[:j].strip()
+                wv=l[j+2:].strip()
+            else:
+                wv+=' '+l.strip()
     if wk!='':
-       wa[wk]=wv
+        if workload=='' or workload==wk:  wa[wk]=wv
 
     # Load WA template
     wt=os.path.join(work['path'],'templates','wa-template.json')
@@ -658,49 +663,45 @@ def import_wa(i):
         cs=None
         rxx=ck.load_module_from_path({'path':pw, 'module_code_name':'__init__', 'skip_init':'yes'})
         if rxx['return']==0:
-            ck.out('      Obtaining params from __init__.py ...')
-
             cs=rxx['code']
 
-            import inspect
+            ck.out('      Obtaining params from __init__.py ...')
 
             wa_name=''
-            j=0
+            pp=None
+            imported_params={}
+
             for name, obj in inspect.getmembers(cs):
-                if inspect.isclass(obj):
-                    j+=1
-                    if j==2:
+                if name!='AndroidUxPerfWorkload' and inspect.isclass(obj):
+                    try:
+                        addr=getattr(cs, name)
+                        pp=addr.parameters
+                    except Exception as e:
+                        pass
+
+                    if pp!=None:
                         wa_name=name
                         break
 
-            if name!='':
+            if wa_name!='':
                 ck.out('         WA class: '+wa_name)
 
-                addr=getattr(cs, wa_name)
+                for p in pp:
+                    for name, obj in inspect.getmembers(p):
+                        if type(obj)==dict:
+                            pn=obj['name']
+                            pd=obj['default']
+                            pk=obj['kind']
+                            pm=obj['mandatory']
+                            pdesc=obj['description'].replace('\n','').replace('                 ','').strip()
+                            pa=obj['allowed_values']
 
-                imported_params={}
+                            imported_params[pn]={'default':pd, 'desc':pdesc, 'allowed_values':pa, 'type':str(pk.__name__), 'mandatory':pm}
 
-                pp=None
-                try:
-                    pp=addr.parameters
-                except Exception as e:
-                    pass
+                            break
 
-                if pp!=None:
-                    for p in pp:
-                        for name, obj in inspect.getmembers(p):
-                            if type(obj)==dict:
-                                pn=obj['name']
-                                pd=obj['default']
-                                pdesc=obj['description']
-                                pa=obj['allowed_values']
-
-                                imported_params[pn]={'default':pd, 'desc':pdesc, 'allowed_values':pa}
-
-                                break
-
-                    if len(imported_params)>0:
-                        d['params']=imported_params
+                if len(imported_params)>0:
+                    d['params']=imported_params
 
         # Cleaning up wd
         if wd.endswith('.'): wd=wd[:-1]
