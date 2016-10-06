@@ -162,7 +162,7 @@ def run(i):
                     xlst.append(q)
 
         if len(xlst)==0:
-            return {'return':1, 'error':'no suitable target devices found (use "ck add device" to register new device)'}
+            return {'return':1, 'error':'no suitable target devices found (use "ck add machine" to register new target device)'}
         elif len(xlst)==1:
             target=xlst[0]['data_uoa']
         else:
