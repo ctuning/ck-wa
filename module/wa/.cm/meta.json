@@ -34,7 +34,7 @@
     "list": "list_wa"
   },
   "agenda_file": "agenda.yaml",
-  "copyright": "See CK COPYRIGHT for copyright details",
+  "copyright": "See CK-WA COPYRIGHT for copyright details",
   "default_agenda": {
     "config": {
       "instrumentation": [
@@ -47,10 +47,13 @@
     "workloads": []
   },
   "default_device_cfg_file": "device-template.json",
-  "desc": "ARM workload automation wrapper",
+  "desc": "CK front-end for ARM workload automation",
+  "developer": "dividiti",
+  "developer_email": "grigori@dividiti.com",
+  "developer_webpage": "http://dividiti.com",
   "device_cfg_file": "config.py",
-  "license": "See CK LICENSE for licensing details",
-  "linux_based_wa_devices":[
+  "license": "See CK-WA LICENSE for licensing details",
+  "linux_based_wa_devices": [
     "chromeos_test_image",
     "gem5_linux",
     "generic_linux",

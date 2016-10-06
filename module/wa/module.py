@@ -1,10 +1,10 @@
 #
 # Collective Knowledge (ARM workload automation)
 #
-# See CK LICENSE for licensing details
-# See CK COPYRIGHT for copyright details
+# See CK-WA LICENSE for licensing details
+# See CK-WA COPYRIGHT for copyright details
 #
-# Developer: dividiti, http://dividiti.com
+# Developer: dividiti, grigori@dividiti.com, http://dividiti.com
 #
 
 cfg={}  # Will be updated by CK (meta description of this module)

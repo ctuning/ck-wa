@@ -1,8 +1,8 @@
 #
 # Collective Knowledge (WA results)
 #
-# See CK LICENSE.txt for licensing details
-# See CK COPYRIGHT.txt for copyright details
+# See CK-WA LICENSE.txt for licensing details
+# See CK-WA COPYRIGHT.txt for copyright details
 #
 # Developer: dividiti, grigori@dividiti.com, http://dividiti.com
 #
