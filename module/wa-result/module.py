@@ -83,7 +83,8 @@ def show(i):
     lst=r['lst']
 
     # Check unique entries
-    selector=[{'name':'Workload', 'key':'workload_name'},
+    selector=[{'name':'Scenario', 'key':'scenario'},
+              {'name':'Workload', 'key':'workload_name'},
               {'name':'Platform', 'key':'plat_name'},
               {'name':'CPU', 'key':'cpu_name'},
               {'name':'OS', 'key':'os_name'},
@@ -147,6 +148,7 @@ def show(i):
 
     h+='  <tr>\n'
     h+='   <td '+ha+'><b>All raw files</b></td>\n'
+    h+='   <td '+ha+'><b>Scenario</b></td>\n'
     h+='   <td '+ha+'><b>Workload</b></td>\n'
     h+='   <td '+ha+'><b>Platform</b></td>\n'
     h+='   <td '+ha+'><b>serial number / adb device ID</b></td>\n'
@@ -186,6 +188,8 @@ def show(i):
         wname=meta.get('workload_name','')
         wuid=meta.get('program_uid','')
 
+        scenario=meta.get('scenario','')
+
         ltarget_uoa=meta.get('local_target_uoa','')
         ltarget_uid=meta.get('local_target_uid','')
 
@@ -219,6 +223,11 @@ def show(i):
         h+='  <tr'+bg+'>\n'
 
         h+='   <td '+ha+'><a href="'+url0+'&wcid='+work['self_module_uid']+':'+duid+'">'+duid+'</a></td>\n'
+
+        x=''
+        if scenario!='':
+            x='<a href="'+url0+'&wcid='+cfg['module_deps']['wa-scenario']+':'+scenario+'">'+scenario+'</a>'
+        h+='   <td '+ha+'>'+x+'</td>\n'
 
         x=wname
         if wuid!='': x='<a href="'+url0+'&wcid='+cfg['module_deps']['program']+':'+wuid+'">'+x+'</a>'

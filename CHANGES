@@ -2,6 +2,7 @@
              - added wa-scenario module and "cpu","fps","markers" entries
              - added customization of device config/workload params from CMD
              - asking for mandatory params
+             - added scenario selector to WA dashboard
 
 * 2016.10.05 - moved repo to github.com/ctuning to simplify installation
              - improved format of wa-result after meeting with Michael McGeagh

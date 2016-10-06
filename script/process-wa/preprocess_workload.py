@@ -93,12 +93,6 @@ def ck_preprocess(i):
     r=ck.merge_dicts({'dict1':params, 'dict2':all_params.get('params',{})})
     if r['return']>0: return r
 
-    ck.out('')
-    ck.out('Parameters for this workload:')
-    ck.out('')
-    ck.out(json.dumps(params, indent=2))
-    ck.out('')
-
     wname=meta['wa_alias']
     agenda['workloads'].append({'name':wname, 'params': params})
 
