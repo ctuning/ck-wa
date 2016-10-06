@@ -1,1 +1,1 @@
-ck run wa @run-dhrystone.json --record --iterations=2 --verbose
+ck run wa:dhrystone @run-dhrystone.json --repetitions=2

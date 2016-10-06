@@ -1,9 +1,6 @@
 {
- "params":{
-   "versbose":"yes",
-   "workload":{
-    "mloops":16,
-    "threads":16
+ "env":{
+    "CK_DHRYSTONE_ITERS":400,
+    "CK_DHRYSTONE_THREADS":2
    }
- }
 }

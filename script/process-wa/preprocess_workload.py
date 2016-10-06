@@ -44,6 +44,8 @@ def ck_preprocess(i):
 
     env=i['env']
 
+    all_params=i.get('params',{})
+
     raw_path=env.get('CK_WA_RAW_RESULT_PATH','')
 
     if raw_path=='':
@@ -57,8 +59,7 @@ def ck_preprocess(i):
 
     meta=i.get('meta',{})
 
-    all_params=i.get('params',{})
-
+    # Get target machine config 
     device_cfg=i.get('device_cfg',{})
     wa_config=device_cfg.get('wa_config',{})
 
@@ -78,7 +79,6 @@ def ck_preprocess(i):
 
         dv=x.get('default',None)
 
-
         if dv==None and x.get('mandatory',False):
             r=ck.inp({'text':'Enter '+x.get('desc','')+': '})
             if r['return']>0: return r
@@ -89,8 +89,9 @@ def ck_preprocess(i):
         if dv!=None:
             params[k]=dv
 
-    # Update by external parameters
-    params.update(all_params.get('workload',{}))
+    # Customize device config and workload params from outside!
+    r=ck.merge_dicts({'dict1':params, 'dict2':all_params.get('params',{})})
+    if r['return']>0: return r
 
     ck.out('')
     ck.out('Parameters for this workload:')
@@ -112,12 +113,14 @@ def ck_preprocess(i):
     if 'config' not in agenda:
         agenda['config']={}
 
-    # Next is device config !
+    # Prepare and customize WA device config !
     ac=agenda['config']
-
     ac.update(wa_config) # Update config from device description
 
     ac["remote_assets_url"]="https://raw.githubusercontent.com/ARM-software/workload-automation-assets/master/dependencies"
+
+    r=ck.merge_dicts({'dict1':ac, 'dict2':all_params.get('config',{})})
+    if r['return']>0: return r
 
     acrp=ac['result_processors']
     if 'json'not in acrp:

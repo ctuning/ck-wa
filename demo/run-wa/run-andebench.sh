@@ -1,1 +1,1 @@
-ck run wa @run-andebench.json --record --iterations=2 --verbose
+ck run wa:andebench @run-andebench.json --repetitions=1

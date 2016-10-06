@@ -61,14 +61,13 @@
     "XE503C12"
   ],
   "module_deps": {
-    "device": "5add622b07468cb6",
     "env": "9b9b3208ac44b891",
     "machine": "84be34883a81b2a9",
     "pipeline": "db25414b48b4ffb3",
     "platform": "707ccdfe444cafac",
     "platform.os": "41e31cc4496b8a8e",
     "program": "b0ac08fe1d3c2615",
-    "wa-agenda": "749324e71a4947ac",
+    "wa-scenario":"694431881401480c",
     "wa-result": "9db0db9369416e1b"
   },
   "wa_deps": {

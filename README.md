@@ -7,8 +7,8 @@ Introduction
 This Collective Knowledge repository provides high level
 front-end for [ARM Workload Automation framework (WA)](https://github.com/ARM-software/workload-automation).
 It includes unified JSON API to WA, automated experimentation,
-benchmarking and tuning across farms of machines, 
-web-based dashboard, optimization knowledge sharing, etc.
+benchmarking and tuning across farms of machines (Android, Linux,
+MacOS, Windows), web-based dashboard, optimization knowledge sharing, etc.
  Please, read [CK Getting Started Guide](http://github.com/ctuning/ck/wiki),
 [DATE'16 paper](http://bit.ly/ck-date16) and 
 [CPC'15 article](https://arxiv.org/abs/1506.06256)

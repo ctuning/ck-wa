@@ -1,5 +1,4 @@
 {
- "agenda":{
   "config": {
     "instrumentation": [
       "trace-cmd"
@@ -15,13 +14,7 @@
       ]
     }
   },
-  "workloads": [
-    {
-      "name": "googlephotos",
       "params": {
         "check_apk": false
       }
-    }
-  ]
- }
 }

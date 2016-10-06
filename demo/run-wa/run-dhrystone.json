@@ -1,5 +1,4 @@
 {
- "agenda":{
   "config": {
     "instrumentation": [
       "~execution_time"
@@ -8,14 +7,8 @@
       "json"
     ]
   },
-  "workloads": [
-    {
-      "name": "dhrystone",
-      "params": {
-        "mloops": 5,
-        "threads": 1
-      }
-    }
-  ]
- }
+  "params": {
+    "mloops": 5,
+    "threads": 1
+  }
 }

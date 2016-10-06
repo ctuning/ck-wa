@@ -103,6 +103,10 @@ def run(i):
               (overwrite)       - if 'yes', do not record date and time in result directory, but overwrite wa-results
 
               (repetitions)     - statistical repetitions (default=1), for now statistical analysis is not used (TBD)
+
+              (config)          - customize config
+              (params)          - workload params
+              (scenario)        - use pre-defined scenario (see ck list wa-scenario)
             }
 
     Output: {
@@ -120,6 +124,24 @@ def run(i):
     o=i.get('out','')
     oo=''
     if o=='con': oo=o
+
+    # Check scenario
+    config=i.get('config',{})
+    params=i.get('params',{})
+
+    scenario=i.get('scenario','')
+    if scenario!='':
+        r=ck.access({'action':'load',
+                     'module_uoa':cfg['module_deps']['wa-scenario'],
+                     'data_uoa':scenario})
+        if r['return']>0: return r
+        d=r['dict']
+
+        r=ck.merge_dicts({'dict1':config, 'dict2':d.get('config',{})})
+        if r['return']>0: return r
+
+        r=ck.merge_dicts({'dict1':params, 'dict2':d.get('params',{})})
+        if r['return']>0: return r
 
     # Check workload(s)
     duoa=i.get('data_uoa','')
@@ -227,6 +249,7 @@ def run(i):
               'os_name':os_name,
               'plat_name':plat_name,
               'gpu_name':gpu_name,
+              'scenario':scenario,
               'serial_number':sn}
 
         mmeta=copy.deepcopy(meta)
@@ -316,6 +339,9 @@ def run(i):
             'device_id':device_id,
 
             'prepare':'yes',
+
+            'params':{'config':config,
+                      'params':params},
 
             'no_state_check':'yes',
             'no_compiler_description':'yes',

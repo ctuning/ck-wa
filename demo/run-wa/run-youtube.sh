@@ -1,1 +1,1 @@
-ck run wa @run-youtube.json --record --iterations=2 --verbose
+ck run wa:youtube @run-youtube.json --repetitions=1
