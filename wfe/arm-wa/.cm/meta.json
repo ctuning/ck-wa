@@ -1,14 +1,10 @@
 {
   "top_menu": [
     {
-      "module_uoa": "", 
-      "module_uoas": [
-        ""
-      ], 
       "url_extra": "action=index&module_uoa=wfe&native_action=show&native_module_uoa=machine", 
       "native_module_uoa":"machine",
       "native_action":"show",
-      "default":"yes",
+      "default":"no",
       "name": "Targets"
     }, 
     {
@@ -19,6 +15,7 @@
       "url_extra": "action=index&module_uoa=wfe&native_action=show&native_module_uoa=wa-result", 
       "native_module_uoa":"wa-result",
       "native_action":"show",
+      "default":"yes",
       "name": "Raw experiments"
     }, 
     {

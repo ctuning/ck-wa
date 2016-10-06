@@ -137,7 +137,7 @@ def show(i):
         r=ck.access(ii)
         if r['return']>0: return r
 
-        h+='<b>'+n+':</b> '+r['html']+'\n'
+        h+='<b>'+n+':</b> '+r['html'].strip()+'\n'
 
     h+='<br><br>'
 
@@ -148,8 +148,8 @@ def show(i):
 
     h+='  <tr>\n'
     h+='   <td '+ha+'><b>All raw files</b></td>\n'
-    h+='   <td '+ha+'><b>Scenario</b></td>\n'
     h+='   <td '+ha+'><b>Workload</b></td>\n'
+    h+='   <td '+ha+'><b>Scenario</b></td>\n'
     h+='   <td '+ha+'><b>Platform</b></td>\n'
     h+='   <td '+ha+'><b>serial number / adb device ID</b></td>\n'
     h+='   <td '+ha+'><b>CPU</b></td>\n'
@@ -224,13 +224,13 @@ def show(i):
 
         h+='   <td '+ha+'><a href="'+url0+'&wcid='+work['self_module_uid']+':'+duid+'">'+duid+'</a></td>\n'
 
+        x=wname
+        if wuid!='': x='<a href="'+url0+'&wcid='+cfg['module_deps']['program']+':'+wuid+'">'+x+'</a>'
+        h+='   <td '+ha+'>'+x+'</td>\n'
+
         x=''
         if scenario!='':
             x='<a href="'+url0+'&wcid='+cfg['module_deps']['wa-scenario']+':'+scenario+'">'+scenario+'</a>'
-        h+='   <td '+ha+'>'+x+'</td>\n'
-
-        x=wname
-        if wuid!='': x='<a href="'+url0+'&wcid='+cfg['module_deps']['program']+':'+wuid+'">'+x+'</a>'
         h+='   <td '+ha+'>'+x+'</td>\n'
 
         x=plat_name
