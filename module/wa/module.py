@@ -101,6 +101,8 @@ def run(i):
               (record)          - if 'yes', record result in repository in 'experiment' standard
               (skip-record-raw) - if 'yes', skip record raw results
               (overwrite)       - if 'yes', do not record date and time in result directory, but overwrite wa-results
+
+              (repetitions)     - statistical repetitions (default=1), for now statistical analysis is not used (TBD)
             }
 
     Output: {
@@ -138,6 +140,10 @@ def run(i):
     record=i.get('record','')
     skip_record_raw=i.get('skip-record-raw','')
     overwrite=i.get('overwrite','')
+
+    repetitions=i.get('repetitions','')
+    if repetitions=='': repetitions=1
+    repetitions=int(repetitions)
 
     # Get target features
     target=i.get('target','')
@@ -360,7 +366,7 @@ def run(i):
             'device_id':device_id,
 
             'iterations':1,
-            'repetitions':1,
+            'repetitions':repetitions,
 
             'tmp_dir':tmp_dir,
 

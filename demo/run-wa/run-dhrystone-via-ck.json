@@ -1,7 +1,7 @@
 {
  "params":{
    "versbose":"yes",
-   "workload_params":{
+   "workload":{
     "mloops":16,
     "threads":16
    }

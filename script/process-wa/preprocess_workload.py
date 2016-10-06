@@ -69,8 +69,34 @@ def ck_preprocess(i):
     r=ck.merge_dicts({'dict1':agenda, 'dict2':all_params.get('agenda',{})})
     if r['return']>0: return 
 
-    params=all_params.get('workload_params',{})
+    # Check default params
+    params={}
 
+    dp=meta.get('params',{})
+    for k in sorted(dp):
+        x=dp[k]
+
+        dv=x.get('default',None)
+
+
+        if dv==None and x.get('mandatory',False):
+            r=ck.inp({'text':'Enter '+x.get('desc','')+': '})
+            if r['return']>0: return r
+            dv=r['string'].strip()
+            if dv=='':
+                dv=None
+
+        if dv!=None:
+            params[k]=dv
+
+    # Update by external parameters
+    params.update(all_params.get('workload',{}))
+
+    ck.out('')
+    ck.out('Parameters for this workload:')
+    ck.out('')
+    ck.out(json.dumps(params, indent=2))
+    ck.out('')
 
     wname=meta['wa_alias']
     agenda['workloads'].append({'name':wname, 'params': params})
