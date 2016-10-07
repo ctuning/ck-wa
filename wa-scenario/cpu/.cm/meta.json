@@ -7,6 +7,7 @@
       "cpustates"
     ],
     "trace-cmd": {
+      "no_install": false,
       "events": [
         "cpu_idle",
         "cpu_frequency"

@@ -265,7 +265,10 @@ def run(i):
 
             time.sleep(1)
 
+        aggregated_stats={} # Pre-load statistics ...
+
         result_path=''
+        result_path0=''
         if skip_record_raw!='yes':
             if o=='con':
                 ck.out('  Preparing wa_result entry to store raw results ...')
@@ -299,6 +302,7 @@ def run(i):
                 ddd=rx['dict']
 
             # Possible directory extension (date-time)
+            result_path0=result_path
             if overwrite!='yes':
                 rx=ck.get_current_date_time({})
                 if rx['return']>0: return rx
@@ -331,6 +335,15 @@ def run(i):
             ff=os.path.join(result_path,'ck-platform-features.json')
             r=ck.save_json_to_file({'json_file':ff, 'dict':features})
             if r['return']>0: return r
+
+            # Check stats ...
+            fstat=os.path.join(result_path0,'ck-stat-flat-characteristics.json')
+            if overwrite!='yes':
+                # Check if file already exists (no check for parallel runs)
+                if os.path.isfile(fstat):
+                    r=ck.load_json_file({'json_file':fstat})
+                    if r['return']==0:
+                        aggregated_stats=r['dict']
 
         # Prepare CK pipeline for a given workload
         ii={'action':'pipeline',
@@ -397,9 +410,14 @@ def run(i):
             'iterations':1,
             'repetitions':repetitions,
 
+            'collect_all':'yes',
+            'process_multi_keys':['##characteristics#*'],
+
             'tmp_dir':tmp_dir,
 
             'pipeline':pipeline,
+
+            'stat_flat_dict':aggregated_stats,
 
             'record':record,
 
@@ -420,9 +438,9 @@ def run(i):
         rrr=ck.access(ii)
         if rrr['return']>0: return rrr
 
-        ck.save_json_to_file({'json_file':'/tmp/xyz222.json','dict':rrr})
-
         ls=rrr.get('last_iteration_output',{})
+        lsa=rrr.get('last_stat_analysis',{})
+        lsad=lsa.get('dict_flat',{})
 
         # Clean tmp dir
         tmp_dir=ls.get('state',{}).get('tmp_dir','')
@@ -443,6 +461,12 @@ def run(i):
 
             fpip=os.path.join(result_path,'ck-pipeline-out.json')
             r=ck.save_json_to_file({'json_file':fpip, 'dict':rrr})
+            if r['return']>0: return r
+
+            # Write stats ...
+            print (fstat)
+            ck.inp({'text':''})
+            r=ck.save_json_to_file({'json_file':fstat, 'dict':lsad})
             if r['return']>0: return r
 
             # Update meta
