@@ -507,8 +507,9 @@ def dashboard(i):
 def import_wa(i):
     """
     Input:  {
-              (workload)        - import only this workload
-              (target_repo_uoa) - where to record imported workloads
+              (workload)              - import only this workload
+              (target_repo_uoa)       - where to record imported workloads
+              (extra_target_repo_uoa) - where to record imported tools and devices
             }
 
     Output: {
@@ -529,6 +530,10 @@ def import_wa(i):
     if o=='con': oo=o
 
     ruoa=i.get('target_repo_uoa','')
+
+    eruoa=i.get('extra_target_repo_uoa','')
+    if eruoa=='':
+        eruoa=ruoa
 
     # Get platform params
     target=i.get('target','')
@@ -662,6 +667,11 @@ def import_wa(i):
     wa={}
     wk=''
     wv=''
+
+    ##############################################################################
+    ck.out('Importing WA workloads to CK:')
+    ck.out('')
+
     for l in lst:
         if l!='':
             j=l.find(': ')
@@ -819,6 +829,84 @@ def import_wa(i):
                     os.makedirs(pd2)
 
                 shutil.copy2(p1,p2)
+
+    ############################################################################
+    ck.out('')
+    ck.out('Importing WA tools to CK:')
+    ck.out('')
+
+    pd=os.path.join(pwlauto,'instrumentation')
+    if os.path.isdir(pd):
+        for px in os.listdir(pd):
+            pdd=os.path.join(pd,px)
+            if os.path.isdir(pdd):
+                ck.out('  '+px)
+                r=ck.access({'action':'update',
+                             'module_uoa':cfg['module_deps']['wa-tool'],
+                             'data_uoa':px,
+                             'repo_uoa':eruoa})
+                if r['return']>0: return r
+
+                pnew=r['path']
+
+                ck.out('    Path to CK entry: '+pnew)
+
+                # Copying files to CK entry
+                r=ck.list_all_files({'path':pdd})
+                if r['return']>0: return r
+
+                lst=r['list']
+
+                for fn in lst:
+                    p1=os.path.join(pdd,fn)
+                    p2=os.path.join(pnew,fn)
+
+                    pd2=os.path.dirname(p2)
+                    if not os.path.isdir(pd2):
+                        os.makedirs(pd2)
+
+                    shutil.copy2(p1,p2)
+
+    ############################################################################
+    ck.out('')
+    ck.out('Importing WA devices to CK:')
+    ck.out('')
+
+    devs=['android','linux']
+
+    for dv in devs:
+        pd=os.path.join(pwlauto,'devices',dv)
+        if os.path.isdir(pd):
+            for px in os.listdir(pd):
+                pdd=os.path.join(pd,px)
+                if os.path.isdir(pdd):
+                    ck.out('  '+px)
+                    r=ck.access({'action':'update',
+                                 'module_uoa':cfg['module_deps']['wa-device'],
+                                 'data_uoa':dv+'-'+px,
+                                 'repo_uoa':eruoa})
+                    if r['return']>0: return r
+
+                    pnew=r['path']
+
+                    ck.out('    Path to CK entry: '+pnew)
+
+                    # Copying files to CK entry
+                    r=ck.list_all_files({'path':pdd})
+                    if r['return']>0: return r
+
+                    lst=r['list']
+
+                    for fn in lst:
+                        p1=os.path.join(pdd,fn)
+                        p2=os.path.join(pnew,fn)
+
+                        pd2=os.path.dirname(p2)
+                        if not os.path.isdir(pd2):
+                            os.makedirs(pd2)
+
+                        shutil.copy2(p1,p2)
+
 
     return {'return':0}
 

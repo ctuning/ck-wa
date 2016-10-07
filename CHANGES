@@ -1,6 +1,6 @@
 * 2016.10.07 - added support for stat.analysis of results collected by WA
                (with possibility to aggregate or overwrite them)
-             - added module dummies (wa-device, wa-tool, wa-params)
+             - added modules wa-device, wa-tool, wa-params as well as import from WA
 
 * 2016.10.06 - added reading of default parameters during WA import
              - added wa-scenario module and "cpu","fps","markers" entries

@@ -203,6 +203,35 @@ from the 'ck-docker' repository:
  $ ck show repo:ck-docker
 ```
 
+Importing workloads, devices and instruments from CK
+====================================================
+To be able to easily share and reuse workloads, devices, instruments
+and other WA artifacts, we automatically import them into CK format
+(in the future, we hope to integrate CK to WA to avoid unnecessary imports).
+
+You can find already imported workloads in the following repository
+(automatically pulled with the ck-wa):
+```
+ $ ck find repo:ck-wa-workloads
+ $ ck show repo:ck-wa-workloads
+```
+
+You can find already imported WA devices and instruments in
+the following repository (also automatically pulled with the ck-wa):
+```
+ $ ck find repo:ck-wa-extra
+ $ ck show repo:ck-wa-extra
+```
+
+You can import new workloads, devices and instruments as following:
+```
+ export CK_PYTHON=python2 ; ck import wa --target_repo_uoa=ck-wa-workloads --extra_target_repo_uoa=ck-wa-extra
+```
+
+If you want to import WA artifacts to other CK repositories (for example, private),
+just change flags ''--target_repo_uoa'' and ''--extra_target_repo_uoa''. If omitted, 
+already existing entries will be updated or new ones will be recored in ''local'' repository.
+
 
 
 
@@ -213,7 +242,7 @@ WA can be accessed via CK web service with unified JSON API.
 
 For internal tests, we have a CK-powered WA service running 
 on a 'cknowledge.ddns.net' host machine with 7344 port
-(please, ping us in advance to start this service). 
+(please, ping us in advance to start this service).
 
 You can see CK dashboard via http://cknowledge.ddns.net:7344/?template=arm-wa
 

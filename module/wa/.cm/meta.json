@@ -69,7 +69,10 @@
     "program": "b0ac08fe1d3c2615",
     "experiment":"bc0409fb61f0aa82",
     "wa-scenario":"694431881401480c",
-    "wa-result": "9db0db9369416e1b"
+    "wa-result": "9db0db9369416e1b",
+    "wa-tool": "4f939c62eeeb988b",
+    "wa-device": "b288469ca210e99e",
+    "wa-params": "53869eb7a3ca4aea"
   },
   "wa_deps": {
     "wa": {
