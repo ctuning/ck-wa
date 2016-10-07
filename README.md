@@ -162,7 +162,12 @@ Using Windows devices
 It is possible to run workloads (currently shared as sources in CK format)
 on remote Windows devices using light-weight, standalone, open-source 
 [CK crowd-node server](https://github.com/ctuning/ck-crowdnode).
-Just run it on your target Windows device and register using ''ck add machine''.
+Simply download the latest CK crowd-node version [here](https://ci.appveyor.com/project/gfursin/ck-crowdnode/build/artifacts), 
+install and run it on your target Windows device,
+and then register it in CK-WA using ''ck add machine''.
+
+''Note that at this stage your client machine should also run Windows.
+However, we may provide cross-compilation in the future.''
 
 Using Docker image
 ==================
