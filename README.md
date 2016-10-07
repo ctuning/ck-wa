@@ -159,9 +159,10 @@ Just follow online instructions to reinstall WA on your machine.
 Using Windows devices
 =====================
 
-
-
-
+It is possible to run workloads (currently shared as sources in CK format)
+on remote Windows devices using light-weight, standalone, open-source 
+[CK crowd-node server](https://github.com/ctuning/ck-crowdnode).
+Just run it on your target Windows device and register using ''ck add machine''.
 
 Using Docker image
 ==================
