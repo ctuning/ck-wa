@@ -156,10 +156,28 @@ You can install or update latest WA from GitHub for a given target machine via C
 
 Just follow online instructions to reinstall WA on your machine.
 
+Using Windows devices
+=====================
+
+
+
+
+
 Using Docker image
 ==================
 
-We have Docker automation in the CK. You can now build and run CK-powered WA
+We have Docker automation in the CK. 
+
+You can run the latest [CK-WA Docker image](https://hub.docker.com/r/ctuning/ck-wa/) via
+```
+ $ ck run docker:ck-wa
+    or
+ $ docker pull ctuning/ck-wa
+ $ docker run ctuning-ck-wa
+
+```
+
+You can also build and run your local or customized CK-WA
 instance (on Linux and Windows) using the following commands:
 ```
  $ ck build docker:ck-wa
@@ -178,7 +196,6 @@ from the 'ck-docker' repository:
 ```
  $ ck show repo:ck-docker
 ```
-
 
 
 
