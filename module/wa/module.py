@@ -464,8 +464,6 @@ def run(i):
             if r['return']>0: return r
 
             # Write stats ...
-            print (fstat)
-            ck.inp({'text':''})
             r=ck.save_json_to_file({'json_file':fstat, 'dict':lsad})
             if r['return']>0: return r
 
