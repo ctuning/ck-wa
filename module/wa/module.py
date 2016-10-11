@@ -131,6 +131,8 @@ def run(i):
     oo=''
     if o=='con': oo=o
 
+    cur_dir=os.getcwd()
+
     # Check if any input has . and convert to dict
     for k in i:
         if k.find('.')>0:
@@ -256,6 +258,9 @@ def run(i):
     # Iterate over workloads
     rrr={}
     for wa in lst:
+        # Reset dir
+        os.chdir(cur_dir)
+
         duoa=wa['data_uoa']
         duid=wa['data_uid']
         dw=wa['meta']
