@@ -148,7 +148,6 @@ def run(i):
     params=i.get('params',{})
 
     # Check scenarios
-    print (params)
     scenario=i.get('scenario','')
     if scenario!='':
         r=ck.access({'action':'load',
@@ -530,6 +529,7 @@ def run(i):
         lsad=lsa.get('dict_flat',{})
 
         features=ls.get('features',{})
+        apk_ver=''
         if apk_name!='':
             apk_ver=features.get('apk',{}).get(apk_name,{}).get('versionName','')
 

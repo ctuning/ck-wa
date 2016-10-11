@@ -41,6 +41,15 @@ def ck_postprocess(i):
     if r['return']>0: return r
     err=r['string']
 
+    xerr=''
+    for l in err.split('\n'):
+        l1=str(l.strip())
+
+        if len(l1)>9:
+            if (l1.startswith('ERROR') or l1[5:].startswith('ERROR')):
+                l2=l1[5:].strip()
+                xerr+=l2+'\n'
+
     #######################################
     ck.out ('Loading status.txt ...')
 
@@ -52,7 +61,11 @@ def ck_postprocess(i):
         if j>=0:
             j1=ss.find('\n',j)
             if j1<0: j1=ss.length()
-            return {'return':1, 'error':ss[j+8:j1]}
+
+            xerr+='FAILURE: '+ss[j+8:j1]
+
+    if xerr!='':
+        return {'return':1, 'error':xerr}
 
     #######################################
     ck.out ('Loading results.json ...')
