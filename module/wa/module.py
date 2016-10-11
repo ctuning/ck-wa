@@ -262,6 +262,8 @@ def run(i):
         dw=wa['meta']
         dp=wa['path']
 
+        apk_name=dw.get('apk',{}).get('name','')
+
         ww=dw['wa_alias']
 
         # If cache, check if params already exist
@@ -527,6 +529,18 @@ def run(i):
         lsa=rrr.get('last_stat_analysis',{})
         lsad=lsa.get('dict_flat',{})
 
+        features=ls.get('features',{})
+        if apk_name!='':
+            apk_ver=features.get('apk',{}).get(apk_name,{}).get('versionName','')
+
+        deps=ls.get('dependencies',{})
+        wa_ver=deps.get('wa',{}).get('cus',{}).get('version','')
+
+        # Update meta
+        ddd['meta']['apk_name']=apk_name
+        ddd['meta']['apk_version']=apk_ver
+        ddd['meta']['wa_version']=wa_ver
+
         # Clean tmp dir
         tmp_dir=ls.get('state',{}).get('tmp_dir','')
         if dp!='' and tmp_dir!='' and i.get('keep','')!='yes':
@@ -592,9 +606,9 @@ def dashboard(i):
 def import_wa(i):
     """
     Input:  {
-              (workload)              - import only this workload
-              (target_repo_uoa)       - where to record imported workloads
-              (extra_target_repo_uoa) - where to record imported tools and devices
+              (workload) or (data_uoa) - import only this workload
+              (target_repo_uoa)        - where to record imported workloads
+              (extra_target_repo_uoa)  - where to record imported tools and devices
             }
 
     Output: {
@@ -748,6 +762,8 @@ def import_wa(i):
 
     # Parse descriptions
     workload=i.get('workload','')
+    if workload=='':
+        workload=i.get('data_uoa','')
 
     wa={}
     wk=''
@@ -830,6 +846,7 @@ def import_wa(i):
 
             wa_name=''
             pp=None
+            pname=None
             imported_params={}
 
             for name, obj in inspect.getmembers(cs):
@@ -837,12 +854,17 @@ def import_wa(i):
                     try:
                         addr=getattr(cs, name)
                         pp=addr.parameters
+                        pname=addr.package
                     except Exception as e:
                         pass
 
                     if pp!=None:
                         wa_name=name
                         break
+
+            if pname!=None:
+                if 'apk' not in d: d['apk']={}
+                d['apk']['name']=pname
 
             if wa_name!='':
                 ck.out('         WA class: '+wa_name)

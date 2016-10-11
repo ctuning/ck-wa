@@ -155,6 +155,8 @@ def show(i):
     h+='   <td '+ha+'><b>CPU</b></td>\n'
     h+='   <td '+ha+'><b>GPU</b></td>\n'
     h+='   <td '+ha+'><b>OS</b></td>\n'
+    h+='   <td '+ha+'><b>APK</b></td>\n'
+    h+='   <td '+ha+'><b>WA version</b></td>\n'
     h+='   <td '+ha+'><b>Fail?</b></td>\n'
     h+='   <td '+ha+'><b>Time</b></td>\n'
     h+='   <td '+ha+'><b>JSON results</b></td>\n'
@@ -187,6 +189,11 @@ def show(i):
         pname=meta.get('program_uoa','')
         wname=meta.get('workload_name','')
         wuid=meta.get('program_uid','')
+
+        apk_name=meta.get('apk_name','')
+        apk_ver=meta.get('apk_version','')
+
+        wa_ver=meta.get('wa_version','')
 
         scenario=meta.get('scenario','')
 
@@ -245,6 +252,12 @@ def show(i):
         h+='   <td '+ha+'>'+cpu_name+'</td>\n'
         h+='   <td '+ha+'>'+gpu_name+'</td>\n'
         h+='   <td '+ha+'>'+os_name+'</td>\n'
+
+        x=apk_name
+        if apk_ver!='': x+=' (V'+apk_ver+')'
+        h+='   <td '+ha+'>'+x+'</td>\n'
+
+        h+='   <td '+ha+'>'+wa_ver+'</td>\n'
 
         h+='   <td '+ha+'>'+fail_reason+'</td>\n'
 
