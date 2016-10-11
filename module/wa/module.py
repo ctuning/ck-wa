@@ -257,9 +257,14 @@ def run(i):
 
     # Iterate over workloads
     rrr={}
+
+    cparams=copy.deepcopy(params)
     for wa in lst:
         # Reset dir
         os.chdir(cur_dir)
+
+        # Reset params
+        params=copy.deepcopy(cparams)
 
         duoa=wa['data_uoa']
         duid=wa['data_uid']

@@ -46,9 +46,14 @@ def ck_postprocess(i):
         l1=str(l.strip())
 
         if len(l1)>9:
-            if (l1.startswith('ERROR') or l1[5:].startswith('ERROR')):
-                l2=l1[5:].strip()
-                xerr+=l2+'\n'
+            if l1.startswith('ERROR'):
+               xerr+=l1[5:].strip()+'\n'
+            elif l1[5:].startswith('ERROR'):
+               xerr+=l1[10:].strip()+'\n'
+            elif l1.startswith('CRITICAL'):
+               xerr+=l1[8:].strip()+'\n'
+            elif l1[5:].startswith('CRITICAL'):
+               xerr+=l1[13:].strip()+'\n'
 
     #######################################
     ck.out ('Loading status.txt ...')
