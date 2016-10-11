@@ -133,6 +133,12 @@ You can then run a given workload with a given scenario via
  $ ck run wa:youtube --scenario=cpu
 ```
 
+Note that scenario ''cpu'' requires trace-cmd installed on your host machine.
+On Ubuntu, you can install it via
+```
+ $ sudo apt install trace-cmd
+```
+
 Workloads which have C sources (currently '''dhrystone''' and '''memcpy''') 
 are converted into universal CK program format. This allows users to
 reuse powerful crowd-benchmarking, autotuning and crowd-tuning functionality
