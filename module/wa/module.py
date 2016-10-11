@@ -109,6 +109,9 @@ def run(i):
               (scenario)        - use pre-defined scenario (see ck list wa-scenario)
 
               (keep)            - if 'yes', keep tmp file in workload (program) directory
+
+              (cache)           - if 'yes', cache params (to automate runs)
+              (cache_repo_uoa)  - repo UOA where to cache params
             }
 
     Output: {
@@ -128,10 +131,24 @@ def run(i):
     oo=''
     if o=='con': oo=o
 
-    # Check scenario
+    # Check if any input has . and convert to dict
+    for k in i:
+        if k.find('.')>0:
+            v=i[k]
+
+            kk='##'+k.replace('.','#')
+
+            del(i[k])
+
+            r=ck.set_by_flat_key({'dict':i, 'key':kk, 'value':v})
+            if r['return']>0: return r
+
+    # Get device and workload params
     config=i.get('config',{})
     params=i.get('params',{})
 
+    # Check scenarios
+    print (params)
     scenario=i.get('scenario','')
     if scenario!='':
         r=ck.access({'action':'load',
@@ -169,6 +186,8 @@ def run(i):
     repetitions=i.get('repetitions','')
     if repetitions=='': repetitions=1
     repetitions=int(repetitions)
+
+    cache=i.get('cache','')
 
     # Get target features
     target=i.get('target','')
@@ -245,6 +264,72 @@ def run(i):
 
         ww=dw['wa_alias']
 
+        # If cache, check if params already exist
+        if cache=='yes':
+            # Check extra
+            cruoa=i.get('cache_repo_uoa','')
+
+            # Attempt to load
+            r=ck.access({'action':'load',
+                         'module_uoa':cfg['module_deps']['wa-params'],
+                         'data_uoa':duoa,
+                         'repo_uoa':cruoa})
+            if r['return']>0 and r['return']!=16:
+                return r
+
+            if r['return']==0:
+                cruoa=r['repo_uid']
+
+                rx=ck.merge_dicts({'dict1':params, 'dict2':r['dict'].get('params',{})})
+                if rx['return']>0: return rx
+
+        # Check params here (there is another place in pre-processing scripts
+        #  to be able to run WA via program pipeline directly) 
+        dparams=dw.get('params',{})
+
+        if len(dparams)>0:
+            ck.out('Parameters needed for this workload:')
+            ck.out('')
+
+        for k in sorted(dparams):
+            x=dparams[k]
+
+            ds=x.get('desc','')
+
+            dv=params.get(k,None)
+            if dv==None:
+                dv=x.get('default',None)
+
+            if dv!=None:
+                ck.out(k+': '+str(dv))
+            elif x.get('mandatory',False):
+                r=ck.inp({'text':k+' ('+ds+'): '})
+                if r['return']>0: return r
+                dv=r['string'].strip()
+                if dv=='':
+                    dv=None
+
+            if dv!=None:
+                params[k]=dv
+
+        # Cache params if required
+        if cache=='yes':
+            r=ck.access({'action':'update',
+                         'module_uoa':cfg['module_deps']['wa-params'],
+                         'data_uoa':duoa,
+                         'repo_uoa':cruoa,
+                         'dict':{'params':params},
+                         'sort_keys':'yes',
+                         'substitute':'yes',
+                         'ignore_update':'yes'})
+            if r['return']>0:
+                return r
+
+            if o=='con':
+                ck.out('')
+                ck.out('Parameters were cached in '+r['path']+' ...')
+
+        # Prepare high-level experiment meta
         meta={'program_uoa':duoa,
               'program_uid':duid,
               'workload_name':ww,

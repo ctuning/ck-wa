@@ -74,13 +74,24 @@ def ck_preprocess(i):
     params={}
 
     dp=meta.get('params',{})
+
+    # Customize device config and workload params from outside!
+    r=ck.merge_dicts({'dict1':params, 'dict2':all_params.get('params',{})})
+    if r['return']>0: return r
+
     for k in sorted(dp):
         x=dp[k]
 
-        dv=x.get('default',None)
+        ds=x.get('desc','')
 
-        if dv==None and x.get('mandatory',False):
-            r=ck.inp({'text':'Enter '+x.get('desc','')+': '})
+        dv=params.get(k,None)
+        if dv==None:
+            dv=x.get('default',None)
+
+        if dv!=None:
+            ck.out(k+': '+str(dv))
+        elif x.get('mandatory',False):
+            r=ck.inp({'text':k+' ('+ds+'): '})
             if r['return']>0: return r
             dv=r['string'].strip()
             if dv=='':
@@ -88,10 +99,6 @@ def ck_preprocess(i):
 
         if dv!=None:
             params[k]=dv
-
-    # Customize device config and workload params from outside!
-    r=ck.merge_dicts({'dict1':params, 'dict2':all_params.get('params',{})})
-    if r['return']>0: return r
 
     wname=meta['wa_alias']
     agenda['workloads'].append({'name':wname, 'params': params})
