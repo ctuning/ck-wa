@@ -112,6 +112,27 @@ You can easily clean all results via:
  $ ck rm wa-result:* --force
 ```
 
+Some workloads required mandatory parameters. You can cache 
+and later reuse them via flag ''--cache'', i.e.
+```
+ $ ck run wa:skype --cache
+```
+You will be asked parameters only once. Note, that at this moment,
+password parameters are openly recorded in CK repo, which is totally
+unsecure. We plan to develop a secure auth mechanism for such workloads
+in the future: https://github.com/ARM-software/workload-automation/issues/267
+
+We also provided ''scenario'' flag to pre-select device config (such as
+used instruments) and parameters. You can see available WA scenarios via
+```
+ $ ck list wa-scenario
+```
+
+You can then run a given workload with a given scenario via
+```
+ $ ck run wa:youtube --scenario=cpu
+```
+
 Workloads which have C sources (currently '''dhrystone''' and '''memcpy''') 
 are converted into universal CK program format. This allows users to
 reuse powerful crowd-benchmarking, autotuning and crowd-tuning functionality
