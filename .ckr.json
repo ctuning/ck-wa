@@ -7,16 +7,13 @@
         "repo_uoa": "ck-docker"
       },
       {
-        "repo_uoa": "ck-autotuning"
-      },
-      {
-        "repo_uoa": "ck-crowdtuning-platforms"
-      },
-      {
         "repo_uoa": "ck-wa-workloads"
       },
       {
         "repo_uoa": "ck-wa-extra"
+      },
+      {
+        "repo_uoa": "ck-crowdtuning"
       }
     ], 
     "url": "https://github.com/dividiti/ck-wa", 
