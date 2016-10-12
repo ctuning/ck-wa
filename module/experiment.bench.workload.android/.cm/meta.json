@@ -9,7 +9,7 @@
     }
   },
   "copyright": "See CK COPYRIGHT.txt for copyright details",
-  "desc": "crowd-benchmark workload via ARM WA framework",
+  "desc": "crowd-benchmark shared workloads via ARM WA framework",
   "developer": "Grigori Fursin",
   "developer_email": "Grigori.Fursin@cTuning.org",
   "developer_webpage": "http://fursin.net/research.html",
