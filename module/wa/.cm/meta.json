@@ -3,6 +3,9 @@
     "configure": {
       "desc": "configure device"
     },
+    "crowdbench": {
+      "desc": "crowd benchmark Android workloads via CK public repository (cknowledge.org/repo)"
+    },
     "dashboard": {
       "desc": "ARM workload automation dashboard",
       "for_web": "yes"
@@ -62,17 +65,18 @@
   ],
   "module_deps": {
     "env": "9b9b3208ac44b891",
+    "experiment": "bc0409fb61f0aa82",
     "machine": "84be34883a81b2a9",
     "pipeline": "db25414b48b4ffb3",
     "platform": "707ccdfe444cafac",
     "platform.os": "41e31cc4496b8a8e",
     "program": "b0ac08fe1d3c2615",
-    "experiment":"bc0409fb61f0aa82",
-    "wa-scenario":"694431881401480c",
-    "wa-result": "9db0db9369416e1b",
-    "wa-tool": "4f939c62eeeb988b",
     "wa-device": "b288469ca210e99e",
-    "wa-params": "53869eb7a3ca4aea"
+    "wa-params": "53869eb7a3ca4aea",
+    "wa-result": "9db0db9369416e1b",
+    "wa-scenario": "694431881401480c",
+    "wa-tool": "4f939c62eeeb988b",
+    "experiment.bench.workload.android": "53fc154f34ab6b17"
   },
   "wa_deps": {
     "wa": {

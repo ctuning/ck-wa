@@ -1,4 +1,5 @@
 * 2016.10.11 - added support to cache parameters
+             - added first crowd-benchmarking scenario
 
 * 2016.10.07 - added support for stat.analysis of results collected by WA
                (with possibility to aggregate or overwrite them)

@@ -94,24 +94,30 @@ def list_wa(i):
 def run(i):
     """
     Input:  {
-              (data_uoa)        - workload to run (see "ck list wa").
+              (data_uoa)            - workload to run (see "ck list wa").
 
-              (target)          - machine UOA (see "ck list machine")
+              (target)              - machine UOA (see "ck list machine")
 
-              (record)          - if 'yes', record result in repository in 'experiment' standard
-              (skip-record-raw) - if 'yes', skip record raw results
-              (overwrite)       - if 'yes', do not record date and time in result directory, but overwrite wa-results
+              (record)              - if 'yes', record result in repository in 'experiment' standard
+              (skip-record-raw)     - if 'yes', skip record raw results
+              (overwrite)           - if 'yes', do not record date and time in result directory, but overwrite wa-results
 
-              (repetitions)     - statistical repetitions (default=1), for now statistical analysis is not used (TBD)
+              (repetitions)         - statistical repetitions (default=1), for now statistical analysis is not used (TBD)
 
-              (config)          - customize config
-              (params)          - workload params
-              (scenario)        - use pre-defined scenario (see ck list wa-scenario)
+              (config)              - customize config
+              (params)              - workload params
+              (scenario)            - use pre-defined scenario (see ck list wa-scenario)
 
-              (keep)            - if 'yes', keep tmp file in workload (program) directory
+              (keep)                - if 'yes', keep tmp file in workload (program) directory
 
-              (cache)           - if 'yes', cache params (to automate runs)
-              (cache_repo_uoa)  - repo UOA where to cache params
+              (cache)               - if 'yes', cache params (to automate runs)
+              (cache_repo_uoa)      - repo UOA where to cache params
+
+              (share)               - if 'yes', share benchmarking results with public cknowledge.org/repo server
+                                      (our crowd-benchmarking demo)
+              (exchange_repo)       - which repo to record/update info (remote-ck by default)
+              (exchange_subrepo)    - if remote, remote repo UOA
+              (scenario_module_uoa) - UOA of the scenario (to share results)
             }
 
     Output: {
@@ -144,6 +150,18 @@ def run(i):
 
             r=ck.set_by_flat_key({'dict':i, 'key':kk, 'value':v})
             if r['return']>0: return r
+
+    # Check if share
+    share=i.get('share','')
+    user=i.get('user','')
+    smuoa=i.get('scenario_module_uoa','')
+    if smuoa=='': smuoa=cfg['module_deps']['experiment.bench.workload.android']
+
+    er=i.get('exchange_repo','')
+    if er=='': er=ck.cfg['default_exchange_repo_uoa']
+
+    esr=i.get('exchange_subrepo','')
+    if esr=='': esr=ck.cfg['default_exchange_subrepo_uoa']
 
     # Get device and workload params
     config=i.get('config',{})
@@ -564,10 +582,10 @@ def run(i):
 #        tet=ch.get('run',{}).get('total_execution_time',0)
 
         # Save pipeline
-        if skip_record_raw!='yes':
-            ddd['state']={'fail':fail, 'fail_reason':fail_reason}
-            ddd['characteristics']=ch
+        ddd['state']={'fail':fail, 'fail_reason':fail_reason}
+        ddd['characteristics']=ch
 
+        if skip_record_raw!='yes':
             fpip=os.path.join(result_path,'ck-pipeline-out.json')
             r=ck.save_json_to_file({'json_file':fpip, 'dict':rrr})
             if r['return']>0: return r
@@ -580,6 +598,26 @@ def run(i):
             rx=ck.access({'action':'update',
                           'module_uoa':cfg['module_deps']['wa-result'],
                           'data_uoa':result_uid,
+                          'dict':ddd,
+                          'substitute':'yes',
+                          'sort_keys':'yes'})
+            if rx['return']>0: return rx
+
+        # Share results if crowd-benchmarking
+        if share=='yes':
+            ddd['user']=user
+
+            if o=='con':
+               ck.out('')
+               ck.out('Saving results to the remote public repo ...')
+               ck.out('')
+
+            # Update meta
+            rx=ck.access({'action':'update',
+                          'module_uoa':smuoa,
+                          'data_uoa':result_uid,
+                          'repo_uoa':er,
+                          'remote_repo_uoa':esr,
                           'dict':ddd,
                           'substitute':'yes',
                           'sort_keys':'yes'})
@@ -1193,3 +1231,25 @@ def configure(i):
     s=s.replace(' true', ' True')
 
     return {'return':0, 'files':{cfg['device_cfg_file']:s}, 'cfg':dcfg}
+
+##############################################################################
+# crowd benchmark Android workloads via CK public repository (cknowledge.org/repo)
+
+def crowdbench(i):
+    """
+    Input:  {
+              will be passed to "ck crowdsource experiment.bench.workload.android"
+            }
+
+    Output: {
+              return       - return code =  0, if successful
+                                         >  0, if error
+              (error)      - error text if return > 0
+            }
+
+    """
+
+    i['module_uoa']=cfg['module_deps']['experiment.bench.workload.android']
+    i['action']='crowdsource'
+
+    return ck.access(i)
