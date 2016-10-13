@@ -14,6 +14,8 @@ ck=None # Will be updated by CK (initialized CK kernel)
 # Local settings
 line='*************************************************************************************'
 
+ffstat='ck-stat-flat-characteristics.json'
+
 ##############################################################################
 # Initialize module
 
@@ -203,7 +205,7 @@ def run(i):
     overwrite=i.get('overwrite','')
 
     repetitions=i.get('repetitions','')
-    if repetitions=='': repetitions=1
+    if repetitions=='': repetitions=3
     repetitions=int(repetitions)
 
     cache=i.get('cache','')
@@ -451,7 +453,7 @@ def run(i):
             if r['return']>0: return r
 
             # Check stats ...
-            fstat=os.path.join(result_path0,'ck-stat-flat-characteristics.json')
+            fstat=os.path.join(result_path0,ffstat)
             if overwrite!='yes':
                 # Check if file already exists (no check for parallel runs)
                 if os.path.isfile(fstat):
@@ -553,8 +555,18 @@ def run(i):
         if rrr['return']>0: return rrr
 
         ls=rrr.get('last_iteration_output',{})
+        state=ls.get('state',{})
+        xchoices=copy.deepcopy(ls.get('choices',{}))
         lsa=rrr.get('last_stat_analysis',{})
         lsad=lsa.get('dict_flat',{})
+
+        # Not very clean - trying to remove passes ...
+        xparams=xchoices.get('params','').get('params',{})
+        for k in xparams:
+            if k.find('pass')>=0:
+                del(xparams[k])
+
+        ddd['choices']=xchoices
 
         features=ls.get('features',{})
         apk_ver=''
@@ -570,7 +582,7 @@ def run(i):
         ddd['meta']['wa_version']=wa_ver
 
         # Clean tmp dir
-        tmp_dir=ls.get('state',{}).get('tmp_dir','')
+        tmp_dir=state.get('tmp_dir','')
         if dp!='' and tmp_dir!='' and i.get('keep','')!='yes':
             shutil.rmtree(os.path.join(dp,tmp_dir))
 
@@ -612,16 +624,60 @@ def run(i):
                ck.out('Saving results to the remote public repo ...')
                ck.out('')
 
+            # Find remote entry
+            rduid=''
+
+            ii={'action':'search',
+                'module_uoa':cfg['module_deps']['wa-result'],
+                'repo_uoa':er,
+                'remote_repo_uoa':esr,
+                'search_dict':{'meta':meta}}
+            rx=ck.access(ii)
+
+            lst=rx['lst']
+
+            if len(lst)==1:
+                rduid=lst[0]['data_uid']
+
             # Update meta
             rx=ck.access({'action':'update',
                           'module_uoa':smuoa,
-                          'data_uoa':result_uid,
+                          'data_uoa':rduid,
                           'repo_uoa':er,
                           'remote_repo_uoa':esr,
                           'dict':ddd,
                           'substitute':'yes',
                           'sort_keys':'yes'})
             if rx['return']>0: return rx
+            rduid=rx['data_uid']
+
+            # Push statistical characteristics
+            if os.path.isfile(fstat):
+                rx=ck.access({'action':'push',
+                              'module_uoa':smuoa,
+                              'data_uoa':rduid,
+                              'repo_uoa':er,
+                              'remote_repo_uoa':esr,
+                              'filename':fstat,
+                              'overwrite':'yes'})
+                if rx['return']>0: return rx
+
+            # Push latest results
+            fx=os.path.join(result_path,'wa-output','results.json')
+            if os.path.isfile(fx):
+                rx=ck.access({'action':'push',
+                              'module_uoa':smuoa,
+                              'data_uoa':rduid,
+                              'repo_uoa':er,
+                              'remote_repo_uoa':esr,
+                              'filename':fx,
+                              'extra_path':'wa-output',
+                              'overwrite':'yes'})
+                if rx['return']>0: return rx
+
+            # Info
+            if o=='con':
+                ck.out('Succesfully recorded results in repo repo (Entry UID='+rduid+')')
 
     return rrr
 
