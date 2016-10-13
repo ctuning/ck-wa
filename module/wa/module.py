@@ -562,9 +562,13 @@ def run(i):
 
         # Not very clean - trying to remove passes ...
         xparams=xchoices.get('params','').get('params',{})
+        to_be_deleted=[]
         for k in xparams:
             if k.find('pass')>=0:
-                del(xparams[k])
+                to_be_deleted.append(k)
+
+        for k in to_be_deleted:
+            del(xparams[k])
 
         ddd['choices']=xchoices
 
