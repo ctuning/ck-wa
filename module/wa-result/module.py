@@ -22,6 +22,13 @@ hextra+='[ See CK-WA framework at <a href="https://github.com/ctuning/ck-wa">Git
 hextra+='</center>\n'
 hextra+='<br>\n<br>\n'
 
+selector=[{'name':'Scenario', 'key':'scenario'},
+          {'name':'Workload', 'key':'workload_name'},
+          {'name':'Platform', 'key':'plat_name'},
+          {'name':'CPU', 'key':'cpu_name'},
+          {'name':'OS', 'key':'os_name'},
+          {'name':'GPU', 'key':'gpu_name'}]
+
 ##############################################################################
 # Initialize module
 
@@ -107,12 +114,6 @@ def show(i):
     lst=r['lst']
 
     # Check unique entries
-    selector=[{'name':'Scenario', 'key':'scenario'},
-              {'name':'Workload', 'key':'workload_name'},
-              {'name':'Platform', 'key':'plat_name'},
-              {'name':'CPU', 'key':'cpu_name'},
-              {'name':'OS', 'key':'os_name'},
-              {'name':'GPU', 'key':'gpu_name'}]
     choices={}
     wchoices={}
 
@@ -223,7 +224,12 @@ def show(i):
     # Dictionary to hold target meta
     tm={}
 
+    ix=0
+    bgraph={"0":[]} # Just for graph demo
+
     for q in sorted(plst, key=lambda x: x.get('meta',{}).get('meta',{}).get('workload_name','')):
+        ix+=1
+
         duid=q['data_uid']
         path=q['path']
 
@@ -275,11 +281,14 @@ def show(i):
         te=d.get('characteristics',{}).get('run',{})
         tet=te.get('total_execution_time',0)
 
+        if i.get(ckey+'workload_name','')!='':
+            bgraph['0'].append([ix,tet])
+
         h+='  <tr'+bg+'>\n'
 
         x=work['self_module_uid']
         if cmuoa!='': x=cmuoa
-        h+='   <td '+ha+'><a href="'+url0+'&wcid='+x+':'+duid+'">'+duid+'</a></td>\n'
+        h+='   <td '+ha+'>'+str(ix)+')&nbsp;<a href="'+url0+'&wcid='+x+':'+duid+'">'+duid+'</a></td>\n'
 
         x=wname
         if wuid!='': x='<a href="'+url0+'&wcid='+cfg['module_deps']['program']+':'+wuid+'">'+x+'</a>'
@@ -432,6 +441,51 @@ def show(i):
 
     if cmuoa=='':
         h+='</form>\n'
+
+    if len(bgraph['0'])>0:
+       ii={'action':'plot',
+           'module_uoa':cfg['module_deps']['graph'],
+
+           "table":bgraph,
+
+           "h_lines":[1.0],
+
+           "ymin":0,
+
+           "ignore_point_if_none":"yes",
+
+           "plot_type":"d3_2d_bars",
+
+           "display_y_error_bar":"no",
+
+           "title":"Powered by Collective Knowledge",
+
+           "axis_x_desc":"Platform",
+           "axis_y_desc":"Execution time (sec.)",
+
+           "plot_grid":"yes",
+
+           "d3_div":"ck_interactive",
+
+           "image_width":"900",
+           "image_height":"400",
+
+           "wfe_url":url0}
+
+       r=ck.access(ii)
+       if r['return']==0:
+          x=r.get('html','')
+          if x!='':
+             st+=r.get('style','')
+
+             h+='<br>\n'
+             h+='<center>\n'
+             h+='<div id="ck_box_with_shadow" style="width:920px;">\n'
+             h+=' <div id="ck_interactive" style="text-align:center">\n'
+             h+=x+'\n'
+             h+=' </div>\n'
+             h+='</div>\n'
+             h+='</center>\n'
 
     h+=hextra
 

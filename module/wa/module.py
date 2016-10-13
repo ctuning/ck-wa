@@ -171,7 +171,9 @@ def run(i):
 
     # Check scenarios
     scenario=i.get('scenario','')
-    if scenario!='':
+    if scenario=='': scenario='-'
+
+    if scenario!='' and scenario!='-':
         r=ck.access({'action':'load',
                      'module_uoa':cfg['module_deps']['wa-scenario'],
                      'data_uoa':scenario})
