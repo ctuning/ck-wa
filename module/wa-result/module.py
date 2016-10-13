@@ -70,6 +70,8 @@ def show(i):
         conc=onchange
 
     h='<center>\n'
+    h+='\n\n<script language="JavaScript">function copyToClipboard (text) {window.prompt ("Copy to clipboard: Ctrl+C, Enter", text);}</script>\n\n' 
+
     h+='<h2>All WA results</h2>\n'
 
     # Check host URL prefix and default module/action
@@ -190,7 +192,7 @@ def show(i):
     if lplst==0:
         h+='<b>No results found!</b>'+hextra
         return {'return':0, 'html':h, 'style':st}
-    elif lplst>100:
+    elif lplst>50:
         h+='<b>Too many entries to show ('+str(lplst)+') - please, prune list further!</b>'+hextra
         return {'return':0, 'html':h, 'style':st}
 
@@ -198,6 +200,7 @@ def show(i):
     h+='<table border="1" cellpadding="7" cellspacing="0">\n'
 
     ha='align="center" valign="top"'
+    hb='align="left" valign="top"'
 
     h+='  <tr>\n'
     h+='   <td '+ha+'><b>All raw files</b></td>\n'
@@ -211,8 +214,10 @@ def show(i):
     h+='   <td '+ha+'><b>APK</b></td>\n'
     h+='   <td '+ha+'><b>WA version</b></td>\n'
     h+='   <td '+ha+'><b>Fail?</b></td>\n'
-    h+='   <td '+ha+'><b>Time</b></td>\n'
+    h+='   <td '+hb+'><b>Choices</b></td>\n'
+    h+='   <td '+hb+'><b>Characteristics</b></td>\n'
     h+='   <td '+ha+'><b>JSON results</b></td>\n'
+    h+='   <td '+ha+'><b>Replay</b></td>\n'
     h+='  <tr>\n'
 
     # Dictionary to hold target meta
@@ -225,6 +230,8 @@ def show(i):
         d=q['meta']
 
         meta=d.get('meta',{})
+
+        params=d.get('choices',{}).get('params',{}).get('params',{})
 
         pname=meta.get('program_uoa','')
         wname=meta.get('workload_name','')
@@ -265,7 +272,8 @@ def show(i):
 
         bg=' style="background-color:#'+bgc+';"'
 
-        tet=d.get('characteristics',{}).get('run',{}).get('total_execution_time',0)
+        te=d.get('characteristics',{}).get('run',{})
+        tet=te.get('total_execution_time',0)
 
         h+='  <tr'+bg+'>\n'
 
@@ -295,29 +303,127 @@ def show(i):
         h+='   <td '+ha+'>'+gpu_name+'</td>\n'
         h+='   <td '+ha+'>'+os_name+'</td>\n'
 
+        # APK
         x=apk_name
         if apk_ver!='': x+=' (V'+apk_ver+')'
-        h+='   <td '+ha+'>'+x+'</td>\n'
+        x=x.replace("'","\'").replace('"',"\\'").replace('\n','\\n')
+
+        x1=''
+        if x!='':
+            x1='<input type="button" class="ck_small_button" onClick="alert(\''+x+'\');" value="See">'
+
+        h+='   <td '+ha+'>'+x1+'</td>\n'
 
         h+='   <td '+ha+'>'+wa_ver+'</td>\n'
 
-        h+='   <td '+ha+'>'+fail_reason+'</td>\n'
+        x=fail_reason
+        if x=='': 
+            x='No'
+        else:
+            fail_reason=fail_reason.replace("'","\'").replace('"',"\\'").replace('\n','\\n')
+            x='Yes <input type="button" class="ck_small_button" onClick="alert(\''+fail_reason+'\');" value="Log">'
+
+        h+='   <td '+ha+'>'+x+'</td>\n'
+
+        # Params
+#        x='<table border="0" cellpadding="0" cellspacing="2">\n'
+        x=''
+        for k in sorted(params):
+            v=params[k]
+            x+=str(k)+'='+str(v)+'\n'
+#            x+='<tr><td>'+str(k)+'=</td><td>'+str(v)+'</td></tr>\n'
+#        x+='</table>\n'
+        x=x.replace("'","\'").replace('"',"\\'").replace('\n','\\n')
+
+        x1=''
+        if x!='':
+            x1='<input type="button" class="ck_small_button" onClick="alert(\''+x+'\');" value="See">'
+
+        h+='   <td '+hb+'>'+x1+'</td>\n'
+
+        # Characteristics
+        # Check if has statistics
+        dstat={}
+        fstat=os.path.join(path,'ck-stat-flat-characteristics.json')
+        if os.path.isfile(fstat):
+            r=ck.load_json_file({'json_file':fstat, 'dict':dstat})
+            if r['return']>0: return r
+            dstat=r['dict']
 
         x=''
-        if tet>0: x=('%.3f'%tet)+' sec.'
+        if tet>0: x=('%.1f'%tet)+' sec.'
+
+        # Check if has stats
+        x1=dstat.get("##characteristics#run#total_execution_time#center",None)
+        x2=dstat.get("##characteristics#run#total_execution_time#halfrange",None)
+        if x1!=None and x2!=None:
+            x=('%.1f'%x1)+' &PlusMinus; '+('%.1f'%x2)+' sec.'
+
+        # Check all
+        x5=''
+        for k in sorted(te):
+            v=te[k]
+
+            kx="##characteristics#run#"+k
+
+            kx1=dstat.get(kx+'#center',None)
+            kx2=dstat.get(kx+'#halfrange',None)
+
+            if type(v)==int:
+                if kx1!=None and kx2!=None:
+                    x6=str(kx1)+' +- '+str(kx2)
+                else:
+                    x6=str(v)
+            elif type(v)==float:
+                if kx1!=None and kx2!=None:
+                    x6=('%.1f'%kx1)+' +- '+('%.1f'%kx2)
+                else:
+                    x6=('%.1f'%v)
+
+            if x6!='':
+                x5+=str(k)+'='+x6+'\n'
+
+        x5=x5.replace("'","\'").replace('"',"\\'").replace('\n','\\n')
+        if x5!='':
+            x+='<br><input type="button" class="ck_small_button" onClick="alert(\''+x5+'\');" value="All">'
+
         h+='   <td '+ha+'>'+x+'</td>\n'
 
         # Check directories with results
         x=''
-        xf='wa-output/results.json'
+        xf1='wa-output'
+        xf2='results.json'
+        xf=xf1+'/'+xf2
         for d0 in os.listdir(path):
+            found=False
+            brk=False
+
             d1=os.path.join(d0,xf)
             d2=os.path.join(path,d1)
-            if os.path.isfile(d2):
-                if x!='': x+='<br>\n'
-                x+='[&nbsp;<a href="'+url0+'action=pull&common_action=yes&cid='+work['self_module_uid']+':'+duid+'&filename='+d1+'">'+d0+'</a>&nbsp;]\n'
 
+            if os.path.isfile(d2):
+                found=True
+            else:
+                d1=xf
+                d2=os.path.join(path,d1)
+
+                if os.path.isfile(d2):
+                    d0=xf1
+                    found=True
+                    brk=True
+
+            if found:
+                if x!='': x+='<br>\n'
+                x1=work['self_module_uid']
+                if cmuoa!='':
+                    x1=cmuoa
+                x+='[&nbsp;<a href="'+url0+'action=pull&common_action=yes&cid='+x1+':'+duid+'&filename='+d1+'">'+d0+'</a>&nbsp;]\n'
+
+                if brk:
+                    break
         h+='   <td '+ha+'>'+x+'</td>\n'
+
+        h+='   <td '+ha+'><input type="button" class="ck_small_button" onClick="copyToClipboard(\'ck replay wa:'+wname+'\');" value="Replay"></td>\n'
 
         h+='  <tr>\n'
 
