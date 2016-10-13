@@ -15,6 +15,11 @@ ck=None # Will be updated by CK (initialized CK kernel)
 form_name='wa_web_form'
 onchange='document.'+form_name+'.submit();'
 
+hextra='<br>\n<br>\n<br>\n'
+hextra+='[ Check <a href="https://github.com/ctuning/ck/wiki/Demo-ARM-TechCon\'16">ARM TechCon demo</a> and participate in crowd-benchmarking] '
+hextra+='[ See CK-WA framework at <a href="https://github.com/ctuning/ck-wa">GitHub</a> ]'
+hextra+='<br>\n<br>\n'
+
 ##############################################################################
 # Initialize module
 
@@ -139,6 +144,7 @@ def show(i):
         k=ckey+kk['key']
         n=kk['name']
 
+        v=''
         if i.get(k,'')!='':
             v=i[k]
             kk['value']=v
@@ -146,7 +152,7 @@ def show(i):
         # Show hardware
         ii={'action':'create_selector',
             'module_uoa':cfg['module_deps']['wfe'],
-            'data':wchoices[k],
+            'data':wchoices.get(k,[]),
             'name':k,
             'onchange':conc, 
             'skip_sort':'no',
@@ -157,6 +163,34 @@ def show(i):
         h+='<b>'+n+':</b> '+r['html'].strip()+'\n'
 
     h+='<br><br>'
+
+    # Prune list
+    plst=[]
+    for q in lst:
+        d=q['meta']
+        meta=d.get('meta',{})
+
+        # Check selector
+        skip=False
+        for kk in selector:
+            k=kk['key']
+            n=kk['name']
+            v=kk.get('value','')
+
+            if v!='' and meta.get(k,'')!=v:
+                skip=True
+
+        if not skip:
+            plst.append(q)
+
+    # Check if too many
+    lplst=len(plst)
+    if lplst==0:
+        h+='<b>No results found!</b>'+hextra
+        return {'return':0, 'html':h, 'style':st}
+    elif lplst>100:
+        h+='<b>Too many entries to show ('+str(lplst)+') - please, prune list further!</b>'+hextra
+        return {'return':0, 'html':h, 'style':st}
 
     # Prepare table
     h+='<table border="1" cellpadding="7" cellspacing="0">\n'
@@ -182,26 +216,13 @@ def show(i):
     # Dictionary to hold target meta
     tm={}
 
-    for q in sorted(lst, key=lambda x: x.get('meta',{}).get('meta',{}).get('workload_name','')):
+    for q in sorted(plst, key=lambda x: x.get('meta',{}).get('meta',{}).get('workload_name','')):
         duid=q['data_uid']
         path=q['path']
 
         d=q['meta']
 
         meta=d.get('meta',{})
-
-        # Check selector
-        skip=False
-        for kk in selector:
-            k=kk['key']
-            n=kk['name']
-            v=kk.get('value','')
-
-            if v!='' and meta.get(k,'')!=v:
-                skip=True
-
-        if skip:
-            continue
 
         pname=meta.get('program_uoa','')
         wname=meta.get('workload_name','')
@@ -246,7 +267,9 @@ def show(i):
 
         h+='  <tr'+bg+'>\n'
 
-        h+='   <td '+ha+'><a href="'+url0+'&wcid='+work['self_module_uid']+':'+duid+'">'+duid+'</a></td>\n'
+        x=work['self_module_uid']
+        if cmuoa!='': x=cmuoa
+        h+='   <td '+ha+'><a href="'+url0+'&wcid='+x+':'+duid+'">'+duid+'</a></td>\n'
 
         x=wname
         if wuid!='': x='<a href="'+url0+'&wcid='+cfg['module_deps']['program']+':'+wuid+'">'+x+'</a>'
@@ -301,5 +324,7 @@ def show(i):
 
     if cmuoa=='':
         h+='</form>\n'
+
+    h+=hextra
 
     return {'return':0, 'html':h, 'style':st}
