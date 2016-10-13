@@ -1,4 +1,5 @@
 * 2016.10.13 - added WA to CK crowdbenchmarking
+             - added demo graph for crowd-benchmarking (execution time for a given workload/scenario across platforms)
 
 * 2016.10.11 - added support to cache parameters
              - added first crowd-benchmarking scenario

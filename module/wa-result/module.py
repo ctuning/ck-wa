@@ -281,7 +281,7 @@ def show(i):
         te=d.get('characteristics',{}).get('run',{})
         tet=te.get('total_execution_time',0)
 
-        if i.get(ckey+'workload_name','')!='':
+        if i.get(ckey+'workload_name','')!='' and i.get(ckey+'scenario','')!='':
             bgraph['0'].append([ix,tet])
 
         h+='  <tr'+bg+'>\n'
