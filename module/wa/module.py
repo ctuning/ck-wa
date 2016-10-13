@@ -638,6 +638,10 @@ def run(i):
 
             if len(lst)==1:
                 rduid=lst[0]['data_uid']
+            else:
+                rx=ck.gen_uid({})
+                if rx['return']>0: return rx
+                rduid=rx['data_uid']
 
             # Update meta
             rx=ck.access({'action':'update',
@@ -649,7 +653,6 @@ def run(i):
                           'substitute':'yes',
                           'sort_keys':'yes'})
             if rx['return']>0: return rx
-            rduid=rx['data_uid']
 
             # Push statistical characteristics
             if os.path.isfile(fstat):

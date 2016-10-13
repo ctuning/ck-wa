@@ -149,6 +149,7 @@ def crowdsource(i):
        ii['exchange_repo']=er
        ii['exchange_subrepo']=esr
        ii['skip_welcome']='yes'
+       ii['skip_log_wait']='yes'
        ii['crowdtuning_type']='wa-crowd-benchmarking'
        r=ck.access(ii)
        if r['return']>0: return r

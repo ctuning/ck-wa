@@ -16,7 +16,7 @@ form_name='wa_web_form'
 onchange='document.'+form_name+'.submit();'
 
 hextra='<br>\n<br>\n<br>\n'
-hextra+='[ Check <a href="https://github.com/ctuning/ck/wiki/Demo-ARM-TechCon\'16">ARM TechCon demo</a> and participate in crowd-benchmarking] '
+hextra+='[ Check <a href="https://github.com/ctuning/ck/wiki/Demo-ARM-TechCon\'16">ARM TechCon\'16 demo</a> and participate in crowd-benchmarking] '
 hextra+='[ See CK-WA framework at <a href="https://github.com/ctuning/ck-wa">GitHub</a> ]'
 hextra+='<br>\n<br>\n'
 
