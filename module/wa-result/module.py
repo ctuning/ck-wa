@@ -38,6 +38,9 @@ def init(i):
 def show(i):
     """
     Input:  {
+               (crowd_module_uoa) - if rendered from experiment crowdsourcing
+               (crowd_key)        - add extra name to Web keys to avoid overlapping with original crowdsourcing HTML
+               (crowd_on_change)  - reuse onchange doc from original crowdsourcing HTML
             }
 
     Output: {
@@ -51,6 +54,13 @@ def show(i):
     import os
 
     st=''
+
+    cmuoa=i.get('crowd_module_uoa','')
+    ckey=i.get('crowd_key','')
+
+    conc=i.get('crowd_on_change','')
+    if conc=='':
+        conc=onchange
 
     h='<center>\n'
     h+='<h2>All WA results</h2>\n'
@@ -75,9 +85,14 @@ def show(i):
     url1=url
 
     # List entries
-    r=ck.access({'action':'search',
-                 'module_uoa':work['self_module_uid'],
-                 'add_meta':'yes'})
+    ii={'action':'search',
+        'module_uoa':work['self_module_uid'],
+        'add_meta':'yes'}
+
+    if cmuoa!='':
+        ii['module_uoa']=cmuoa
+
+    r=ck.access(ii)
     if r['return']>0: return r
 
     lst=r['lst']
@@ -97,29 +112,31 @@ def show(i):
         meta=d.get('meta',{})
 
         for kk in selector:
-            k=kk['key']
+            kx=kk['key']
+            k=ckey+kx
 
             if k not in choices: 
                 choices[k]=[]
                 wchoices[k]=[{'name':'','value':''}]
 
-            v=meta.get(k,'')
+            v=meta.get(kx,'')
             if v!='':
                 if v not in choices[k]: 
                     choices[k].append(v)
                     wchoices[k].append({'name':v, 'value':v})
 
     # Prepare query div ***************************************************************
-    # Start form + URL (even when viewing entry)
-    r=ck.access({'action':'start_form',
-                 'module_uoa':cfg['module_deps']['wfe'],
-                 'url':url1,
-                 'name':form_name})
-    if r['return']>0: return r
-    h+=r['html']
+    if cmuoa=='':
+        # Start form + URL (even when viewing entry)
+        r=ck.access({'action':'start_form',
+                     'module_uoa':cfg['module_deps']['wfe'],
+                     'url':url1,
+                     'name':form_name})
+        if r['return']>0: return r
+        h+=r['html']
 
     for kk in selector:
-        k=kk['key']
+        k=ckey+kk['key']
         n=kk['name']
 
         if i.get(k,'')!='':
@@ -131,7 +148,7 @@ def show(i):
             'module_uoa':cfg['module_deps']['wfe'],
             'data':wchoices[k],
             'name':k,
-            'onchange':onchange, 
+            'onchange':conc, 
             'skip_sort':'no',
             'selected_value':v}
         r=ck.access(ii)
@@ -282,6 +299,7 @@ def show(i):
     h+='</table>\n'
     h+='</center>\n'
 
-    h+='</form>\n'
+    if cmuoa=='':
+        h+='</form>\n'
 
     return {'return':0, 'html':h, 'style':st}

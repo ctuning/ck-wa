@@ -8,6 +8,11 @@
       "for_web": "yes"
     }
   },
+  "external_html": {
+    "module_uoa":"9db0db9369416e1b",
+    "action":"show",
+    "crowd_key":"ck_wa_"
+  },
   "copyright": "See CK COPYRIGHT.txt for copyright details",
   "desc": "crowd-benchmark shared workloads via ARM WA framework",
   "developer": "Grigori Fursin",
