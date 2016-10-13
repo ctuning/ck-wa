@@ -628,7 +628,7 @@ def run(i):
             rduid=''
 
             ii={'action':'search',
-                'module_uoa':cfg['module_deps']['wa-result'],
+                'module_uoa':smuoa,
                 'repo_uoa':er,
                 'remote_repo_uoa':esr,
                 'search_dict':{'meta':meta}}
