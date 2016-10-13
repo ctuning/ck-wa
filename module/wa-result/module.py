@@ -15,6 +15,11 @@ ck=None # Will be updated by CK (initialized CK kernel)
 form_name='wa_web_form'
 onchange='document.'+form_name+'.submit();'
 
+hextra='<br>\n<br>\n<br>\n'
+hextra+='[ Check <a href="https://github.com/ctuning/ck/wiki/Demo-ARM-TechCon\'16">ARM TechCon demo</a> and participate in crowd-benchmarking] '
+hextra+='[ See CK-WA framework at <a href="https://github.com/ctuning/ck-wa">GitHub</a> ]'
+hextra+='<br>\n<br>\n'
+
 ##############################################################################
 # Initialize module
 
@@ -180,8 +185,11 @@ def show(i):
 
     # Check if too many
     lplst=len(plst)
-    if lplst>100:
-        h+='<b>Too many entries to show ('+str(lplst)+') - please, prune list further!</b>'
+    if lplst==0:
+        h+='<b>No results found!</b>'+hextra
+        return {'return':0, 'html':h, 'style':st}
+    elif lplst>100:
+        h+='<b>Too many entries to show ('+str(lplst)+') - please, prune list further!</b>'+hextra
         return {'return':0, 'html':h, 'style':st}
 
     # Prepare table
@@ -316,5 +324,7 @@ def show(i):
 
     if cmuoa=='':
         h+='</form>\n'
+
+    h+=hextra
 
     return {'return':0, 'html':h, 'style':st}
