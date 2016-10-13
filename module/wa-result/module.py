@@ -242,7 +242,7 @@ def show(i):
 
         bg=' style="background-color:#'+bgc+';"'
 
-        tet=d.get('characteristics',{}).get('total_execution_time',0)
+        tet=d.get('characteristics',{}).get('run',{}).get('total_execution_time',0)
 
         h+='  <tr'+bg+'>\n'
 
