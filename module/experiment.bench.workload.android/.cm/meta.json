@@ -2,10 +2,6 @@
   "actions": {
     "crowdsource": {
       "desc": "crowdsource these experiments"
-    },
-    "html_viewer": {
-      "desc": "view solutions in html",
-      "for_web": "yes"
     }
   },
   "external_html": {
@@ -33,29 +29,6 @@
   },
   "priority": 10,
   "program_tags": "crowd-benchmarking,wa",
-  "prune_results": [
-    {
-      "desc": "Compiler",
-      "id": "compiler",
-      "ref_module_uoa": "36ebc331048475bb",
-      "ref_uid": "compiler_description_uoa",
-      "reverse": true
-    },
-    {
-      "desc": "CPU",
-      "id": "cpu_name",
-      "ref_module_uoa": "aa6b542a420b8db9",
-      "ref_uid": "cpu_uid"
-    }
-  ],
-  "record_keys": [
-    "##characteristics#*"
-  ],
-  "reference_threshold": 0.03,
-  "replay_desc": {
-    "desc_key": "pipeline_desc",
-    "module_uoa": "b0ac08fe1d3c2615"
-  },
   "tags": [
     "crowdsource",
     "experiments",
