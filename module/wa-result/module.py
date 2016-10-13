@@ -147,7 +147,7 @@ def show(i):
         # Show hardware
         ii={'action':'create_selector',
             'module_uoa':cfg['module_deps']['wfe'],
-            'data':wchoices[k],
+            'data':wchoices.get(k,[]),
             'name':k,
             'onchange':conc, 
             'skip_sort':'no',
