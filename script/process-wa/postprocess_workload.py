@@ -42,18 +42,23 @@ def ck_postprocess(i):
     err=r['string']
 
     xerr=''
+    traceback=False
     for l in err.split('\n'):
         l1=str(l.strip())
 
-        if len(l1)>9:
+        if traceback or l1.startswith('Traceback '):
+            xerr+=l1+'\n'
+            traceback=True
+
+        elif len(l1)>9:
             if l1.startswith('ERROR'):
-               xerr+=l1[5:].strip()+'\n'
+                xerr+=l1[5:].strip()+'\n'
             elif l1[5:].startswith('ERROR'):
-               xerr+=l1[10:].strip()+'\n'
+                xerr+=l1[10:].strip()+'\n'
             elif l1.startswith('CRITICAL'):
-               xerr+=l1[8:].strip()+'\n'
+                xerr+=l1[8:].strip()+'\n'
             elif l1[5:].startswith('CRITICAL'):
-               xerr+=l1[13:].strip()+'\n'
+                xerr+=l1[13:].strip()+'\n'
 
     #######################################
     ck.out ('Loading status.txt ...')
