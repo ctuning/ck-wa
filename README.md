@@ -27,7 +27,8 @@ and the [cTuning foundation](http://cTuning.org).
 
 You can see some public crowd-benchmarking results at 
 [CK public repo](http://cknowledge.org/repo) - just
-select "crowd-benchmark shared workloads via ARM WA framework".
+select "crowd-benchmark shared workloads via ARM WA framework"
+crowdsourcing scenario.
 
 News
 ====
