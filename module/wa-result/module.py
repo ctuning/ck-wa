@@ -316,7 +316,8 @@ def show(i):
         # APK
         x=apk_name
         if apk_ver!='': x+=' (V'+apk_ver+')'
-        x=x.replace("'","\'").replace('"',"\\'").replace('\n','\\n')
+#        x=x.replace("'","\'").replace('"',"\\'").replace('\n','\\n')
+        x=x.replace("\'","'").replace("'","\\'").replace('\"','"').replace('"',"\\'").replace('\n','\\n')
 
         x1=''
         if x!='':
@@ -330,7 +331,7 @@ def show(i):
         if x=='': 
             x='No'
         else:
-            fail_reason=fail_reason.replace("'","\'").replace('"',"\\'").replace('\n','\\n')
+            fail_reason=fail_reason.replace("\'","'").replace("'","\\'").replace('\"','"').replace('"',"\\'").replace('\n','\\n')
             x='Yes <input type="button" class="ck_small_button" onClick="alert(\''+fail_reason+'\');" value="Log">'
 
         h+='   <td '+ha+'>'+x+'</td>\n'
@@ -343,7 +344,8 @@ def show(i):
             x+=str(k)+'='+str(v)+'\n'
 #            x+='<tr><td>'+str(k)+'=</td><td>'+str(v)+'</td></tr>\n'
 #        x+='</table>\n'
-        x=x.replace("'","\'").replace('"',"\\'").replace('\n','\\n')
+#        x=x.replace("'","\'").replace('"',"\\'").replace('\n','\\n')
+        x=x.replace("\'","'").replace("'","\\'").replace('\"','"').replace('"',"\\'").replace('\n','\\n')
 
         x1=''
         if x!='':
@@ -393,7 +395,8 @@ def show(i):
             if x6!='':
                 x5+=str(k)+'='+x6+'\n'
 
-        x5=x5.replace("'","\'").replace('"',"\\'").replace('\n','\\n')
+#        x5=x5.replace("'","\'").replace('"',"\\'").replace('\n','\\n')
+        x5=x5.replace("\'","'").replace("'","\\'").replace('\"','"').replace('"',"\\'").replace('\n','\\n')
         if x5!='':
             x+='<br><input type="button" class="ck_small_button" onClick="alert(\''+x5+'\');" value="All">'
 
