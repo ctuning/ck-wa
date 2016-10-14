@@ -269,20 +269,21 @@ def show(i):
         adb_id=tm.get(ltarget_uid,{}).get('device_id','')
         sn=meta.get('serial_number','')
 
+        te=d.get('characteristics',{}).get('run',{})
+        tet=te.get('total_execution_time',0)
+
         bgc='afffaf'
         fail=d.get('state',{}).get('fail','')
         fail_reason=d.get('state',{}).get('fail_reason','')
         if fail=='yes':
             if fail_reason=='': fail_reason='yes'
+
             bgc='ffafaf'
+        else:
+            if i.get(ckey+'workload_name','')!='' and i.get(ckey+'scenario','')!='':
+                bgraph['0'].append([ix,tet])
 
         bg=' style="background-color:#'+bgc+';"'
-
-        te=d.get('characteristics',{}).get('run',{})
-        tet=te.get('total_execution_time',0)
-
-        if i.get(ckey+'workload_name','')!='' and i.get(ckey+'scenario','')!='':
-            bgraph['0'].append([ix,tet])
 
         h+='  <tr'+bg+'>\n'
 
