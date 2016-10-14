@@ -21,13 +21,13 @@ License
 
 Status
 ======
-Heavy development phase led by [dividiti](http://dividiti.com).
-We plan to connect WA to our crowd-benchmarking and crowd-tuning
-infrastructure while reusing multiple platforms provided by
-users and their features:
-* http://cknowledge.org/repo
-* http://github.com/ctuning/ck-crowdtuning
-* https://github.com/ctuning/ck-crowdtuning-platforms
+Relatively stable. 
+Development is led by [dividiti](http://dividiti.com)
+and the [cTuning foundation](http://cTuning.org).
+
+You can see some public crowd-benchmarking results at 
+[CK public repo](http://cknowledge.org/repo) - just
+select "crowd-benchmark shared workloads via ARM WA framework".
 
 News
 ====
