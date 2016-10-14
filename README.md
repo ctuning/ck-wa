@@ -119,7 +119,7 @@ and later reuse them via flag ''--cache'', i.e.
 ```
 You will be asked parameters only once. Note, that at this moment,
 password parameters are openly recorded in CK repo, which is totally
-unsecure. We plan to develop a secure auth mechanism for such workloads
+insecure. We plan to develop a secure auth mechanism for such workloads
 in the future: https://github.com/ARM-software/workload-automation/issues/267
 
 We also provided ''scenario'' flag to pre-select device config (such as
@@ -259,61 +259,55 @@ If you want to import WA artifacts to other CK repositories (for example, privat
 just change flags ''--target_repo_uoa'' and ''--extra_target_repo_uoa''. If omitted, 
 already existing entries will be updated or new ones will be recored in ''local'' repository.
 
+Registering APK in local CK repo
+================================
+Various workloads may require specific versions of APK installed on Android devices.
+If these APK are not installed, user has to manually find and install them.
 
-
-
-Remote Access - NEED TO BE UPDATED using new functionality!!!
-=============================================================
-
-WA can be accessed via CK web service with unified JSON API.
-
-For internal tests, we have a CK-powered WA service running 
-on a 'cknowledge.ddns.net' host machine with 7344 port
-(please, ping us in advance to start this service).
-
-You can see CK dashboard via http://cknowledge.ddns.net:7344/?template=arm-wa
-
-To be able to access above service via local CK instance, 
-we already provided a proxy repository "remote-wa". 
-
-You can now list devices connected to a remote machine via
+We started automating this process. It is now possible to list all APK and their versions
+via
 ```
- $ ck list remote-wa:device:*
+ $ ck detect apk
+   or
+ $ ck detect apk:com.android.calendar
 ```
 
-You can now list workloads available in this remote service via
+If you have found and downloaded a specific APK, you can register it in the CK via
+
 ```
- $ ck list remote-wa:wa:*
+ $ ck add apk:{name} --path
 ```
 
-You can run dhrystone workload on this remote machine (and connected mobile phone) via
+You can then install or uninstall a given APK via CK:
 ```
- $ ck run remote-wa:wa:dhrystone --remote
-```
-
-You can run dhrystone workload on this remote machine (and connected mobile phone) 
-and save output in JSON via
-```
- $ ck run remote-wa:wa:dhrystone --remote --out=json_file --out_file=results.json
+ $ ck install apk:{name}
+ $ ck uninstall apk:{name}
 ```
 
-If you want to deploy Docker container with CK-powered WA web service on your own machine 
-with "workgroup-hostname" IP, you should run it as following:
+Whenever you run a workload which require an APK, CK will search for it in the CK repo,
+and will try to install it if found. Private CK repositories with a collection of APK
+can be easily shared in companies' workgroups to automate workload benchmarking.
+
+Demo of crowd-benchmarking (remote collection of statistics)
+============================================================
+
+We prepared a demo to crowdsource benchmarking (and tuning)
+of shared workloads. Any user can participate in crowd-benchmarking
+simply as following
+
 ```
- $ ck run docker:ck-ubuntu-16.04 --WFE_HOST=workgroup-hostname"
+ $ ck crowdbench wa:dhyrstone
 ```
 
-You should then register this repository (for example with name "workgroup-wa-repo") 
-on client machines with CK as following
+You can also attribute your public contributions using flag --user via
 ```
- $ ck add repo:workgroup-wa-repo --remote --hostname=workgroup-hostname --port=3344 --quiet
+ $ ck crowdbench wa:googlephotos --user=grigori@dividiti.com
 ```
 
-It will then be possible to list and run workloads on the remote server via
-```
- $ ck list workgroup-wa-repo:wa:
- $ ck run workgroup-wa-repo:wa:dhrystone
-```
+The results are aggregated in the [Collective Knowledge public repository](http://cknowledge.org/repo).
+You just need to select crowdsourcing scenario "crowd-benchmark shared workloads via ARM WA framework".
+
+At the same page, you can also see all participated platforms, CPU, GPU, OS, as well as user timeline.
 
 Future work
 ===========
@@ -322,6 +316,10 @@ Future work
 
 Main reference
 ==============
+
+If you found our collaborative approach to benchmarking and optimization
+useful for your research, feel free to reference the following publication:
+
 
 ```
  @inproceedings{cm:29db2248aba45e5:9671da4c2f971915,
