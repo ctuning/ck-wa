@@ -258,7 +258,7 @@ You can import new workloads, devices and instruments as following:
 
 If you want to import WA artifacts to other CK repositories (for example, private),
 just change flags ''--target_repo_uoa'' and ''--extra_target_repo_uoa''. If omitted, 
-already existing entries will be updated or new ones will be recored in ''local'' repository.
+already existing entries will be updated or new ones will be recorded in ''local'' repository.
 
 Registering APK in local CK repo
 ================================
