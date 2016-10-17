@@ -11,6 +11,11 @@ import json
 import os
 import re
 
+# Removes control sequences (ANSII escape sequences, such as color codes) from the given line
+def escape_ansi(line):
+    ansi_escape = re.compile(r'(\x9B|\x1B\[)[0-?]*[ -\/]*[@-~]')
+    return ansi_escape.sub('', line)
+
 def ck_postprocess(i):
     ck=i['ck_kernel']
 
@@ -39,7 +44,7 @@ def ck_postprocess(i):
 
     r=ck.load_text_file({'text_file':'tmp-output2.tmp'})
     if r['return']>0: return r
-    err=r['string']
+    err=escape_ansi(r['string'])
 
     xerr=''
     traceback=False
@@ -50,15 +55,11 @@ def ck_postprocess(i):
             xerr+=l1+'\n'
             traceback=True
 
-        elif len(l1)>9:
-            if l1.startswith('ERROR'):
-                xerr+=l1[5:].strip()+'\n'
-            elif l1[5:].startswith('ERROR'):
-                xerr+=l1[10:].strip()+'\n'
-            elif l1.startswith('CRITICAL'):
-                xerr+=l1[8:].strip()+'\n'
-            elif l1[5:].startswith('CRITICAL'):
-                xerr+=l1[13:].strip()+'\n'
+        elif l1.startswith('ERROR'):
+            xerr+=l1[5:].strip()+'\n'
+
+        elif l1.startswith('CRITICAL'):
+            xerr+=l1[8:].strip()+'\n'
 
     #######################################
     ck.out ('Loading status.txt ...')
