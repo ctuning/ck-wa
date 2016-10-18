@@ -397,6 +397,7 @@ def run(i):
                 'module_uoa':cfg['module_deps']['wa-result'],
                 'search_dict':{'meta':meta}}
             rx=ck.access(ii)
+            if rx['return']>0: return rx
 
             lst=rx['lst']
 
