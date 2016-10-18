@@ -687,7 +687,7 @@ def run(i):
 
             # Info
             if o=='con':
-                ck.out('Succesfully recorded results in repo repo (Entry UID='+rduid+')')
+                ck.out('Succesfully recorded results in the remote repo (Entry UID='+rduid+')')
 
     return rrr
 
