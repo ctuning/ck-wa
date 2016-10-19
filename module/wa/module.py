@@ -142,7 +142,7 @@ def run(i):
     cur_dir=os.getcwd()
 
     # Check if any input has . and convert to dict
-    for k in i:
+    for k in list(i.keys()):
         if k.find('.')>0:
             v=i[k]
 
