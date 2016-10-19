@@ -381,6 +381,7 @@ def show(i):
             kx1=dstat.get(kx+'#center',None)
             kx2=dstat.get(kx+'#halfrange',None)
 
+            x6=''
             if type(v)==int:
                 if kx1!=None and kx2!=None:
                     x6=str(kx1)+' +- '+str(kx2)
