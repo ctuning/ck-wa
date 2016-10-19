@@ -15,17 +15,21 @@ ck=None # Will be updated by CK (initialized CK kernel)
 form_name='wa_web_form'
 onchange='document.'+form_name+'.submit();'
 
-hextra='<br>\n<br>\n<br>\n'
-hextra+='<center>\n'
-hextra+='[ Check <a href="https://github.com/ctuning/ck/wiki/Demo-ARM-TechCon\'16">ARM TechCon\'16 demo</a> and participate in crowd-benchmarking] '
-hextra+='[ See CK-WA framework at <a href="https://github.com/ctuning/ck-wa">GitHub</a> ]'
-hextra+='</center>\n'
-hextra+='<br>\n<br>\n'
+hextra='<i><center>\n'
+hextra+='This is an on-going long-term project. Please check our vision [ '
+hextra+='<a href="http://schedule.armtechcon.com/session/know-your-workloads-design-more-efficient-systems">ARM TechCon\'16</a>, \n'
+hextra+='<a href="http://bit.ly/ck-date16">DATE\'16</a>, \n'
+hextra+='<a href="http://arxiv.org/abs/1506.06256">CPC\'15</a>, \n'
+hextra+='<a href="http://hal.inria.fr/hal-01054763">JSP\'14</a>, \n'
+hextra+='<a href="https://www.youtube.com/watch?v=Q94yWxXUMP0">YouTube</a> ]\n'
+hextra+=' and <a href="https://github.com/dividiti/ck-wa">CK-WA GitHub repo</a> for more details!'
+hextra+='</center></i>\n'
+hextra+='<br>\n'
 
 selector=[{'name':'Scenario', 'key':'scenario'},
           {'name':'Workload', 'key':'workload_name'},
           {'name':'Platform', 'key':'plat_name'},
-          {'name':'CPU', 'key':'cpu_name'},
+          {'name':'CPU', 'key':'cpu_name', 'new_line':'yes'},
           {'name':'OS', 'key':'os_name'},
           {'name':'GPU', 'key':'gpu_name'}]
 
@@ -76,10 +80,13 @@ def show(i):
     if conc=='':
         conc=onchange
 
-    h='<center>\n'
+    h='<hr>\n'
+    h+='<center>\n'
     h+='\n\n<script language="JavaScript">function copyToClipboard (text) {window.prompt ("Copy to clipboard: Ctrl+C, Enter", text);}</script>\n\n' 
 
     h+='<h2>All WA results</h2>\n'
+
+    h+=hextra
 
     # Check host URL prefix and default module/action
     rx=ck.access({'action':'form_url_prefix',
@@ -149,6 +156,10 @@ def show(i):
         k=ckey+kk['key']
         n=kk['name']
 
+        nl=kk.get('new_line','')
+        if nl=='yes':
+            h+='<br>\n<div id="ck_entries_space8"></div>\n'
+
         v=''
         if i.get(k,'')!='':
             v=i[k]
@@ -191,10 +202,10 @@ def show(i):
     # Check if too many
     lplst=len(plst)
     if lplst==0:
-        h+='<b>No results found!</b>'+hextra
+        h+='<b>No results found!</b>'
         return {'return':0, 'html':h, 'style':st}
     elif lplst>50:
-        h+='<b>Too many entries to show ('+str(lplst)+') - please, prune list further!</b>'+hextra
+        h+='<b>Too many entries to show ('+str(lplst)+') - please, prune list further!</b>'
         return {'return':0, 'html':h, 'style':st}
 
     # Prepare table
@@ -203,7 +214,7 @@ def show(i):
     ha='align="center" valign="top"'
     hb='align="left" valign="top"'
 
-    h+='  <tr>\n'
+    h+='  <tr style="background-color:#dddddd">\n'
     h+='   <td '+ha+'><b>All raw files</b></td>\n'
     h+='   <td '+ha+'><b>Workload</b></td>\n'
     h+='   <td '+ha+'><b>Scenario</b></td>\n'
@@ -491,7 +502,5 @@ def show(i):
              h+=' </div>\n'
              h+='</div>\n'
              h+='</center>\n'
-
-    h+=hextra
 
     return {'return':0, 'html':h, 'style':st}
