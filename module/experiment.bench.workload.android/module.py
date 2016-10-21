@@ -44,6 +44,7 @@ def crowdsource(i):
     """
     Input:  {
               (local)            - if 'yes', local crowd-benchmarking, instead of public
+              (user)             - force different user ID/email for demos
             }
 
     Output: {

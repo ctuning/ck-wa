@@ -22,8 +22,9 @@ License
 Status
 ======
 Relatively stable. 
-Development is led by [dividiti](http://dividiti.com)
-and the [cTuning foundation](http://cTuning.org).
+Development is led by [dividiti](http://dividiti.com], 
+the [cTuning foundation](http://cTuning.org) 
+and [ARM](http://www.arm.com].
 
 You can see some public crowd-benchmarking results at 
 [CK public repo](http://cknowledge.org/repo) - just
@@ -44,8 +45,11 @@ It requires:
 * python2
 * pip (install via apt-get install python-pip)
 * yaml (install via apt-get install libyaml-dev)
+* trace-cmd (install via apt-get install trace-cmd) - useful for advanced scenarios
 
-In the future, we plan to provide support for python 3+ and Windows/Linux/MacOS host platforms in the WA via CK unified routines.
+CK is very portable and can run on diverse platforms including Linux, Windows, MacOS with Python 2.7 and 3.2+.
+WA can currently run only on Linux/MacOS with Python 2.7 - in the future, we plan to 
+provide tighter integration of WA with the CK to make it run across any platform with Python 2.7 and 3.2+.
 
 Authors
 =======
