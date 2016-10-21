@@ -979,6 +979,7 @@ def import_wa(i):
             if pname!=None:
                 if 'apk' not in d: d['apk']={}
                 d['apk']['name']=pname
+                if 'android-sdk' in d['deps']: del(d['deps']['android-sdk'])
 
             if wa_name!='':
                 ck.out('         WA class: '+wa_name)
@@ -1050,6 +1051,18 @@ def import_wa(i):
                     os.makedirs(pd2)
 
                 shutil.copy2(p1,p2)
+
+            # If src, add Android SDK dep
+            p3=os.path.join(pnew,'src')
+            if os.path.isdir(p3):
+                ck.out('       Seems like sources - adding dependency on Android SDK!')
+
+                d['deps']['android-sdk']={
+                       "local": "yes", 
+                       "name": "Android SDK", 
+                       "sort": 5, 
+                       "tags": "android,sdk"
+                   }
 
     ############################################################################
     ck.out('')
