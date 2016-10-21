@@ -1,3 +1,6 @@
+* 2016.10.21 - added deps on WA when adding new machine
+             - added 2 Docker images (one with CMD, another one as standalone CK web service)
+
 * 2016.10.13 - added WA to CK crowdbenchmarking
              - added demo graph for crowd-benchmarking (execution time for a given workload/scenario across platforms)
 
