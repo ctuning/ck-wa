@@ -340,9 +340,9 @@ useful for your research, feel free to reference the following publication:
 
 Publications
 ============
-The concepts has been described in the following publications:
+This concept has been described in the following publications:
 
-* http://bit.ly/ck-date16 (DATE'16)
+* http://tinyurl.com/zyupd5v (DATE'16)
 * http://arxiv.org/abs/1506.06256 (CPC'15)
 * http://hal.inria.fr/hal-01054763 (Journal of Scientific Programming'14)
 
