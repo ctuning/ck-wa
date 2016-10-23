@@ -139,6 +139,7 @@ You can then run a given workload with a given scenario via
 ```
 
 Note that scenario ''cpu'' requires trace-cmd installed on your host machine.
+''It may also require your mobile device to be rooted''!
 On Ubuntu, you can install it via
 ```
  $ sudo apt install trace-cmd
@@ -176,6 +177,33 @@ You can also replay a given WA run using above UIDs via
 You can delete all above results via
 ```
  $ ck rm wa-result:* --force
+```
+
+Demo of crowd-benchmarking (remote collection of statistics)
+============================================================
+
+We prepared a demo to crowdsource benchmarking (and tuning)
+of shared workloads. Any user can participate in crowd-benchmarking
+simply as following
+
+```
+ $ ck crowdbench wa:dhyrstone
+```
+
+You can also attribute your public contributions using flag --user via
+```
+ $ ck crowdbench wa:googlephotos --user=grigori@dividiti.com
+```
+
+The results are aggregated in the [Collective Knowledge public repository](http://cknowledge.org/repo).
+You just need to select crowdsourcing scenario "crowd-benchmark shared workloads via ARM WA framework".
+
+At the same page, you can also see all participated platforms, CPU, GPU, OS, as well as user timeline.
+
+You can also participate in crowd-tuning of other shared workloads simply via
+```
+ $ ck pull repo:ck-crowdtuning
+ $ ck crowdsource experiment
 ```
 
 Updating WA via CK
@@ -292,27 +320,6 @@ You can then install or uninstall a given APK via CK:
 Whenever you run a workload which require an APK, CK will search for it in the CK repo,
 and will try to install it if found. Private CK repositories with a collection of APK
 can be easily shared in companies' workgroups to automate workload benchmarking.
-
-Demo of crowd-benchmarking (remote collection of statistics)
-============================================================
-
-We prepared a demo to crowdsource benchmarking (and tuning)
-of shared workloads. Any user can participate in crowd-benchmarking
-simply as following
-
-```
- $ ck crowdbench wa:dhyrstone
-```
-
-You can also attribute your public contributions using flag --user via
-```
- $ ck crowdbench wa:googlephotos --user=grigori@dividiti.com
-```
-
-The results are aggregated in the [Collective Knowledge public repository](http://cknowledge.org/repo).
-You just need to select crowdsourcing scenario "crowd-benchmark shared workloads via ARM WA framework".
-
-At the same page, you can also see all participated platforms, CPU, GPU, OS, as well as user timeline.
 
 Future work
 ===========
