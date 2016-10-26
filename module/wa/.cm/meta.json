@@ -26,10 +26,6 @@
     "runx": {
       "desc": "run workload via CK pipeline",
       "for_web": "yes"
-    },
-    "show": {
-      "desc": "WA dashboard",
-      "for_web": "yes"
     }
   },
   "actions_redirect": {

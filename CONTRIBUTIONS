@@ -19,3 +19,9 @@ E:
 O: ARM, UK
 C: reporting problem with yaml recording, CPU feature detection (in new format) and general feedback about ck-wa
 W:
+
+N: Dave Butcher
+E:
+O: ARM, UK
+C: evaluating CK-WA, providing feebdback and reporting a few bugs
+W:
