@@ -49,7 +49,12 @@ def ck_preprocess(i):
     raw_path=env.get('CK_WA_RAW_RESULT_PATH','')
 
     if raw_path=='':
-       p=os.getcwd()
+       try:
+           p=os.getcwd()
+       except OSError:
+           os.chdir('..')
+           p=os.getcwd()
+
     else:
        p=raw_path
 

@@ -139,7 +139,11 @@ def run(i):
     oo=''
     if o=='con': oo=o
 
-    cur_dir=os.getcwd()
+    try:
+        cur_dir=os.getcwd()
+    except OSError:
+        os.chdir('..')
+        cur_dir=os.getcwd()
 
     # Check if any input has . and convert to dict
     for k in list(i.keys()):

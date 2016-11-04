@@ -206,10 +206,10 @@ You can also participate in crowd-tuning of other shared workloads simply via
  $ ck crowdsource experiment
 ```
 
-Finally, you can participate in crowd-benchmarking and crowd-tuning using commodity mobile phones
-via two Android apps:
+Finally, you can participate in crowd-benchmarking and crowd-tuning 
+using commodity mobile phones via two Android apps:
 * [For small workloads](https://play.google.com/store/apps/details?id=openscience.crowdsource.experiments)
-* [For large workloads including DNN libs such as Caffe](https://play.google.com/store/apps/details?id=openscience.crowdsource.experiments)
+* [For large workloads including DNN libs such as Caffe](https://play.google.com/store/apps/details?id=openscience.crowdsource.video.experiments)
 
 Updating WA via CK
 ==================
