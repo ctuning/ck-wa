@@ -69,6 +69,10 @@ def setup(i):
     ck=i['ck_kernel']
     s=''
 
+#    del(i['ck_kernel'])
+#    ck.save_json_to_file({'json_file':'/tmp/xyz.json','dict':i})
+#    exit(1)
+
     cus=i['customize']
     env=i['env']
 
@@ -81,6 +85,9 @@ def setup(i):
 
     if cus.get('force_path',''):
        fp=cus['force_path'] # usually passed from CK package
+
+    # Specialize for given WA version if needed
+    sver=i.get('version_split',[])
 
     if winh=='yes':
        fp+='.bat'

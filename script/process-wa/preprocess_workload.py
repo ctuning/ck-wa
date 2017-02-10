@@ -8,6 +8,9 @@ import json
 import os
 import re
 
+fix_params={0:{"exact_abi":"check_abi"},
+            1:{"check_abi":"exact_abi"}}
+
 ##########################################################
 default_agenda={
     "config": {
@@ -29,8 +32,13 @@ def ck_preprocess(i):
     o=i.get('out','')
 
     ck=i['ck_kernel']
+
+
     rt=i['run_time']
     deps=i['deps']
+
+    deps_wa=deps.get('wa',{})
+    sver=deps_wa.get('cus',{}).get('version_split',[])
 
     misc=i['misc']
 
@@ -45,7 +53,6 @@ def ck_preprocess(i):
     env=i['env']
 
     all_params=i.get('params',{})
-
     raw_path=env.get('CK_WA_RAW_RESULT_PATH','')
 
     if raw_path=='':
@@ -79,9 +86,15 @@ def ck_preprocess(i):
     params={}
 
     dp=meta.get('params',{})
+    rx=update_params({'params':dp, 'version_split':sver})
+    if rx['return']>0: return rx
+
+    dp1=all_params.get('params',{})
+    rx=update_params({'params':dp1, 'version_split':sver})
+    if rx['return']>0: return rx
 
     # Customize device config and workload params from outside!
-    r=ck.merge_dicts({'dict1':params, 'dict2':all_params.get('params',{})})
+    r=ck.merge_dicts({'dict1':params, 'dict2':dp1})
     if r['return']>0: return r
 
     for k in sorted(dp):
@@ -168,5 +181,29 @@ def ck_preprocess(i):
        ck.out('---------------------------------------')
 
     return {'return':0, 'bat':b}
+
+##########################################################
+# Fix parameters according to WA version to keep backwards compatibility
+
+def update_params(i):
+
+    params=i.get('params',{})
+    sver=i.get('version_split',[])
+
+    # Fix params depending on the WA version
+    if len(params)>0:
+       fparams={}
+       if len(sver)>1 and sver[0]>=2 and sver[1]>=6:
+          fparams=fix_params[1]
+       else:
+          fparams=fix_params[0]
+
+       for k in fparams:
+           if k in params:
+              params[fparams[k]]=params[k]
+              del(params[k])
+
+    return {'return':0, 'params':params}
+
 
 # Do not add anything here!

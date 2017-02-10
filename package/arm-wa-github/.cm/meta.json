@@ -1,33 +1,39 @@
 {
-  "check_exit_status": "yes", 
+  "check_exit_status": "yes",
   "customize": {
-    "skip_file_check": "yes",
+    "extra_dir": "",
+    "force_cmd_version_detection": "yes",
+    "git_src_dir": "src",
     "install_env": {
       "WA_URL": "https://github.com/ARM-software/workload-automation"
     },
-    "extra_dir": "", 
-    "version": "trunk",
-    "use_git_revision":"yes",
-    "git_src_dir":"src"
-  }, 
+    "skip_file_check": "yes",
+    "soft_version_cmd": {
+      "linux": "wa --version > $#filename#$ 2>&1",
+      "win": "wa --version > $#filename#$ 2>&1"
+    },
+    "soft_version_skip_add_target_file":"yes",
+    "use_git_revision": "yes",
+    "version": "trunk"
+  },
   "end_full_path": {
-    "linux": "src/scripts/wa",
-    "android": "src$#sep#$scripts$#sep#$wa" 
-  }, 
+    "android": "src$#sep#$scripts$#sep#$wa",
+    "linux": "src/scripts/wa"
+  },
   "only_for_host_os_tags": [
     "linux",
-    "windows" 
-  ], 
+    "windows"
+  ],
   "only_for_target_os_tags": [
-    "linux", 
+    "linux",
     "android"
-  ], 
-  "process_script": "process", 
+  ],
+  "process_script": "process",
   "soft_uoa": "65d719061a41f7ae",
-  "suggested_path": "tool-arm-wa", 
+  "suggested_path": "tool-arm-wa",
   "tags": [
-    "tool", 
-    "arm", 
+    "tool",
+    "arm",
     "wa"
   ]
 }
