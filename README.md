@@ -28,9 +28,9 @@ License
 Status
 ======
 Relatively stable. 
-Development is led by [dividiti](http://dividiti.com], 
+Development is led by [dividiti](http://dividiti.com), 
 the [cTuning foundation](http://cTuning.org) 
-and [ARM](http://www.arm.com].
+and [ARM](http://www.arm.com).
 
 You can see some public crowd-benchmarking results at 
 [CK public repo](http://cknowledge.org/repo) - just
