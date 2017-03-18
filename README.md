@@ -17,7 +17,9 @@ MacOS, Windows), web-based dashboard, optimization knowledge sharing, etc.
 [DATE'16 paper](http://bit.ly/ck-date16) and 
 [CPC'15 article](https://arxiv.org/abs/1506.06256)
 for more details about CK and our vision of collaborative,
-reproducible and systematic experimentation.
+reproducible and systematic experimentation. 
+
+Check out our related project to crowdsource benchmarking and optimization of deep learning (engines, models, inputs): http://cKnowledge.org/ai
 
 License
 =======
