@@ -89,8 +89,8 @@ described in detail in the [CK wiki](https://github.com/ctuning/ck/wiki/Farms-of
  $ ck add machine:my-target-machine
 ```
 
-Please, select either ''2) WA: Android machine accessed via ARM's workload automation framework''
-for Android based machine or ''3) WA: Linux machine accessed via ARM's workload automation''
+Please, select either ''WA: Android machine accessed via ARM's workload automation framework''
+for Android based machine or ''WA: Linux machine accessed via ARM's workload automation''
 for Linux based machine. 
 
 Now you can see available WA workloads via
@@ -332,7 +332,7 @@ can be easily shared in companies' workgroups to automate workload benchmarking.
 
 Future work
 ===========
-* Current WA can work only with Python 2.x and does not support Windows. Hence, we plan to provide tighter integration with the CK to make WA support Python 3.x and all Linux/MacOS/Windows via CK unified routines.
+* We now focus on crowdsourcing benchmarking and optimization of [deep learning](http://cKnowledge.org/ai) across diverse hardware, models and inputs via CK. See [ck-caffe](https://github.com/dividiti/ck-caffe), [ck-tensorflow](https://github.com/ctuning/ck-tensorflow) and our engaging [Android app](https://play.google.com/store/apps/details?id=openscience.crowdsource.video.experiments).
 * We continuing unifying high-level API to crowd-benchmark and crowd-tune shared workloads (see [1](http://bit.ly/ck-date16), [2](http://hal.inria.fr/hal-01054763) and [3](http://arxiv.org/abs/1506.06256) to know more about our vision).
 
 Main reference
