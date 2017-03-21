@@ -85,7 +85,7 @@ Usage
 =====
 
 First, you need to register a target machine in the CK as 
-described in detail in the [CK wiki](https://github.com/ctuning/ck/wiki/Farms-of-CK-machines CK wiki):
+described in detail in the [CK wiki](https://github.com/ctuning/ck/wiki/Farms-of-CK-machines):
 
 ```
  $ ck add machine:my-target-machine
