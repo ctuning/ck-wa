@@ -959,6 +959,7 @@ def import_wa(i):
         rxx=ck.load_module_from_path({'path':pw, 'module_code_name':'__init__', 'skip_init':'yes'})
         if rxx['return']==0:
             cs=rxx['code']
+            cuid=rxx['cuid']
 
             ck.out('      Obtaining params from __init__.py ...')
 
@@ -967,18 +968,44 @@ def import_wa(i):
             pname=None
             imported_params={}
 
-            for name, obj in inspect.getmembers(cs):
-                if name!='AndroidUxPerfWorkload' and inspect.isclass(obj):
-                    try:
-                        addr=getattr(cs, name)
-                        pp=addr.parameters
-                        pname=addr.package
-                    except Exception as e:
-                        pass
+            # Only examine classes
+            for name, obj in inspect.getmembers(cs, predicate=inspect.isclass):
+                # And only classes defined in this module
+                if cuid == obj.__module__:
+                    # And only classes that inherit from wl.auto.core.Workload
+                    is_workload = False
+                    def hunt_workload(obj):
+                        fullname = obj.__module__ +'.'+ obj.__name__
+                        if obj == object:
+                            return False
+                        elif fullname == "wlauto.core.workload.Workload":
+                            is_workload = True
+                            return True
+                        else:
+                            is_workload = False
+                            for o in obj.__bases__:
+                                is_workload |= hunt_workload(o)
+                        return is_workload
+                    is_workload = hunt_workload(obj)
+                # if name!='AndroidUxPerfWorkload' and inspect.isclass(obj):
+                    if is_workload:
+                        try:
+                            addr=getattr(cs, name)
+                            pp=addr.parameters
+                            if type(addr.package) == str:
+                                pname=addr.package
+                            else:
+                                # Needs support for instantiate-qnd-query at
+                                # experiment run time
+                                pname="unknown"
+                        except Exception as e:
+                            # Warn about problems scanning
+                            print(e)
+                            pass
 
-                    if pp!=None:
-                        wa_name=name
-                        break
+                        if pp!=None:
+                            wa_name=name
+                            break
 
             if pname!=None:
                 if 'apk' not in d: d['apk']={}
