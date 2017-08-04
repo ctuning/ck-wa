@@ -281,6 +281,22 @@ def run(i):
     gpu_name=fgpu.get('name','')
     sn=fos.get('serial_number','')
 
+    # Make sure our wa environment has the CK Resource Getter
+    # expand plugin dir
+    gp = os.path.expanduser('~/.workload_automation/resource_getters/ck_apk_getter.py')
+
+    ii={'action':'load',
+      'module_uoa':'module',
+      'data_uoa':'wa'}
+    r=ck.access(ii)
+    if r['return']>0: return r
+
+    pp=r['path']
+    sp = os.path.join(pp,'ck_apk_getter.py')
+
+    # We can't be certain the isn't file is out of date if it is there, so always copy
+    shutil.copyfile(sp,gp)
+
     # Iterate over workloads
     rrr={}
 
@@ -995,9 +1011,10 @@ def import_wa(i):
                             if type(addr.package) == str:
                                 pname=addr.package
                             else:
-                                # Needs support for instantiate-qnd-query at
-                                # experiment run time
-                                pname="unknown"
+                                # Cannot determine package name statically, so
+                                # let wa ask for named resource later
+                                # via a resourceGetter
+                                pname=None
                         except Exception as e:
                             # Warn about problems scanning
                             print(e)
