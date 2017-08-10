@@ -281,6 +281,22 @@ def run(i):
     gpu_name=fgpu.get('name','')
     sn=fos.get('serial_number','')
 
+    # Make sure our wa environment has the CK Resource Getter
+    # expand plugin dir
+    gp = os.path.expanduser('~/.workload_automation/resource_getters/ck_apk_getter.py')
+
+    ii={'action':'load',
+      'module_uoa':'module',
+      'data_uoa':'wa'}
+    r=ck.access(ii)
+    if r['return']>0: return r
+
+    pp=r['path']
+    sp = os.path.join(pp,'ck_apk_getter.py')
+
+    # We can't be certain the isn't file is out of date if it is there, so always copy
+    shutil.copyfile(sp,gp)
+
     # Iterate over workloads
     rrr={}
 
@@ -959,6 +975,7 @@ def import_wa(i):
         rxx=ck.load_module_from_path({'path':pw, 'module_code_name':'__init__', 'skip_init':'yes'})
         if rxx['return']==0:
             cs=rxx['code']
+            cuid=rxx['cuid']
 
             ck.out('      Obtaining params from __init__.py ...')
 
@@ -967,18 +984,45 @@ def import_wa(i):
             pname=None
             imported_params={}
 
-            for name, obj in inspect.getmembers(cs):
-                if name!='AndroidUxPerfWorkload' and inspect.isclass(obj):
-                    try:
-                        addr=getattr(cs, name)
-                        pp=addr.parameters
-                        pname=addr.package
-                    except Exception as e:
-                        pass
+            # Only examine classes
+            for name, obj in inspect.getmembers(cs, predicate=inspect.isclass):
+                # And only classes defined in this module
+                if cuid == obj.__module__:
+                    # And only classes that inherit from wl.auto.core.Workload
+                    is_workload = False
+                    def hunt_workload(obj):
+                        fullname = obj.__module__ +'.'+ obj.__name__
+                        if obj == object:
+                            return False
+                        elif fullname == "wlauto.core.workload.Workload":
+                            is_workload = True
+                            return True
+                        else:
+                            is_workload = False
+                            for o in obj.__bases__:
+                                is_workload |= hunt_workload(o)
+                        return is_workload
+                    is_workload = hunt_workload(obj)
+                # if name!='AndroidUxPerfWorkload' and inspect.isclass(obj):
+                    if is_workload:
+                        try:
+                            addr=getattr(cs, name)
+                            pp=addr.parameters
+                            if type(addr.package) == str:
+                                pname=addr.package
+                            else:
+                                # Cannot determine package name statically, so
+                                # let wa ask for named resource later
+                                # via a resourceGetter
+                                pname=None
+                        except Exception as e:
+                            # Warn about problems scanning
+                            print(e)
+                            pass
 
-                    if pp!=None:
-                        wa_name=name
-                        break
+                        if pp!=None:
+                            wa_name=name
+                            break
 
             if pname!=None:
                 if 'apk' not in d: d['apk']={}

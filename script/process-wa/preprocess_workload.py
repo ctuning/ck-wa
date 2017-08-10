@@ -191,9 +191,10 @@ def update_params(i):
     sver=i.get('version_split',[])
 
     # Fix params depending on the WA version
+    # If we don't have a version_split, assume it is newer than 2.6.0
     if len(params)>0:
        fparams={}
-       if len(sver)>1 and sver[0]>=2 and sver[1]>=6:
+       if len(sver)==0 or (len(sver)>1 and sver[0]>=2 and sver[1]>=6):
           fparams=fix_params[1]
        else:
           fparams=fix_params[0]
