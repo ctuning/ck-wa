@@ -17,12 +17,14 @@ class CkApkGetter(ResourceGetter):
                        'action':'load',
                        'data_uoa':resource.owner.package})
         path = r['path']
+        r_version = kwargs.get('version', getattr(resource, 'version', None))
         for apk in r['dict']['apks']:
-            if apk['version'] == resource.owner.version:
-                if resource.owner.device.abi in apk['abis']:             
-                    return os.path.join(path,apk['apk_name'])        
+            if r_version is not None and apk['version'] != r_version:
+                continue
+            if resource.owner.device.abi in apk['abis']:
+                return os.path.join(path,apk['apk_name'])
         self.logger.error("Failed to find APK for {} / {} / {}".format(
                             resource.owner.package,
-                            resource.owner.version,
+                            r_version,
                             resource.owner.device.abi))
         return None
