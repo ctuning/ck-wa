@@ -39,7 +39,7 @@ crowdsourcing scenario.
 
 News
 ====
-* Upcoming CK presentation and demo at [ARM TechCon'16 (Oct. 27)](http://schedule.armtechcon.com/session/know-your-workloads-design-more-efficient-systems);
+* Upcoming CK presentation and demo at [ARM TechCon'16 (Oct. 27)](https://github.com/ctuning/ck/wiki/Demo-ARM-TechCon'16);
 * Press-release: ARM and dividiti use CK to accelerate computer engineering (2016, [HiPEAC Info'45](https://www.hipeac.net/assets/public/publications/newsletter/hipeacinfo45.pdf), page 17)
 
 Prerequisites
