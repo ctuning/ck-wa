@@ -17,7 +17,7 @@ onchange='document.'+form_name+'.submit();'
 
 hextra='<i><center>\n'
 hextra+='This is an on-going long-term project. Please check our vision [ '
-hextra+='<a href="http://schedule.armtechcon.com/session/know-your-workloads-design-more-efficient-systems">ARM TechCon\'16</a>, \n'
+hextra+='<a href="https://github.com/ctuning/ck/wiki/Demo-ARM-TechCon\'16">ARM TechCon\'16</a>, \n'
 hextra+='<a href="http://bit.ly/ck-date16">DATE\'16</a>, \n'
 hextra+='<a href="http://arxiv.org/abs/1506.06256">CPC\'15</a>, \n'
 hextra+='<a href="http://hal.inria.fr/hal-01054763">JSP\'14</a>, \n'
