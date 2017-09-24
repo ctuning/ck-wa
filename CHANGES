@@ -1,3 +1,5 @@
+* 2017.09.24 - added possibility to customize dashboard via --host --port --wfe_host --wfe_port
+
 * 2017.02.09 - providing backwards compatibility layer for WA params (check_abi -> exact_abi)
 
 * 2016.11.04 - making os.getcwd() safer

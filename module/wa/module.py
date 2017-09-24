@@ -717,6 +717,13 @@ def run(i):
 def dashboard(i):
     """
     Input:  {
+              (host)        - Internal web server host
+              (port)        - Internal web server port
+
+              (wfe_host)    - External web server host
+              (wfe_port)    - External web server port
+
+              (extra_url)   - extra URL
             }
 
     Output: {
@@ -727,10 +734,17 @@ def dashboard(i):
 
     """
 
-    i['action']='browser'
-    i['cid']=''
-    i['module_uoa']=''
+#    Old style
+#    i['action']='browser'
+#    i['cid']=''
+#    i['module_uoa']=''
+#    i['template']='arm-wa'
+
+    i['action']='start'
+    i['module_uoa']='web'
+    i['browser']='yes'
     i['template']='arm-wa'
+    i['cid']=''
 
     return ck.access(i)
 
