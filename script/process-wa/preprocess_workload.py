@@ -97,6 +97,8 @@ def ck_preprocess(i):
     r=ck.merge_dicts({'dict1':params, 'dict2':dp1})
     if r['return']>0: return r
 
+    runtime_parameters = dict(meta.get('runtime_parameters',{}))
+
     for k in sorted(dp):
         x=dp[k]
 
@@ -119,7 +121,7 @@ def ck_preprocess(i):
             params[k]=dv
 
     wname=meta['wa_alias']
-    agenda['workloads'].append({'name':wname, 'params': params})
+    agenda['workloads'].append({'name':wname, 'params': params, 'runtime_parameters': runtime_parameters})
 
     # Prepare agenda
     if 'global' not in agenda:
