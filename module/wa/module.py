@@ -107,6 +107,7 @@ def run(i):
               (repetitions)         - statistical repetitions (default=1), for now statistical analysis is not used (TBD)
 
               (config)              - customize config
+              (runtime_parameters)  - runtime_parameters
               (params)              - workload params
               (scenario)            - use pre-defined scenario (see ck list wa-scenario)
 
