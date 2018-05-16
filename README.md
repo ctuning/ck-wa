@@ -190,7 +190,7 @@ Demo of crowd-benchmarking (remote collection of statistics)
 
 We prepared a demo to crowdsource benchmarking (and tuning)
 of shared workloads. Any user can participate in crowd-benchmarking
-simply as following
+simply as follows
 
 ```
  $ ck crowdbench wa:dhyrstone
@@ -294,7 +294,7 @@ the following repository (also automatically pulled with the ck-wa):
  $ ck show repo:ck-wa-extra
 ```
 
-You can import new workloads, devices and instruments as following:
+You can import new workloads, devices and instruments as follows:
 ```
  export CK_PYTHON=python2 ; ck import wa --target_repo_uoa=ck-wa-workloads --extra_target_repo_uoa=ck-wa-extra
 ```
