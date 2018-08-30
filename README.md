@@ -214,8 +214,8 @@ You can also participate in crowd-tuning of other shared workloads simply via
 
 Finally, you can participate in crowd-benchmarking and crowd-tuning 
 using commodity mobile phones via two Android apps:
-* [For small workloads](https://play.google.com/store/apps/details?id=openscience.crowdsource.experiments)
-* [For large workloads including DNN libs such as Caffe](https://play.google.com/store/apps/details?id=openscience.crowdsource.video.experiments)
+* [For small workloads](http://cKnowledge.org/android-apps.html)
+* [For large workloads including DNN libs such as Caffe](http://cKnowledge.org/android-apps.html)
 
 Updating WA via CK
 ==================
@@ -334,7 +334,7 @@ can be easily shared in companies' workgroups to automate workload benchmarking.
 
 Future work
 ===========
-* We now focus on crowdsourcing benchmarking and optimization of [deep learning](http://cKnowledge.org/ai) across diverse hardware, models and inputs via CK. See [ck-caffe](https://github.com/dividiti/ck-caffe), [ck-tensorflow](https://github.com/ctuning/ck-tensorflow) and our engaging [Android app](https://play.google.com/store/apps/details?id=openscience.crowdsource.video.experiments).
+* We now focus on crowdsourcing benchmarking and optimization of [deep learning](http://cKnowledge.org/ai) across diverse hardware, models and inputs via CK. See [ck-caffe](https://github.com/dividiti/ck-caffe), [ck-tensorflow](https://github.com/ctuning/ck-tensorflow) and our engaging [Android app](http://cKnowledge.org/android-apps.html).
 * We continuing unifying high-level API to crowd-benchmark and crowd-tune shared workloads (see [1](http://bit.ly/ck-date16), [2](http://hal.inria.fr/hal-01054763) and [3](http://arxiv.org/abs/1506.06256) to know more about our vision).
 
 Main reference
