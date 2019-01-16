@@ -12,7 +12,7 @@
       "linux": "wa --version > $#filename#$ 2>&1",
       "win": "wa --version > $#filename#$ 2>&1"
     },
-    "soft_version_skip_add_target_file":"yes",
+    "soft_version_skip_add_target_file": "yes",
     "use_git_revision": "yes",
     "version": "trunk"
   },
