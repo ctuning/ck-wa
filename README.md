@@ -20,7 +20,7 @@ MacOS, Windows), web-based dashboard, optimization knowledge sharing, etc.
 for more details about CK and our vision of collaborative,
 reproducible and systematic experimentation. 
 
-Check out our related project to crowdsource benchmarking and optimization of deep learning (engines, models, inputs): http://cKnowledge.org/ai
+Check out our related project to crowdsource benchmarking and optimization of deep learning (engines, models, inputs): http://cKnowledge.io
 
 License
 =======
@@ -335,7 +335,7 @@ can be easily shared in companies' workgroups to automate workload benchmarking.
 
 Future work
 ===========
-* We now focus on crowdsourcing benchmarking and optimization of [deep learning](http://cKnowledge.org/ai) across diverse hardware, models and inputs via CK. See [ck-caffe](https://github.com/dividiti/ck-caffe), [ck-tensorflow](https://github.com/ctuning/ck-tensorflow) and our engaging [Android app](http://cKnowledge.org/android-apps.html).
+* We now focus on crowdsourcing benchmarking and optimization of [deep learning](http://cKnowledge.io) across diverse hardware, models and inputs via CK. See [ck-caffe](https://github.com/dividiti/ck-caffe), [ck-tensorflow](https://github.com/ctuning/ck-tensorflow) and our engaging [Android app](http://cKnowledge.org/android-apps.html).
 * We continuing unifying high-level API to crowd-benchmark and crowd-tune shared workloads (see [1](http://bit.ly/ck-date16), [2](http://hal.inria.fr/hal-01054763) and [3](http://arxiv.org/abs/1506.06256) to know more about our vision).
 
 Main reference
